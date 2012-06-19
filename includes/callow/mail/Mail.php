@@ -111,7 +111,7 @@ class Mail
     public function getSubject()
     {
 
-        return $this->getSubject();
+        return $this->subject;
 
     }
 
@@ -121,7 +121,7 @@ class Mail
      */
     public function getMessage()
     {
-        return $this->getMessage();
+        return $this->message;
     }
 
 }
