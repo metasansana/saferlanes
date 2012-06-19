@@ -8,7 +8,7 @@
 <![endif]-->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>Keep the database fat!</title>
-    </head>
+    </head>.
     <body>
         <div id="master">
             <div id="window">
