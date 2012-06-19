@@ -8,7 +8,7 @@
  * @copyright 2012 Lasana Murray
  * @package callow\framework
  *
- *  Wrapper class for strings.
+ *  Wrapper class for creating string objects.
  *
  *
  */
@@ -26,36 +26,34 @@ class String
      */
     private $value;
 
-    public function __construct($value)
+    public function __construct($value = NULL)
     {
 
-        $this->value = (string) $value;
+        if ($value)
+            $this->value = (string) $value;
 
     }
-
-
 
     /**
-     * Determines if the string is alphanumeric.
-     * @return boolean
+     * Appends a string value to the end of this string.
+     * @return String
      */
-    public function isAlphaNumeric()
+    public function append($value)
     {
-
-        return TRUE; //@TODO this^$this->matchesRegex('/[^a-z_\-0-9]/i');
-
+        $this->value .= (string) $value;
+        return $this;
     }
 
-    public function isAlphabetic()
+    /**
+     * Prepends a string value to this string.
+     * @param string $value
+     * @return String
+     */
+    public function prepend($value)
     {
-
+        $this->value .= $this->value .= (string) $value;
+        return $this;
     }
-
-    public function isNumeric()
-    {
-
-    }
-
 
 
     /**
@@ -65,7 +63,6 @@ class String
     public function getLength()
     {
         return strlen($this->value);
-
     }
 
     /**
@@ -82,14 +79,18 @@ class String
     public function equals(String $string)
     {
 
-
         $operand = $string->toString();
 
-
-        if($this->value === $operand)
+        if ($this->value === $operand)
             return TRUE;
 
         return FALSE;
+
+    }
+
+    public function __toString()
+    {
+        return $this->toString();
     }
 
 }
