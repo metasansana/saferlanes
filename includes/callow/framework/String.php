@@ -45,6 +45,28 @@ class String
     }
 
     /**
+     * Determines whether to String objects are equal in value.
+     * @param String $string
+     *
+     * @internal This method may be replaced with a compare type method. The reason being that a numeric
+     *                   comparisson is more flexible.
+     * 
+     * @return boolean
+     */
+    public function equals(String $string)
+    {
+
+        $operand = $string->toString();
+
+        if ($this->value === $operand)
+            return TRUE;
+
+        return FALSE;
+
+    }
+
+
+    /**
      * Prepends a string value to this string.
      * @param string $value
      * @return String
@@ -73,18 +95,6 @@ class String
     {
 
         return $this->value;
-
-    }
-
-    public function equals(String $string)
-    {
-
-        $operand = $string->toString();
-
-        if ($this->value === $operand)
-            return TRUE;
-
-        return FALSE;
 
     }
 
