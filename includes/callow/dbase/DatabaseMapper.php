@@ -67,7 +67,7 @@ class DatabaseMapper implements DomainMapperInterface
             $pstmt->execute($args->getFormatedArray());
             unset($args);
         }
-        
+
         return $this;
 
     }
@@ -75,7 +75,6 @@ class DatabaseMapper implements DomainMapperInterface
     public function load()
     {
 
-        $counter = 0;
 
         $args = NULL;
 

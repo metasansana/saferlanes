@@ -47,25 +47,14 @@ class Mail
 
     /**
      * Sets the destination address of the email.
-     * @param string $email_address
+     * @param EmailAddress $address
      * @return \callow\mail\Mail
-     * @throws InvalidEmailAddressException
      */
-    public function setDest($email_address)
+    public function setDest(EmailAddress $address)
     {
 
-        $result = filter_var($email_address, FILTER_VALIDATE_EMAIL);
-
-        if (!$result)
-        {
-            throw new InvalidEmailAddressException();
-            return $this;
-        }
-        else
-        {
-            $this->dest_address = $email_address;
-            return $this;
-        }
+        $this->dest_address = $address;
+        return $this;
 
     }
 
@@ -122,6 +111,7 @@ class Mail
     public function getMessage()
     {
         return $this->message;
+
     }
 
 }
