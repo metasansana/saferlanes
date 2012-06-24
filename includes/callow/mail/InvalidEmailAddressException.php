@@ -15,7 +15,7 @@
 
 namespace callow\mail;
 
-class InvalidEmailAddressException extends \Excepiton
+class InvalidEmailAddressException extends \Exception
 {
 
 
