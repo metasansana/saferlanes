@@ -24,7 +24,7 @@ class String
      * @var String $value
      * @access private
      */
-    private $value;
+    protected $value;
 
     public function __construct($value = NULL)
     {
@@ -50,7 +50,7 @@ class String
      *
      * @internal This method may be replaced with a compare type method. The reason being that a numeric
      *                   comparisson is more flexible.
-     * 
+     *
      * @return boolean
      */
     public function equals(String $string)

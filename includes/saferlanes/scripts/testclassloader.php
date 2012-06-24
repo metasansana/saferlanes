@@ -9,6 +9,7 @@
 //The aim here is not  to modify the include path and hinder cli php unit
 spl_autoload_register(function ($package)
 {
+            printf("Starting");
      $php = '.php';
 
         $package = str_replace("\\", '/', $package) . $php;
@@ -18,7 +19,6 @@ spl_autoload_register(function ($package)
             require_once $package;
             return;
         }
-
         else
         {
             //check the include path
@@ -29,7 +29,11 @@ spl_autoload_register(function ($package)
                 require_once $package;
                 return;
             }
+
         }
+
+            printf("Could not locate the class ---> $package");
+
 
 });
 ?>
