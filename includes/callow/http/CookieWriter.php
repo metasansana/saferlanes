@@ -6,13 +6,13 @@
  *
  * @author Lasana Murray  <lmurray@trinistorm.org>
  * @copyright 2012 Lasana Murray
- * @package callow\net\http
+ * @package callow\http
  *
  *  Class used for creating cookies.
  *
  */
 
-namespace callow\net\http;
+namespace callow\http;
 
 
 class CookieWriter

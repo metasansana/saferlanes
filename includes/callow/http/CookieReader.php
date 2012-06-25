@@ -12,7 +12,7 @@
  *
  */
 
-namespace callow\net\http;
+namespace callow\http;
 
 class CookieReader
 {

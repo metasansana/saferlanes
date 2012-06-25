@@ -7,13 +7,13 @@
  *
  * @author Lasana Murray  <lmurray@trinistorm.org>
  * @copyright 2012 Lasana Murray
- * @package callow\net\http
+ * @package callow\http
  *
  * Class that performs an HTTP redirect.
  *
  */
 
-namespace callow\net\http;
+namespace callow\http;
 
 class Redirect
 {
