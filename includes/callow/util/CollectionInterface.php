@@ -16,7 +16,7 @@ namespace callow\util;
 interface CollectionInterface
 {
 
-    public function add($member, $index=NULL);
+    public function add($member, $index);
 
     public function remove($index);
 

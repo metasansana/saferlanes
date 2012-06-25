@@ -13,7 +13,7 @@
 
 namespace callow\net;
 
-class MalFormedUrlException extends \Exception
+class MalFormedURLException extends \Exception
 {
 
     /**

@@ -17,14 +17,14 @@ namespace callow\net;
 
 use callow\util\Collection;
 
-class UrlParameters extends Collection
+class URLQuery extends Collection
 {
 
-    public function __construct($url= NULL)
+    public function __construct($query_string= NULL)
     {
 
-        if($url)
-            $this->parse ($url);
+        if($query_string)
+            $this->set ($query_string);
 
     }
 
@@ -36,14 +36,19 @@ class UrlParameters extends Collection
 
     }
 
-    public function parse($url)
+    /**
+     * Parses a string of url parameters.
+     * @param string $query_string
+     * @return \callow\net\URLQuery
+     */
+    public function set($query_string)
     {
 
-       $url = parse_url((string)$url, PHP_URL_QUERY);
+       $query_string = (string)$query_string;
 
-       $url = str_replace('?', '&', $url);
+       $query_string = str_replace('?', '&', $query_string);
 
-       $this->members = parse_str($url);
+       parse_str($query_string, $this->members);
 
        return $this;
 
@@ -51,6 +56,7 @@ class UrlParameters extends Collection
 
     public function __toString()
     {
+
         $count = 0;
         $mark = '?';
         $query = '';

@@ -27,12 +27,6 @@ class URL
      */
     private $url;
 
-    /**
-     * An array containing key value pairs for the structure of the url
-     * @var array $parts
-     * @access private
-     */
-    private $parts = array ();
 
     public function __construct($url = NULL)
     {
@@ -68,7 +62,7 @@ class URL
     {
         if (!filter_var($url, FILTER_VALIDATE_URL))
         {
-            throw new MalFormedUrlException();
+            throw new MalFormedURLException();
             return;
         }
 
@@ -80,11 +74,20 @@ class URL
 
     /**
      * Returns the a Query object based on the query string of the url.
-     * @return \callow\net\Query
+     * @return \callow\net\Query|null
      */
+
     public function getQuery()
     {
-        return new  Query($this->parse(PHP_URL_QUERY));
+        $qstring = $this->parse(PHP_URL_QUERY);
+
+        if(is_string($qstring))
+        {
+            return new URLQuery($qstring);
+        }
+
+        return NULL;
+
     }
 
     /**
@@ -95,6 +98,11 @@ class URL
     {
         return $this->parse();
 
+    }
+
+    public function __toString()
+    {
+           return $this->url;
     }
 
 }
