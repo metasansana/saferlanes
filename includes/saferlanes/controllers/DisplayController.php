@@ -58,11 +58,34 @@ class DisplayController extends Controller
 
                 $mapper->load();
 
+                //ideal code
+
+                $auth = new Authenticator();
+                try
+                {
+                    $auth->verify();  //Is the user already verified?
+                    //@todo add vote button generation here
+                }
+                catch (AuthenticationRequiredException $exc)
+                {
+
+                    $dialog = Widgets::getAuthDialog();  //Widgets is a factory method in sl.
+                    $screen->add($dialog, 'auth');  //Dialog should be forced into a string. Screen should therefore accept any object but force it into a string.
+                    exit();  //exit because php does not have a finally block.
+                }
+
+                //If here, the user should be auth otherwise he would see the driver as normal with no vote option
+                //instead a facebook button.
+
+
+
+                //End
+
                 $printer = new DriverPrinter($screen);
 
-                $printer->printDriver($driver);
+                $printer->printDriver($driver);  //@todo take out vote token generation and put into own class?
 
-                $screen->setTemplate('display');
+                $screen->setTemplate('display');  //@todo the screen needs a clearer interface
 
             }
             catch (BadValueException $iexc)
