@@ -36,10 +36,10 @@ class HTMLTemplate extends GenericCollection
     }
 
 
-    public function add($index, Widget $w)
+    public function add($index, $markup)
     {
 
-        return parent::add($index, (string)$w);
+        return parent::add($index, (string)$markup);
 
     }
 
