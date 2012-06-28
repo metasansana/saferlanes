@@ -34,7 +34,7 @@ class GenericCollection implements Collection
 
     }
 
-    public function add($item, $index)
+    public function add($index, $item)
     {
         $index = (string)$index;
 
@@ -67,7 +67,7 @@ class GenericCollection implements Collection
         if (array_key_exists($index, $this->collected))
             return $this->collected[$index];
 
-        throw new MemberNotFoundException($index);
+        throw new InvalidIndexException($index);
 
         return FALSE;
 

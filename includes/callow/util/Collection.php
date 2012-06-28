@@ -18,7 +18,6 @@ namespace callow\util;
 interface Collection extends \ArrayAccess, \IteratorAggregate, \Countable
 {
 
-
     public function remove($index);
 
     public function contains($index);
