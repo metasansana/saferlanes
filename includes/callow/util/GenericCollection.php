@@ -8,6 +8,7 @@
  * @copyright 2012 Lasana Murray
  * @package callow\util
  *
+ *  The GenericCollection class is the implementation of the Collection interface.
  *
  */
 
@@ -25,23 +26,19 @@ class GenericCollection implements Collection
 
     public function __construct(array &$items = NULL)
     {
-        if ($items)
-            $this->collected = $items;
+
+        foreach ($items as $key => &$value)
+        {
+            $this->add($value, $key);
+        }
 
     }
 
-    public function add($item, $index = NULL)
+    public function add($item, $index)
     {
-        if ($index)
-        {
-            $this->collected[$index] = $item;
-            $next = $this->count();
-            $this->collected[$next] = &$this->collected[$index];    //Makes the next numbered key point to the $index key
-        }
-        else
-        {
-            $this->collected[] = $item;
-        }
+        $index = (string)$index;
+
+        $this->collected[$index] = $item;
 
         return $this;
 
