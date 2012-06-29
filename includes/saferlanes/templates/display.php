@@ -7,27 +7,27 @@
        <link rel="stylesheet" href="blueprint/ie.css" type="text/css" media="screen, projection">
 <![endif]-->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>Found <?= $page['plate']; ?>!</title>
+        <title>Found <?= $content['plate']; ?>!</title>
     </head>
     <body>
         <div id="master">
             <div id="window">
                 <img src="img/van.png" alt="truck"/>
-                <div id="breakdown" class="<?= $page['image']; ?>">
-                    <h1><?= $page['plate']; ?></h1>
+                <div id="breakdown" class="<?= $content['image']; ?>">
+                    <h1><?= $content['plate']; ?></h1>
                     <ul class="list">
                         <li>
-                            <p>First entered: <?= $page['timestamp']; ?></p>
+                            <p>First entered: <?= $content['timestamp']; ?></p>
                         </li><li>
-                            <p>Likes: <?= $page['likes']; ?> <a href="<?= $page['plus_link']; ?>">
+                            <p>Likes: <?= $content['likes']; ?> <a href="<?= $content['plus_link']; ?>">
                                     <img src="img/vote.png" alt="like this driver" title="click to like this driver!"/> </a></p>
                         </li>
                         <li>
-                            <p>Fails: <?= $page['fails']; ?> <a href="<?= $page['minus_link']; ?>">
+                            <p>Fails: <?= $content['fails']; ?> <a href="<?= $content['minus_link']; ?>">
                                     <img src="img/smote.png" alt="fail this driver" title="click to fail this driver!"/> </a></p>
                         </li>
                     </ul>
-                    <p>Link to this record: http://sl.trinistorm.org/<?= $page['plate']; ?></p>
+                    <p>Link to this record: http://sl.trinistorm.org/<?= $content['plate']; ?></p>
                 </div>
             </div>
         </div>

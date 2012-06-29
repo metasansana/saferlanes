@@ -19,10 +19,10 @@
                 <p>The developer of saferlanes does not claim ownership over any of the plates stored in the database and you cannot either. If you would like to remove your registration from the database, please email <a href="/contact">this</a> address and we will be happy to remove it once you can prove you are not trolling. </p>
                 <div id="application">
                     <form name="plate_number" method="POST" action="/post">
-                        <?= $page['msg']; ?>
-                        <?= $page['plate']; ?>
+                        <?= $content['msg']; ?>
+                        <?= $content['plate']; ?>
                         <input id="pnum" class="title" type="text" name="plate" placeholder="Enter a new plate number here.."/>
-                        <input hidden  name="csrf_token" value="<?= $page['csrf_token'];?>"/>
+                        <input hidden  name="csrf_token" value="<?= $content['csrf_token'];?>"/>
                         <input  type="submit" value="go" name="submit" />
                     </form>
                 </div>
