@@ -15,27 +15,25 @@ namespace saferlanes\controllers;
 
 use callow\mvc\Controller;
 use callow\http\Redirect;
-use callow\http\MethodReader;
-use callow\gui\Screen;
-use saferlanes\gui\SearchForm;
+use callow\http\PostReader;
+use callow\ui\Templates;
+use saferlanes\tools\TemplateFactory;
 
 
 class SearchController extends Controller
 {
 
-
-
     public function main()
     {
 
-        $reader = new MethodReader(MethodReader::POST);
+        $reader = new PostReader();
 
-        if($reader->hasMember('plate'))
+        if($reader->contains('plate'))
         {
             new Redirect('/'.$reader->get('plate'), TRUE);
         }
 
-        $form = new SearchForm(new Screen);
+        $page = TemplateFactory::getSearchPage();
 
     }
 
