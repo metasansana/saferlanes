@@ -22,10 +22,10 @@ class DatabaseMapper implements DomainMapperInterface
 
     /**
      * Reference to a database connection object.
-     * @var Connection $con
+     * @var ActiveDatabase $dbase
      * @access private
      */
-    private $con;
+    private $dbase;
 
     /**
      * Reference to the domain being managed.
@@ -41,19 +41,24 @@ class DatabaseMapper implements DomainMapperInterface
      */
     private $sql;
 
-    public function __construct(AbstractDomain &$domain, SQL &$sql, Connection &$con)
+    public function __construct(AbstractDomain &$domain = NULL, SQL &$sql = NULL, ActiveDatabase &$dbase = NULL)
     {
 
-        $this->domain = $domain;
-        $this->sql = $sql;
-        $this->con = $con;
+        if($domain)
+        $this->setDomain ($domain);
+
+        if($sql)
+        $this->setSQL ($sql);
+
+        if($dbase)
+        $this->setActiveDatabase ($dbase);
 
     }
 
     public function save()
     {
 
-        $pstmt = $this->con->prepareStatement($this->sql);
+        $pstmt = $this->dbase->prepareStatement($this->sql);
 
         $count = $this->domain->count();
 
@@ -80,7 +85,7 @@ class DatabaseMapper implements DomainMapperInterface
 
         $c = 0;
 
-        $pstmt = $this->con->prepareStatement($this->sql);
+        $pstmt = $this->dbase->prepareStatement($this->sql);
 
         $count = $this->domain->count();
 
@@ -110,7 +115,7 @@ class DatabaseMapper implements DomainMapperInterface
     public function edit()
     {
 
-        $pstmt = $this->con->prepareStatement($this->sql);
+        $pstmt = $this->dbase->prepareStatement($this->sql);
 
         $count = $this->domain->count();
 
@@ -135,7 +140,7 @@ class DatabaseMapper implements DomainMapperInterface
     public function delete()
     {
 
-        $pstmt = $this->con->prepareStatement($this->sql);
+        $pstmt = $this->dbase->prepareStatement($this->sql);
 
         $count = $this->domain->count();
 
@@ -155,6 +160,24 @@ class DatabaseMapper implements DomainMapperInterface
 
         return $this;
 
+    }
+
+    public function setActiveDatabase(ActiveDatabase &$dbase)
+    {
+        $this->dbase = $dbase;
+        return $this;
+    }
+
+    public function setSQL(SQL &$sql)
+    {
+        $this->sql = $sql;
+        return $this;
+    }
+
+    public function setDomain(AbstractDomain &$domain)
+    {
+        $this->domain = $domain;
+        return $this;
     }
 
 }
