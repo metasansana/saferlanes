@@ -31,7 +31,7 @@ class NoticeBar extends Widget
     {
         $msg = (string) $msg;
 
-        $msg = "<div class='notice'>$msg</div>";
+        $this->html = "<div class='notice'>$msg</div>";
         return $this;
 
     }
