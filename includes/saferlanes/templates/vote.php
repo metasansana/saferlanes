@@ -5,6 +5,6 @@
         <title></title>
     </head>
     <body>
-        <?= $page->get('msg'); ?>
+        <?= $page['msg']; ?>
     </body>
 </html>

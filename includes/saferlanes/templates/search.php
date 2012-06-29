@@ -3,7 +3,7 @@
     <head>
         <link rel="stylesheet" href="css/layout.css" type="text/css" media="screen, projection"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title><?= $page->get('title'); ?></title>
+        <title><?= $page['title']; ?></title>
     </head>
     <body>
         <div id="master">
@@ -17,8 +17,8 @@
                 <p>Do you want to add a plate number? Use <a href="/post">this</a> link.</p>
                 <div id="application">
                     <form name="plate_number" method="POST" action="/">
-                        <?= $page->get('msg'); ?>
-                        <?= $page->get('plate'); ?>
+                        <?= $page['msg']; ?>
+                        <?= $page['plate']; ?>
                         <input id="pnum" class="title" type="text" name="plate" placeholder="Driver search"/>
                         <input  type="submit" value="go" name="submit"  />
                     </form>
