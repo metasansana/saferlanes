@@ -13,6 +13,7 @@
  */
 
 namespace callow\util;
+
 use callow\util\Collection;
 
 class GenericCollection implements Collection
@@ -27,16 +28,20 @@ class GenericCollection implements Collection
     public function __construct(array &$items = NULL)
     {
 
-        foreach ($items as $key => &$value)
+        if ($items)
         {
-            $this->add($value, $key);
+
+            foreach ($items as $key => &$value)
+            {
+                $this->add($value, $key);
+            }
         }
 
     }
 
     public function add($index, $item)
     {
-        $index = (string)$index;
+        $index = (string) $index;
 
         $this->collected[$index] = $item;
 
@@ -55,6 +60,7 @@ class GenericCollection implements Collection
     public function copy(Collection $another_collection)
     {
         $this->collected = $another_collection->toArray();
+
     }
 
     public function getIterator()
@@ -62,7 +68,7 @@ class GenericCollection implements Collection
 
     }
 
-    public function get($index)
+    public function retrieve($index)
     {
         if (array_key_exists($index, $this->collected))
             return $this->collected[$index];
@@ -79,7 +85,6 @@ class GenericCollection implements Collection
 
     }
 
-
     public function hasIndex($index)
     {
         return array_key_exists($index, $this->collected);
@@ -88,7 +93,7 @@ class GenericCollection implements Collection
 
     public function contains($index)
     {
-        $result = isset($this->collected[$index]) ;
+        $result = isset($this->collected[$index]);
 
         return $result;
 
@@ -117,13 +122,21 @@ class GenericCollection implements Collection
     {
         $this->remove($offset);
 
-
     }
 
     public function offsetGet($offset)
     {
 
-        $result  = $this->hasIndex($offset) ? $this->get($offset) : null;
+        $result = NULL;
+
+        try
+        {
+            $result = $this->retrieve($offset);
+        }
+        catch (\Exception $ex)
+        {
+
+        }
 
         return $result;
 
@@ -132,6 +145,7 @@ class GenericCollection implements Collection
     public function toArray()
     {
         return $this->collected;
+
     }
 
 }

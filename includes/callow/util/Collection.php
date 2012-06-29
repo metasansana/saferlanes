@@ -24,7 +24,7 @@ interface Collection extends \ArrayAccess, \IteratorAggregate, \Countable
 
     public function hasIndex($index);
 
-    public function get($index);
+    public function retrieve($index);
 
 }
 
