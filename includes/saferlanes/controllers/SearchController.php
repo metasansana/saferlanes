@@ -33,7 +33,7 @@ class SearchController extends Controller
             new Redirect('/'.$reader->get('plate'), TRUE);
         }
 
-        $page = TemplateFactory::getSearchPage();
+        TemplateFactory::getSearchPage();
 
     }
 
