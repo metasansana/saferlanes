@@ -19,6 +19,13 @@ use callow\ui\Widget;
 class NoticeBar extends Widget
 {
 
+    public function __construct($notice = NULL)
+    {
+
+        if($notice)
+            $this->setNotice((string)$notice);
+}
+
 public function setNotice($msg)
 {
     if(is_string($msg))
