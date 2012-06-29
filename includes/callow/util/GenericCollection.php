@@ -10,6 +10,8 @@
  *
  *  The GenericCollection class is the implementation of the Collection interface.
  *
+ *  @todo There is still no distinction between numeric and string keys.
+ *  @todo A call to remove messes up the key ordering of the internal array. A solution is needed.
  */
 
 namespace callow\util;
@@ -33,7 +35,7 @@ class GenericCollection implements Collection
 
             foreach ($items as $key => &$value)
             {
-                $this->add($value, $key);
+                $this->add($key, $value);
             }
         }
 
@@ -50,8 +52,18 @@ class GenericCollection implements Collection
 
     public function remove($index)
     {
+
+        $removed = NULL;
+
+        if($this->hasIndex($index))
+        {
+            if(!is_string($index))
+            {
+
+            }
         $removed = $this->collected[$index];
         unset($this->collected[$index]);
+        }
 
         return $removed;
 
@@ -68,7 +80,7 @@ class GenericCollection implements Collection
 
     }
 
-    public function retrieve($index)
+    public function get($index)
     {
         if (array_key_exists($index, $this->collected))
             return $this->collected[$index];
@@ -131,7 +143,7 @@ class GenericCollection implements Collection
 
         try
         {
-            $result = $this->retrieve($offset);
+            $result = $this->get($offset);
         }
         catch (\Exception $ex)
         {
