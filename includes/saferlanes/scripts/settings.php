@@ -14,5 +14,11 @@ define('ADMIN_EMAIL', 'lmurray@trinistorm.org');
 
 define('SL_TEMPLATE_PATH', '/srv/www/saferlanes/includes/saferlanes/templates');
 
+define('CLASS_LOADER_PATH', '/srv/www/saferlanes/includes/saferlanes/scripts/classloader.php');
+
+require_once 'dbcreds.php';
+
+require_once 'classloader.php';
+
 ?>
 
