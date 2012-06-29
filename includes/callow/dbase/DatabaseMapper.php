@@ -53,7 +53,7 @@ class DatabaseMapper implements DomainMapperInterface
     public function save()
     {
 
-        $pstmt = $this->con->prepareStatement($this->sql->toString());
+        $pstmt = $this->con->prepareStatement($this->sql);
 
         $count = $this->domain->count();
 
@@ -80,7 +80,7 @@ class DatabaseMapper implements DomainMapperInterface
 
         $c = 0;
 
-        $pstmt = $this->con->prepareStatement($this->sql->toString());
+        $pstmt = $this->con->prepareStatement($this->sql);
 
         $count = $this->domain->count();
 
@@ -110,7 +110,7 @@ class DatabaseMapper implements DomainMapperInterface
     public function edit()
     {
 
-        $pstmt = $this->con->prepareStatement($this->sql->toString());
+        $pstmt = $this->con->prepareStatement($this->sql);
 
         $count = $this->domain->count();
 
@@ -135,7 +135,7 @@ class DatabaseMapper implements DomainMapperInterface
     public function delete()
     {
 
-        $pstmt = $this->con->prepareStatement($this->sql->toString());
+        $pstmt = $this->con->prepareStatement($this->sql);
 
         $count = $this->domain->count();
 
