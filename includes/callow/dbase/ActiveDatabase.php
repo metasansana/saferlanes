@@ -30,7 +30,7 @@ class ActiveDatabase
     public function __construct(PDOBuilder  &$config)
     {
 
-        $this->pdo = $config->getPDO();
+        $this->pdo = $config->get();
 
     }
 
