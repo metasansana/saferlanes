@@ -41,8 +41,7 @@ class GenericCollection implements Collection
 
     public function add($index, $item)
     {
-        $index = (string) $index;
-
+        
         $this->collected[$index] = $item;
 
         return $this;
