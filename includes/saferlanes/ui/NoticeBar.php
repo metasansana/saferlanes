@@ -22,20 +22,19 @@ class NoticeBar extends Widget
     public function __construct($notice = NULL)
     {
 
-        if($notice)
-            $this->setNotice((string)$notice);
-}
+        if ($notice)
+            $this->setNotice($notice);
 
-public function setNotice($msg)
-{
-    if(is_string($msg))
+    }
+
+    public function setNotice($msg)
     {
+        $msg = (string) $msg;
 
         $msg = "<div class='notice'>$msg</div>";
         return $this;
-    }
 
-}
+    }
 
 }
 
