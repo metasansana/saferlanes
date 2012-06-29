@@ -17,82 +17,101 @@
 namespace callow\ui;
 
 use callow\util\GenericCollection;
-use callow\fio\FileNotFoundException;
 use callow\util\InvalidIndexException;
 
-class Templates extends GenericCollection
+class Templates
 {
 
-    private $current;
+    private $markup;
+    private $files;
+    private $template_directory;
 
-    private $template_path;
-
-    public function __construct($template_path)
+    public function __construct($template_path, Collection $markup = NULL, array $files = NULL)
     {
 
-            $this->setPath($template_path);
+        $this->setPath($template_path);
 
-    }
-
-    public function add($index, $markup)
-    {
-
-        return parent::add($index, (string) $markup);
-
-    }
-
-    /**
-     * Sets the path to the current template file, throws an exception if the file cannot be accessed.
-     * @param string $filename
-     * @return boolean
-     * @throws FileNotFoundException
-     */
-    public function setTemplate($filename)
-    {
-
-        $filename = (string) $this->template_path.$filename;
-
-        if (file_exists($filename))
+        if ($markup)
         {
-
-            $this->current = $filename;
-            return TRUE;
+            $this->setMarkup($markup);
         }
         else
         {
-            throw new FileNotFoundException;
-            return FALSE;
+            $this->markup = new GenericCollection();
         }
+
+        if ($files)
+            $this->setFileNames($files);
 
     }
 
-    public function retrieve($index)
+    public function addFileName($filename)
     {
-        $result = NULL;
-        try
-        {
-            $result = parent::retrieve($index);
-        }
-        catch (InvalidIndexException $ex)
-        {
-              //oh well :/
-        }
 
-        return $result;
+        $this->files[] = "$this->template_directory/$filename";
+        return $this;
 
     }
 
     public function setPath($template_path)
     {
-        $this->template_path = $template_path."/";
+        $this->template_directory = $template_path . "/";
         return $this;
+
+    }
+
+    public function addMarkup($label, $html)
+    {
+        $this->markup->add((string) $label, (string) $html);
+        return $this;
+
+    }
+
+    public function setFileNames(array $filenames)
+    {
+        foreach ($filenames as $key => &$value)
+        {
+            $this->setFileNames($value);
+        }
+
+        return $this;
+
+    }
+
+    public function setMarkup(GenericCollection $markup)
+    {
+        $this->markup = $markup;
+        return $this;
+
+    }
+
+    public function getFileNames()
+    {
+        return $this->files;
+
+    }
+
+    public function getMarkup()
+    {
+        return $this->markup;
+
+    }
+
+    public function getTemplatePath()
+    {
+        return $this->template_directory;
+
     }
 
     public function __destruct()
     {
 
-        $output = &$this;
-        include_once($this->current);
+        $content = &$this->markup;
+
+        foreach ($this->files as &$value)
+        {
+            include_once($value);
+        }
 
     }
 
