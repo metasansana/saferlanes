@@ -41,7 +41,7 @@ class GenericCollection implements Collection
 
     public function add($index, $item)
     {
-        
+
         $this->collected[$index] = $item;
 
         return $this;
@@ -50,9 +50,10 @@ class GenericCollection implements Collection
 
     public function remove($index)
     {
+        $removed = $this->collected[$index];
         unset($this->collected[$index]);
 
-        return $this;
+        return $removed;
 
     }
 
