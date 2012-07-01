@@ -16,7 +16,7 @@ namespace saferlanes\core;
 use callow\domain\AbstractDomain;
 use callow\dbase\DatabaseMapper;
 
-class Driver extends AbstractDomain implements DriverInterface
+class AbstractDriver extends AbstractDomain implements Driver
 {
 
     protected $plate;
