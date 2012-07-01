@@ -67,7 +67,7 @@ class Driver extends AbstractDomain implements DriverInterface
 
         if (!$validator->isValid('plus', $plus))
         {
-            throw new BadValueException('plus', $plus, $validator->getError('plus'));
+            throw new VoteError();
         }
 
         return $this;
@@ -81,7 +81,7 @@ class Driver extends AbstractDomain implements DriverInterface
 
         if (!$validator->isValid('minus', $minus))
         {
-            throw new BadValueException('minus', $minus, $validator->getError('minus'));
+            throw new VoteError();
         }
 
         return $this;
