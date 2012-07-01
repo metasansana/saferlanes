@@ -20,6 +20,13 @@ use callow\ui\Templates;
 class View extends Templates
 {
 
+    public function __construct()
+    {
+
+        parent::__construct(SL_TEMPLATE_PATH);
+
+    }
+
 
     public function toSearchPage()
     {
