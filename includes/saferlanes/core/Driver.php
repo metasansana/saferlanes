@@ -14,7 +14,6 @@
 namespace saferlanes\core;
 
 use callow\domain\AbstractDomain;
-use callow\domain\BadValueException;
 use callow\dbase\DatabaseMapper;
 
 class Driver extends AbstractDomain implements DriverInterface
@@ -41,7 +40,7 @@ class Driver extends AbstractDomain implements DriverInterface
 
         if (!$validator->isValid('plate', $plate))
         {
-            throw new BadValueException('plate', $plate, $validator->getError('plate'));
+            throw new InvalidPlateNumberError();
         }
         else
         {
