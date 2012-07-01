@@ -16,7 +16,7 @@ namespace saferlanes\core;
 
 use callow\galaxy\Error;
 
-class InvalidPlateNumberError extends  \Error
+class InvalidPlateNumberError extends  Error
 {
 
     public function __toString()
