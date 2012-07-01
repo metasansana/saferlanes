@@ -25,7 +25,6 @@ class Parameters extends GenericCollection
 
         $url = urldecode($_SERVER['REQUEST_URI']);
 
-        parse_str($url, $get_args);  //Extract the args from the GET request.
 
         @$params = explode('/', $url);
 
@@ -34,7 +33,7 @@ class Parameters extends GenericCollection
         if (empty($params[0]))
             array_shift($params);
 
-        $this->collected = array_merge($get_args, $params);
+        $this->collected = $params;
 
     }
 
