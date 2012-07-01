@@ -11,6 +11,9 @@
  *  Exception type class that is thrown when the user does something wrong.
  *
  */
+
+namespace callow\galaxy;
+
 class Error extends \Exception
 {
 
