@@ -15,7 +15,7 @@
 namespace callow\domain;
 
 
-class AbstractDomain implements DomainInterface
+class AbstractDomain implements Domain
 {
 
     public function count()

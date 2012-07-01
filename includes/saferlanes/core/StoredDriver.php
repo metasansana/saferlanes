@@ -14,7 +14,7 @@
 namespace saferlanes\core;
 
 
-class StoredDriver extends Driver
+class StoredDriver extends AbstractDriver
 {
 
 
