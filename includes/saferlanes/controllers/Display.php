@@ -9,6 +9,7 @@
  * @copyright 2012 Lasana Murray
  * @package saferlanes\controllers
  *
+ *  Class that controllers how data is render in the web browser.
  *
  */
 
