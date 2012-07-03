@@ -14,9 +14,9 @@
 
 namespace callow\http;
 
-use callow\util\Collection;
+use callow\util\GenericCollection;
 
-class Session extends Collection
+class Session extends GenericCollection
 {
 
     /**
@@ -39,7 +39,7 @@ class Session extends Collection
     public function clear()
     {
 
-        $this->members = array ();
+        $this->collected = array ();
         return $this;
 
     }
@@ -77,7 +77,7 @@ class Session extends Collection
 
         session_destroy();
 
-        $this->members = array ();
+        $this->collected = array ();
 
         return $this;
 
@@ -96,7 +96,7 @@ class Session extends Collection
 
         @session_start();
 
-        $this->members = &$_SESSION;
+        $this->collected = &$_SESSION;
 
     }
 

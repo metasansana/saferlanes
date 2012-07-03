@@ -14,7 +14,7 @@
 namespace saferlanes\core;
 
 
-class FormatedDriver extends Driver
+class TrackedDriver extends AbstractDriver
 {
 
 

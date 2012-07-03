@@ -19,22 +19,8 @@ use saferlanes\ui\MessageBar;
 use callow\galaxy\Error;
 
 
-class ErrorHandler
+class ErrorHandler extends AbstractViewChanger
 {
-    /**
-     * The View object to be updated with error messages.
-     * @var View $view
-     * @access private
-     */
-    private $view;
-
-
-    public function __construct(View &$view)
-    {
-
-        $this->view =$view;
-
-    }
 
     public function handleError(Error $err, $exit=TRUE)
     {

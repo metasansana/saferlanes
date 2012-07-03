@@ -12,26 +12,26 @@
  *
  */
 
-namespace saferlanes\gui;
+namespace saferlanes\ui;
 
 use callow\ui\Widget;
 
-class NoticeBar extends Widget
+class MessageBar extends Widget
 {
 
-    public function __construct($notice = NULL)
+    public function __construct($message, $type='notice')
     {
 
-        if ($notice)
-            $this->setNotice($notice);
+        if ($message)
+            $this->setMessage($message, $type);
 
     }
 
-    public function setNotice($msg)
+    public function setMessage($msg, $type)
     {
         $msg = (string) $msg;
 
-        $this->html = "<div class='notice'>$msg</div>";
+        $this->html = "<div class='$type'>$msg</div>";
         return $this;
 
     }

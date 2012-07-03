@@ -17,25 +17,27 @@ namespace saferlanes\models;
 use callow\dbase\SQL;
 use callow\dbase\ActiveDatabase;
 use callow\dbase\DatabaseMapper;
-use saferlanes\core\DriverInterface;
+use saferlanes\core\Driver;
 
-class DriverEngine
+class SLEngine
 {
 
-    private $dbase;
+    private $mapper;
 
     public function __construct(ActiveDatabase &$dbase)
     {
-        $this->dbase = $dbase;
+        $this->mapper = new DatabaseMapper($dbase);
     }
 
-    public function find(DriverInterface &$driver, SQL &$sql)
+    public function find(Driver &$driver, SQL &$sql)
     {
 
 
-        $mapper = new DatabaseMapper($driver, $sql, $dbase);
+        $this->mapper->setDomain($driver);
 
-        $mapper->load();
+        $this->mapper->setSQL($sql);
+
+        $this->mapper->load();
 
         return $driver;
 

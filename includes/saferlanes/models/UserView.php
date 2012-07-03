@@ -17,7 +17,7 @@ namespace saferlanes\models;
 
 use callow\ui\Templates;
 
-class View extends Templates
+class UserView extends Templates
 {
 
     public function __construct()
@@ -28,12 +28,21 @@ class View extends Templates
     }
 
 
-    public function toSearchPage()
+    public function showSearchPage()
     {
 
         $this->addFileName('search.php');
         return $this;
     }
+
+    public function showDriverProfilePage()
+    {
+        
+        $this->addFileName('display.php');
+        return $this;
+
+    }
+
 
 }
 

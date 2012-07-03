@@ -41,7 +41,7 @@ class DatabaseMapper implements DomainMapperInterface
      */
     private $sql;
 
-    public function __construct(AbstractDomain &$domain = NULL, SQL &$sql = NULL, ActiveDatabase &$dbase = NULL)
+    public function __construct(ActiveDatabase &$dbase, AbstractDomain &$domain = NULL, SQL &$sql = NULL)
     {
 
         if($domain)
@@ -50,7 +50,6 @@ class DatabaseMapper implements DomainMapperInterface
         if($sql)
         $this->setSQL ($sql);
 
-        if($dbase)
         $this->setActiveDatabase ($dbase);
 
     }

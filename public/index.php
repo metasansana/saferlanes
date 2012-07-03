@@ -1,14 +1,11 @@
 <?php
 
-require_once 'callow/mvc/Application.php';
+//Define constants, load class loader.
+require_once 'saferlanes/scripts/settings.php';
 
-$saferlanes = new callow\mvc\Application();
+$app = new saferlanes\controllers\Saferlanes();
 
-$saferlanes->setStartUpScript('saferlanes/scripts/boot.php');
-
-$saferlanes->setRuntimeScript('saferlanes/scripts/setup.php');
-
-$saferlanes->run();
+$app->init()->run()->end();
 
 
 ?>

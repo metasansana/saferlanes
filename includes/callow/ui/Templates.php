@@ -22,9 +22,9 @@ use callow\util\InvalidIndexException;
 class Templates
 {
 
-    private $markup;
-    private $files;
-    private $template_directory;
+    protected $markup;
+    protected $files;
+    protected $template_directory;
 
     public function __construct($template_path, Collection $markup = NULL, array $files = NULL)
     {
