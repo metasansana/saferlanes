@@ -31,7 +31,7 @@ class Saferlanes extends Application
 
         require_once 'scripts/uservars.php';
 
-        include_once 'settings.php';
+        include_once 'scripts/settings.php';
 
         if(!defined(APP_NAME))
             header("Status: 500 Not Found", FALSE, 500);

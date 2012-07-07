@@ -30,7 +30,7 @@ class SearchController extends AppController
 
     private $driver;
 
-    public function main(Parameters $params = NULL)
+    public function main(Commands $params = NULL)
     {
 
         $reader = new PostReader();
@@ -39,7 +39,7 @@ class SearchController extends AppController
         {
 
             $this->validate($reader->get('plate'))->find()->show();
-            
+
         }
         elseif ($params->count() === 1)  //get plate number from url
         {
