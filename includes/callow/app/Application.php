@@ -8,7 +8,12 @@
  * @copyright 2012 Lasana Murray
  * @package callow\app
  *
+ *  The Application class is the parent class of all main classes of a callow application.
+ *  Child classes must define three methods that can be called in sequence using the
+ *  launch() method.
  *
+ * NOTE: This class relies on method chaining, therefore the three methods must all return an
+ * instance of $this.
  */
 
 namespace callow\app;
@@ -19,7 +24,7 @@ abstract class Application
 
     /**
      * Parameters formed from the current url.
-     * @var Parameters $params
+     * @var Commands $params
      * @access protected
      */
     protected $params;
@@ -27,24 +32,34 @@ abstract class Application
     final public function __construct()
     {
 
-        $this->params = new Parameters();
+        $this->params = new Commands();
 
     }
 
     /**
      * Contains code needed to initilize the application.
      */
-    abstract public function init();
+    abstract protected function init();
 
     /**
      * Contains the logic of the application.
      */
-    abstract public function run();
+    abstract protected function exec();
 
     /**
-     * Optionally performs clean up actions after the application logic.
+     * Contains logic for finishing cleaning up after the application.
      */
-    public function end(){}
+    abstract protected function finish();
+
+    /**
+     * Launches the application.
+     *
+     */
+    public function launch()
+    {
+        return $this->init()->exec()->finish();
+
+    }
 
 }
 

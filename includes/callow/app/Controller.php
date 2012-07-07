@@ -17,7 +17,7 @@ interface  Controller
 {
 
 
-    public function main (Parameters $params = NULL);
+    public function main (Commands $params = NULL);
 
 
 }
