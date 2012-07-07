@@ -8,26 +8,27 @@
  * @copyright 2012 Lasana Murray
  * @package callow\app
  *
- * CommandController are the type of controllers that repsond to some user submitted command.
+ * ResponseControllers are the type of controllers that repsond to some user submitted command with some form
+ * of visual output.
  *
  *
  */
 
 namespace callow\app;
 
-abstract class CommandController implements Controller
+abstract class AbstractController implements Controller
 {
 
     /**
      * Reference to a controller for the screen.
-     * @var Controller $view
+     * @var Window $view
      * @access protected
      */
     protected $view;
 
 
 
-    public function setDisplayController(Controller $view)
+    public function setWindow(Window &$view)
     {
         $this->view = $view;
         return $this;

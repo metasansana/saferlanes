@@ -8,7 +8,7 @@
  * @copyright 2012 Lasana Murray
  * @package callow\html;
  *
- *  The container class holds html code that can be called by other classes or within template files.
+ *  The HTMLContainer class holds html code that can be called by other classes or within template files.
  *
  */
 
@@ -18,6 +18,11 @@ use callow\util\GenericCollection;
 
 class HTMLContainer extends GenericCollection
 {
+
+    public function __construct()
+    {
+     //Does nothing
+    }
 
     public function add($index, $item)
     {

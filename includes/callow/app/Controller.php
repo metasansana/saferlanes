@@ -19,6 +19,8 @@ interface  Controller
 
     public function main (Commands $params = NULL);
 
+    public function setWindow(Window &$view);
+
 
 }
 

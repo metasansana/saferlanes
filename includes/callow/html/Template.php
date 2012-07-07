@@ -22,14 +22,35 @@ class Template
      * @var string $file_path
      * @access private
      */
-    private $file_path;
+    private $template_file;
 
-public function setFilePath($file_path)
+    /**
+     * Reference to an HTMLContainer object.
+     * @var HTMLContainer $container
+     */
+    private $container;
+
+    public function __construct($template_path=NULL)
+    {
+
+            if($template_path)
+            $this->setFilePath ($template_path);
+
+    }
+
+
+public  function setFilePath($file_path)
 {
     $file_path = (string)$file_path;
 
-    $this->file_path = $file_path;
+    $this->template_file = $file_path;
 
+}
+
+public function setContainer(HTMLContainer &$container)
+{
+    $this->container = $container;
+    return $this;
 }
 
     public function __destruct()
@@ -37,7 +58,7 @@ public function setFilePath($file_path)
 
         $content = &$this->container;
 
-        include_once($this->file);
+        include_once($this->template_file);
 
 
     }

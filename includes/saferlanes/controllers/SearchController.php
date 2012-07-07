@@ -13,7 +13,8 @@
 
 namespace saferlanes\controllers;
 
-use callow\app\Controller;
+use callow\app\AbstractController;
+use callow\app\Commands;
 use callow\app\Parameters;
 use callow\http\Redirect;
 use callow\http\PostReader;
@@ -25,7 +26,7 @@ use saferlanes\tools\DriverSQLGenerator;
 use saferlanes\models\ActiveDatabaseFactory;
 use saferlanes\models\Report;
 
-class SearchController extends AppController
+class SearchController extends AbstractController
 {
 
     private $driver;
@@ -54,7 +55,7 @@ class SearchController extends AppController
         elseif ($params->count() < 1)    //no input
         {
 
-            $this->view->showSearchPage();
+            $this->view->useTemplate('search');
         }
 
     }

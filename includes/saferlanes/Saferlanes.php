@@ -19,6 +19,7 @@ use callow\app\Application;
 use saferlanes\controllers\SearchController;
 use saferlanes\controllers\PostController;
 use saferlanes\controllers\VoteController;
+use saferlanes\models\PageWindow;
 
 
 class Saferlanes extends Application
@@ -59,7 +60,9 @@ class Saferlanes extends Application
                     break;
             }
 
-        $controller->main($this->params);
+        $controller->setWindow(new PageWindow)->main($this->params);
+
+
 
         return $this;
 
