@@ -1,7 +1,6 @@
 <?php
 
-//Define constants, load class loader.
-require_once 'saferlanes/scripts/settings.php';
+require_once 'classloader.php';
 
 $app = new saferlanes\controllers\Saferlanes();
 
