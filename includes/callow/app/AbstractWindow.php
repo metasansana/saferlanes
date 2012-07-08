@@ -36,6 +36,11 @@ abstract class AbstractWindow implements Window
 
     }
 
+    public function insertHTML($label, $markup)
+    {
+        $this->container->add($label, $markup);
+    }
+
         public function __destruct()
     {
         $this->template->setContainer($this->container);
