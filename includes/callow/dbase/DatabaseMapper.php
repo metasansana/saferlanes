@@ -96,7 +96,7 @@ class DatabaseMapper implements DomainMapperInterface
         }
 
         if($pstmt->getRowCount() <1)
-            throw new NullResultSetException();
+            throw new EmptyResultException();
 
        $flag = TRUE;
 
