@@ -16,7 +16,7 @@ namespace saferlanes\models;
 
 use callow\event\Event;
 
-class FetchFailure
+class FetchFailure extends Event
 {
 
     private $plate_number;
