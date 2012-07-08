@@ -19,28 +19,34 @@ class SQLFactory
 {
 
 
-    public function getNewDriver()
+    const NEW_DRIVER = "INSERT INTO driver (`plate`, `timestamp`) VALUES (:plate, :timestamp)";
+
+    const LOAD_DRIVER = "SELECT `plate`, `timestamp`, `plus`, `minus` FROM driver WHERE plate=:plate";
+
+    const VOTE_PLUS  = "UPDATE driver SET plus = plus+1 WHERE  plate = :plate";
+
+    const VOTE_MINUS = "UPDATE driver SET minus = minus+1 WHERE  plate = :plate";
+
+    private $code = '';
+
+    public function __construct($sql)
     {
-        $sql = "INSERT INTO driver (`plate`, `timestamp`) VALUES (:plate, :timestamp)";
-        return new SQL($sql);
+
+        if
+            ($sql === SQLFactory::NEW_DRIVER|SQLFactory::LOAD_DRIVER|
+                SQLFactory::VOTE_PLUS|SQLFactory::VOTE_MINUS)
+            $this->code = $sql;
+
+
     }
 
-    public function getLoadDriver()
-    {
-        $sql = "SELECT `plate`, `timestamp`, `plus`, `minus` FROM driver WHERE plate=:plate";
-        return new SQL($sql);
-    }
 
-    public function  getPlusVote()
-    {
-        $sql = "UPDATE driver SET plus = plus+1 WHERE  plate = :plate";
-        return new SQL($sql);
-    }
 
-     public function  getMinusVote()
+    public  function __toString()
     {
-        $sql = "UPDATE driver SET minus = minus+1 WHERE  plate = :plate";
-        return new SQL($sql);
+
+        return $this->code;
+
     }
 
 }
