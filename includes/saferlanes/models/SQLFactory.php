@@ -11,7 +11,7 @@
  *
  */
 
-namespace saferlanes\tools;
+namespace saferlanes\models;
 
 use callow\dbase\SQL;
 
