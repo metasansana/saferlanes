@@ -167,7 +167,7 @@ class DatabaseMapper implements DomainMapperInterface
         return $this;
     }
 
-    public function setSQL(SQL &$sql)
+    public function setSQL(&$sql)
     {
         $this->sql = $sql;
         return $this;
