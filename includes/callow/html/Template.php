@@ -35,7 +35,7 @@ class Template
      * @var boolean $flag
      * @access private;
      */
-    private $flag = FALSE;
+    private $flag = TRUE;
 
     public function __construct($template_path=NULL)
     {
@@ -86,6 +86,7 @@ public function disable()
         $content = &$this->container;
 
         include_once($this->template_file);
+
         }
 
 
