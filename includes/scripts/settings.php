@@ -17,6 +17,8 @@ define('DB_USER', 'root');
 
 define('DB_PASSWORD', 'samurix');
 
+define('DB_DSN', 'saferlanes');
+
 define('E_ADMIN', 'admin@saferlanes.com');
 
 ?>
