@@ -20,24 +20,11 @@ use callow\core\Driver;
 use callow\http\Session;
 use callow\security\RandomToken;
 
-class SessionAgent
+class SessionAgent extends AbstractWindowModel
 {
 
-    /**
-     * Reference to the current window object.
-     * @var AbstractWindow $win
-     * @access private
-     */
-    private $win;
 
-    public function __construct(AbstractWindow &$win)
-    {
-
-        $this->win =$win;
-
-    }
-
-    public function enableVoting(Driver &$driver)
+    public function enableVoting($plate_number)
     {
         $session = new Session();
 
@@ -45,21 +32,17 @@ class SessionAgent
 
         $token = RandomToken::generate();
 
-        $session->add($token, 'vote_key');
+        $session->add('vote_key', $token);
 
-        $this->screen->add($driver->getPlate(), 'plate');
+        $plus_link =  "/vote/plus/$plate_number/$token";
 
-        $this->screen->add($driver->getTimeStamp(), 'timestamp');
-
-        $plus_link =
-        "/vote/plus/{$driver->getPlate()}/$token";
-
-        $minus_link =
-        "/vote/minus/{$driver->getPlate()}/$token";
+        $minus_link =  "/vote/minus/$plate_number/$token";
 
         $this->win->insertHTML( 'plus_link', $plus_link);
 
-        $this->win>insertHTML('minus_link', $minus_link);
+        $this->win->insertHTML('minus_link', $minus_link);
+
+        return $this;
 
 
     }
