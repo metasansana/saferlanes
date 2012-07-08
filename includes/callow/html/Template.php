@@ -30,6 +30,13 @@ class Template
      */
     private $container;
 
+    /**
+     * Flags whether to show the template or not.
+     * @var boolean $flag
+     * @access private;
+     */
+    private $flag = FALSE;
+
     public function __construct($template_path=NULL)
     {
 
@@ -45,6 +52,8 @@ public  function setFilePath($file_path)
 
     $this->template_file = $file_path;
 
+    return $this;
+
 }
 
 public function setContainer(HTMLContainer &$container)
@@ -53,12 +62,31 @@ public function setContainer(HTMLContainer &$container)
     return $this;
 }
 
+public function enable()
+{
+    $this->flag = TRUE;
+
+    return $this;
+
+}
+
+public function disable()
+{
+    $this->flag = FALSE;
+
+    return $this;
+}
+
     public function __destruct()
     {
+
+        if($this->flag)
+        {
 
         $content = &$this->container;
 
         include_once($this->template_file);
+        }
 
 
     }
