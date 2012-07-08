@@ -6,8 +6,9 @@
  *
  * @author Lasana Murray  <lmurray@trinistorm.org>
  * @copyright 2012 Lasana Murray
- * @package saferlanes\domain;
+ * @package saferlanes\core
  *
+ *  The DriverObject represents a driver.
  *
  */
 
