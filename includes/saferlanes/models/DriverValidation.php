@@ -51,7 +51,7 @@ class DriverValidation
         catch(InvalidPlateNumberError $inv)
         {
 
-            $this->errors['plate'] = $inv->getMessage();
+            $this->errors['plate'] = (string) $inv;
 
             return FALSE;
         }
