@@ -41,7 +41,7 @@ class DatabaseMapper implements DomainMapperInterface
      */
     private $sql;
 
-    public function __construct(ActiveDatabase &$dbase, AbstractDomain &$domain = NULL, SQL &$sql = NULL)
+    public function __construct(ActiveDatabase &$dbase, AbstractDomain &$domain = NULL, $sql = NULL)
     {
 
         if($domain)
