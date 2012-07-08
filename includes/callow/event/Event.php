@@ -32,7 +32,7 @@ class Event
      */
     protected $src;
 
-    public function __construct(EventHostInterface &$src = NULL)
+    public function __construct(EventHost &$src = NULL)
 
     {
 

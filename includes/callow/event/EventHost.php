@@ -1,53 +1,43 @@
 <?php
 
 /**
- * @timestamp Apr 17, 2012 4:50:01 AM
+ * @timestamp Apr 17, 2012 5:06:30 AM
  *
  *
  * @project callow
  * @author Lasana Murray  <lmurray@trinistorm.org>
  * @copyright 2012 Lasana Murray
- * @package callow\event
+ * @package callow
  *
- * Implementation of the EvetListenerInterface.
+ *  Inteface for classes that generate events.
  *
- * Use this class instead of implementing EventListenerInterface when possible (keeps code cleaner).
+ * Use the EventSource class instead where possible. This interface is
+ * to be used when the interested class is already a subclass.
  *
  */
 
 namespace callow\event;
 
-
-abstract class EventHost implements EventHostInterface
+interface EventHost
 {
 
     /**
-     * Stores the EventListenerInterface object.
-     * @var array notified
-     * @access protected
+     * Registers a Subscriber object.
      */
-    protected $notified = array();
+    public function register(Subscriber &$notified);
 
-    public function register(Subscriber &$notified)
-    {
-        $this->notified[] = $notified;
+    
+    /**
+     * Removes all subscribers and returns them for temporary storage.
+     */
+    public function flush();
 
-    }
 
-    public function flush()
-    {
+    /**
+     * Returns the current listener.
+     */
+    public function getSubscribers();
 
-        $temp = $this->notified;
-        $this->notified = NULL;
-        return $temp;
-
-    }
-
-    public function getSubscribers()
-    {
-        return $this->notified;
-
-    }
 
 }
 

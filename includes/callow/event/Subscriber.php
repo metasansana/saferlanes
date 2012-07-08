@@ -18,7 +18,7 @@ interface Subscriber
 {
 
 
-    public function notify(Event $event);
+    public function notify(Event &$event);
 
 }
 
