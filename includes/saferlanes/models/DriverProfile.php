@@ -33,9 +33,11 @@ class DriverProfile extends AbstractWindowModel
 
         parent::__construct($win);
 
+
+
     }
 
-    public function getProfileDate()
+    private function getProfileDate()
     {
         $date = getdate($this->driver->getTimeStamp());
 
@@ -45,10 +47,47 @@ class DriverProfile extends AbstractWindowModel
 
     }
 
-    public function getProfilePlate()
+    private function getProfilePlate()
     {
 
         return strtoupper($this->driver->getPlate());
+
+    }
+
+    public  function displayRequestedDriver()
+    {
+
+        $this->win->insertHTML('plate', $this->getProfilePlate());
+
+        $this->win->insertHTML('timestamp', $this->getProfileDate());
+
+        $likes =  $this->driver->getPlus();
+
+        $fails  = $this->driver->getMinus();
+
+        if($likes > $fails)
+        {
+            $image = "happy";
+        }
+        elseif ($likes == $fails)
+        {
+            $image = "unsure";
+        }
+        else
+        {
+            $image = "sad";
+        }
+
+        $this->win->insertHTML('likes', $likes);
+
+        $this->win->insertHTML('fails', $fails);
+
+        $this->win->insertHTML('image', $image);
+
+        $this->win->selectTemplate('display');
+
+        return $this;
+
 
     }
 
