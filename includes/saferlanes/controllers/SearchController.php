@@ -15,16 +15,16 @@ namespace saferlanes\controllers;
 
 use callow\app\AbstractController;
 use callow\app\Commands;
-use callow\app\Parameters;
 use callow\http\Redirect;
 use callow\http\PostReader;
-use callow\http\Session;
-use callow\galaxy\Error;
-use saferlanes\core\TrackedDriver;
-use saferlanes\models\SLEngine;
+use saferlanes\models\DriverValidation;
+use saferlanes\core\DriverObject;
+use saferlanes\models\Engine;
 use saferlanes\tools\DriverSQLGenerator;
 use saferlanes\models\ActiveDatabaseFactory;
-use saferlanes\models\Report;
+use saferlanes\models\SessionAgent;
+use saferlanes\models\DriverProfile;
+use saferlanes\models\SQLFactory;
 
 class SearchController extends AbstractController
 {
@@ -34,82 +34,72 @@ class SearchController extends AbstractController
     public function main(Commands $params = NULL)
     {
 
+        $this->view->selectTemplate('search');
+
         $reader = new PostReader();
 
         if ($reader->contains('plate'))  //Get platenumber from form
         {
 
-            $this->validate($reader->get('plate'))->find()->show();
+            $this->fetchRequestedDriver($reader->get('plate'));
 
         }
         elseif ($params->count() === 1)  //get plate number from url
         {
 
-            $this->validate($params[0])->find()->show();
+            $this->fetchRequestedDriver($params[0]);
         }
         elseif ($params->count() > 1)  //erroneous input
         {
 
             new Redirect('/', TRUE);
         }
-        elseif ($params->count() < 1)    //no input
-        {
 
-            $this->view->useTemplate('search');
+
+    }
+
+    private function fetchRequestedDriver($plate_number)
+    {
+
+        $validator = new DriverValidation(new DriverObject());
+
+        if(!$validator->assignPlateNumber($plate_number))
+        {
+            $this->view->promptMessage($validator->getErrorMessage('plate'), 'error');
+        }
+        else
+        {
+            $this->getFromDatabase($validator->getDriver());
         }
 
     }
 
-    private function validate($plate_number)
+    private function getFromDatabase(DriverObject &$driver)
     {
 
-        $driver = new TrackedDriver();
+        $dfactory = new ActiveDatabaseFactory($this->view);
 
-        try
-        {
 
-            $driver->setPlate($plate_number);
+        $engine = new Engine($dfactory->getActiveDatabase(), $this->view);
 
-            $this->driver = $driver;
-        }
-        catch (Error $err)
-        {
+        $engine->fetchDriver($driver, new SQLFactory(SQLFactory::LOAD_DRIVER));
 
-            $this->view->showSearchPage();
-            $this->erhandler->handleError($err);
-
-        }
+        $this->show($driver);
 
         return $this;
 
     }
 
-    private function find()
+    private function show(DriverObject &$driver)
     {
 
-        $engine = new SLEngine(ActiveDatabaseFactory::getDatabase());
+        $agent = new SessionAgent($this->view);
 
-        try
-        {
-            $this->driver = $engine->find($this->driver, DriverSQLGenerator::getLoadCode());
-        }
-        catch (\Exception $ex)
-        {
-            header("HTTP/1.1 500 Internal Server Error");
-            exit(); //@todo proper exception handling
+        $agent->enableVoting($driver->getPlate());
 
-        }
+        $profile = new DriverProfile($this->view, $driver);
 
-        return $this;
-
-    }
-
-    private function show()
-    {
-
-        $report = new Report($this->view, $this->driver, new Session);
-
-        $report->show();
+        $profile->displayRequestedDriver();
 
     }
 

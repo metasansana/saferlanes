@@ -85,7 +85,7 @@ class VoteController extends Controller
 
             if ($this->params[0] === 'plus')
             {
-                $code = new DriverSQLGenerator();
+                $code = new SQLTemplates();
             }
             elseif ($this->params[0] === 'minus')
             {
@@ -105,7 +105,7 @@ class VoteController extends Controller
 
                 $con = ConnectionFactory::getConnection();
 
-                $mapper = new DatabaseMapper($driver, $code->getUpdateCode(), $con);
+                $mapper = new DatabaseMapper($driver, $code->getPlusVote(), $con);
 
                 $mapper->edit();
 

@@ -84,9 +84,9 @@ class PostController extends Controller
 
                     $con = ConnectionFactory::getConnection();
 
-                    $code = new DriverSQLGenerator();
+                    $code = new SQLTemplates();
 
-                    $mapper = new DatabaseMapper($driver, $code->getSaveCode(), $con);
+                    $mapper = new DatabaseMapper($driver, $code->getNewDriver(), $con);
 
                     $mapper->save();
 
@@ -129,7 +129,7 @@ class PostController extends Controller
                 $notice = new NoticeBar($screen);
 
                 $notice->setNotice('Whoops! Looks like saferlanes just broke!');
-                
+
             }
             catch (\PDOException $pexc)
             {
