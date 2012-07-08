@@ -16,18 +16,40 @@ namespace saferlanes\models;
 use callow\dbase\ActiveDatabase;
 use callow\dbase\PDOBuilder;
 
-class ActiveDatabaseFactory
+
+
+class ActiveDatabaseFactory extends AbstractEventModel
 {
 
-    final public static function getDatabase()
+
+
+
+    final public function getActiveDatabase()
     {
-        $creds['dsn'] = 'saferlanes';
+
+        $instance = NULL;
+
+        $creds['dsn'] = DB_DSN;
         $creds['usr'] = DB_USER;
-        $creds['passwd'] = DB_PASSWORD;
+        $creds['passwd'] =  DB_PASSWORD;
+
+        try
+        {
 
         $config = new PDOBuilder ($creds);
+        $instance = new ActiveDatabase($config);
 
-        return new ActiveDatabase($config);
+        }
+        catch(\Exception $pexc)
+        {
+
+            $this->fire(new FatalEvent());
+
+        }
+
+        return $instance;
+
+
     }
 }
 
