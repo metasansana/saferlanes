@@ -54,6 +54,8 @@ class ActiveDatabase
     public function prepareStatement($sql)
     {
 
+        $sql = (string)$sql;
+
         $stmt = new PreparedStatement($this->pdo->prepare($sql));
 
         return $stmt;
