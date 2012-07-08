@@ -32,9 +32,6 @@ class SQLFactory
     public function __construct($sql)
     {
 
-        if
-            ($sql === SQLFactory::NEW_DRIVER|SQLFactory::LOAD_DRIVER|
-                SQLFactory::VOTE_PLUS|SQLFactory::VOTE_MINUS)
             $this->code = $sql;
 
 
