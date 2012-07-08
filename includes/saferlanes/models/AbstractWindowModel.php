@@ -15,6 +15,8 @@
 
 namespace saferlanes\models;
 
+use callow\app\AbstractWindow;
+
 abstract class AbstractWindowModel
 {
 
