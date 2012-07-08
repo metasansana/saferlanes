@@ -27,7 +27,7 @@
                                     <img src="img/smote.png" alt="fail this driver" title="click to fail this driver!"/> </a></p>
                         </li>
                     </ul>
-                    <p>Link to this record: http://sl.trinistorm.org/<?= $content['plate']; ?></p>
+                    <p>Link to this record: http://saferlanes.com/<?= $content['plate']; ?></p>
                 </div>
             </div>
         </div>
