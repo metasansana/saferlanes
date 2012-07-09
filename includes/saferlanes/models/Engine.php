@@ -57,6 +57,19 @@ class Engine extends AbstractEventModel
         return $driver;
 
     }
+
+    public function updateDriver(DriverObject &$driver, &$sql)
+    {
+
+        $this->mapper->setDomain($driver);
+
+        $this->mapper->setSQL($sql);
+
+        $this->mapper->edit();
+
+        return $driver;
+
+    }
 }
 
 

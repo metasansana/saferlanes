@@ -15,6 +15,7 @@
 
 namespace saferlanes\models;
 
+use saferlanes\core\DriverObject;
 use saferlanes\core\Driver;
 use saferlanes\core\InvalidPlateNumberError;
 

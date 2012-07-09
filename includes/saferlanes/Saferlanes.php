@@ -53,7 +53,7 @@ class Saferlanes extends Application
                 case 'post':
                     break;
 
-                case 'vote':
+                case 'vote': $controller = new VoteController();
                     break;
 
                 default: $controller = new SearchController();

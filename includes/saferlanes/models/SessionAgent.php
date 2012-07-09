@@ -23,16 +23,26 @@ use callow\security\RandomToken;
 class SessionAgent extends AbstractWindowModel
 {
 
+    private $session;
+
+    public function __construct(AbstractWindow &$win)
+    {
+
+        parent::__construct($win);
+
+        $this->session = new Session();
+
+    }
+
 
     public function enableVoting($plate_number)
     {
-        $session = new Session();
 
-        $session->regenerate(TRUE);
+        $this->session->regenerate(TRUE);
 
         $token = RandomToken::generate();
 
-        $session->add('vote_key', $token);
+        $this->session->add('vote_key', $token);
 
         $plus_link =  "/vote/plus/$plate_number/$token";
 
@@ -43,6 +53,34 @@ class SessionAgent extends AbstractWindowModel
         $this->win->insertHTML('minus_link', $minus_link);
 
         return $this;
+
+
+    }
+
+    public function verifyRequest($key, $value)
+    {
+
+        if($this->session->hasIndex($key))
+        {
+
+            if($this->session->get($key) === $value)
+            {
+                return TRUE;
+            }
+            else
+            {
+                $this->win->insertHTML('system', "<div class='notice'>Your vote appears suspicous and has been ignored!</div>");
+                return FALSE;
+            }
+
+        }
+        else
+        {
+            $this->win->insertHTML('system', "<div class='notice'>You must have cookies enabled to vote!</div>");
+
+            return FALSE;
+
+        }
 
 
     }
