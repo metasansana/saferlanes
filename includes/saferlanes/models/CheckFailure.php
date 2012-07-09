@@ -17,14 +17,10 @@ namespace saferlanes\models;
 
 use callow\event\Event;
 
-class CheckFailure
+class CheckFailure extends Event
 {
 
-    /**
-     *
-     * @var
-     * @access protected
-     */
+    
 
 }
 
