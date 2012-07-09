@@ -25,21 +25,32 @@ class Event
 
     /**
      * Holds a reference to the class that generated the event.
-     * @var src
+     * @var Observable $src
      * @access protected
-     *
-     *
      */
     protected $src;
 
-    public function __construct(EventHost &$src = NULL)
+    /**
+     * Optional message for the event, anything passed to this will be casted to a string.
+     * @var string $message
+     * @access protected
+     */
+    protected $message;
+
+    public function __construct($message=NULL, Observable &$src = NULL)
 
     {
 
         $this->src = $src;
 
+        $this->message = (string)$message;
+
     }
 
+    /**
+     * Returns a reference to the Observable that fired the event,
+     * @return Observable
+     */
     public function getSource()
 
     {
@@ -47,6 +58,20 @@ class Event
         return $this->src;
 
 
+    }
+
+    /**
+     * Returns the message associated with the event.
+     * @return string
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    public function __toString()
+    {
+        return $this->message;
     }
 
 }
