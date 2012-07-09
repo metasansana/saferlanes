@@ -9,6 +9,8 @@
  * @package saferlanes\models;
  *
  *  Helper class for manipulating driver data.
+ * XXX flaged for clean up
+ * @todo move sql code into here
  *
  */
 
@@ -18,7 +20,7 @@ use callow\dbase\SQL;
 use callow\dbase\ActiveDatabase;
 use callow\dbase\DatabaseMapper;
 use callow\dbase\EmptyResultException;
-use callow\event\Subscriber;
+use callow\event\Observer;
 use saferlanes\core\DriverObject;
 
 
@@ -27,7 +29,7 @@ class Engine extends AbstractObservableModel
 
     private $mapper;
 
-    public function __construct(ActiveDatabase &$dbase, Subscriber &$w=NULL)
+    public function __construct(ActiveDatabase &$dbase, Observer &$w=NULL)
     {
         $this->mapper = new DatabaseMapper($dbase);
         if($w)
