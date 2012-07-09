@@ -8,21 +8,22 @@
  * @copyright 2012 Lasana Murray
  * @package callow\html;
  *
- *  The template class is used to import an html template file just before the application terminates.
+ *  Class representing an html template to be used for display.
  *
  */
 
 namespace callow\html;
+
 
 class Template
 {
 
     /**
      * The path to the template file
-     * @var string $file_path
+     * @var string $file
      * @access private
      */
-    private $template_file;
+    private $filename;
 
     /**
      * Reference to an HTMLContainer object.
@@ -35,62 +36,60 @@ class Template
      * @var boolean $flag
      * @access private;
      */
-    private $disable = TRUE;
+    private $disabled = TRUE;
 
-    public function __construct($template_path=NULL)
+    public function __construct($filename = NULL, HTMLContainer &$container = NULL)
     {
 
-            if($template_path)
-            $this->setFilePath ($template_path);
+        if ($filename)
+            $this->set($filename);
+
+        if (!$container)
+            $container = new HTMLContainer();
+
+        $this->container = $container;
 
     }
 
+    public function set($filename)
+    {
+        $filename = (string) $filename;
 
-public  function setFilePath($file_path)
-{
-    $file_path = (string)$file_path;
+        $this->filename = $filename;
 
-    $this->template_file = $file_path;
+        return $this;
 
-    return $this;
+    }
 
-}
+    public function enable()
+    {
+        $this->disabled = FALSE;
 
-public function setContainer(HTMLContainer &$container)
-{
-    $this->container = $container;
-    return $this;
-}
+        return $this;
 
-public function enable()
-{
-    $this->disable = FALSE;
+    }
 
-    return $this;
+    public function disable()
+    {
+        $this->disabled = TRUE;
 
-}
+        return $this;
 
-public function disable()
-{
-    $this->disable = TRUE;
-
-    return $this;
-}
+    }
 
     public function __destruct()
     {
 
-        if(!$this->disable)
+        if (!$this->disabled)
         {
 
-        $content = &$this->container;
+            $content = &$this->container;
 
-        include_once($this->template_file);
-
+            include_once($this->filename);
         }
 
+    }
 
-    }
-    }
+}
 
 ?>
