@@ -30,12 +30,6 @@ class DriverCheck extends AbstractObservableModel
      */
     private $driver;
 
-    /**
-     * An array containing error messages.
-     * @var array $errors
-     * @access private
-     */
-    private $errors = array();
 
     public function __construct(Driver &$driver = NULL)
     {
@@ -55,7 +49,7 @@ class DriverCheck extends AbstractObservableModel
         catch(InvalidPlateNumberError $inv)
         {
 
-            $this->errors['plate'] = (string) $inv;
+            $this->fire(new CheckFailure($inv));
 
             return FALSE;
         }
@@ -63,14 +57,6 @@ class DriverCheck extends AbstractObservableModel
         return TRUE;
 
 
-    }
-
-    public function getErrorMessage($hint)
-    {
-        if(array_key_exists($hint, $this->errors))
-                return $this->errors[$hint];
-
-        return NULL;
     }
 
     public function getDriver()
