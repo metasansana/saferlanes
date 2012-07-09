@@ -20,9 +20,22 @@ use callow\core\Driver;
 use callow\http\Session;
 use callow\security\RandomToken;
 
-class SessionAgent extends AbstractWindowModel
+class SessionAgent extends AbstractObservableModel
 {
 
+    const NO_COOKIE = 'You must have cookies enabled to continue!';
+
+    const CSRF = 'This does not appear to be a valid request! Please try again.';
+
+    const LABEL = 'msg';
+
+
+
+    /**
+     * Internal reference to the current session.
+     * @var Session $session
+     * @access private
+     */
     private $session;
 
     public function __construct(AbstractWindow &$win)
@@ -38,19 +51,19 @@ class SessionAgent extends AbstractWindowModel
     public function enableVoting($plate_number)
     {
 
+        $request = array();
+
         $this->session->regenerate(TRUE);
 
         $token = RandomToken::generate();
 
         $this->session->add('vote_key', $token);
 
-        $plus_link =  "/vote/plus/$plate_number/$token";
+        $request['plus_link'] =  "/vote/plus/$plate_number/$token";
 
-        $minus_link =  "/vote/minus/$plate_number/$token";
+        $request['minus_link'] =  "/vote/minus/$plate_number/$token";
 
-        $this->win->insertHTML( 'plus_link', $plus_link);
-
-        $this->win->insertHTML('minus_link', $minus_link);
+        $this->sendRequest($request);
 
         return $this;
 
@@ -69,20 +82,29 @@ class SessionAgent extends AbstractWindowModel
             }
             else
             {
-                $this->win->insertHTML('system', "<div class='notice'>Your vote appears suspicous and has been ignored!</div>");
+                $request = array(SessionAgent::LABEL, SessionAgent::CSRF);
+                $this->sendRequest($request);
+
                 return FALSE;
             }
 
         }
         else
         {
-            $this->win->insertHTML('system', "<div class='notice'>You must have cookies enabled to vote!</div>");
+
+            $request = array(SessionAgent::LABEL, SessionAgent::NO_COOKIE);
+            $this->sendRequest($request);
 
             return FALSE;
 
         }
 
 
+    }
+
+    private function sendRequest($request)
+    {
+        $this->fire(new UpdateRequest($request));
     }
 
 
