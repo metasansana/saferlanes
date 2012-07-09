@@ -18,7 +18,16 @@ interface Observer
 {
 
 
+    /**
+     * Notifies the Observer of an event, returns TRUE if the event can be handled or FALSE otherwise.
+     */
     public function notify(Event &$event);
+
+    /**
+     * Processes an event
+     * 
+     */
+    public function process(Event &$event);
 
 }
 
