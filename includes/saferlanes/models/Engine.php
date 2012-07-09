@@ -27,7 +27,7 @@ class Engine extends AbstractObservableModel
 
     private $mapper;
 
-    public function __construct(ActiveDatabase &$dbase, Subscriber &$w=NULL)
+    public function __construct(Subscriber &$w=NULL, ActiveDatabase &$dbase)
     {
         $this->mapper = new DatabaseMapper($dbase);
         if($w)
