@@ -19,15 +19,10 @@ interface Observer
 
 
     /**
-     * Notifies the Observer of an event, returns TRUE if the event can be handled or FALSE otherwise.
+     * Notices and processes an event, should return FALSE if the event cannot be handled.
      */
     public function notify(Event &$event);
 
-    /**
-     * Processes an event
-     * 
-     */
-    public function process(Event &$event);
 
 }
 
