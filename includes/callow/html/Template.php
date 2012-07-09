@@ -42,7 +42,7 @@ class Template
     {
 
         if ($filename)
-            $this->set($filename);
+            $this->use($filename);
 
         if (!$container)
             $container = new HTMLContainer();
@@ -51,7 +51,12 @@ class Template
 
     }
 
-    public function set($filename)
+    /**
+     *  Assigns the filename of the template.
+     * @param string $filename
+     * @return \callow\html\Template
+     */
+    public function name($filename)
     {
         $filename = (string) $filename;
 
@@ -59,6 +64,12 @@ class Template
 
         return $this;
 
+    }
+
+    public function set($label, $html)
+    {
+        $this->container->add($label, $html);
+        return $this;
     }
 
     public function enable()
