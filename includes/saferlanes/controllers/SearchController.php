@@ -17,7 +17,7 @@ use callow\app\AbstractController;
 use callow\app\Commands;
 use callow\http\Redirect;
 use callow\http\PostReader;
-use saferlanes\models\DriverValidation;
+use saferlanes\models\DriverCheck;
 use saferlanes\core\DriverObject;
 use saferlanes\models\Engine;
 use saferlanes\models\ActiveDatabaseFactory;
@@ -60,7 +60,7 @@ class SearchController extends AbstractController
     private function fetchRequestedDriver($plate_number)
     {
 
-        $validator = new DriverValidation(new DriverObject());
+        $validator = new DriverCheck(new DriverObject());
 
         if(!$validator->assignPlateNumber($plate_number))
         {

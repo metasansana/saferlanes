@@ -21,7 +21,7 @@ use callow\http\Redirect;
 use saferlanes\models\SessionAgent;
 use saferlanes\models\SQLFactory;
 use saferlanes\core\DriverObject;
-use saferlanes\models\DriverValidation;
+use saferlanes\models\DriverCheck;
 use saferlanes\models\Engine;
 use saferlanes\models\ActiveDatabaseFactory;
 
@@ -68,7 +68,7 @@ class VoteController extends AbstractController
 
         }
 
-        $validator = new DriverValidation();
+        $validator = new DriverCheck();
 
         if($validator->assignPlateNumber($cmd[2]))
         {
