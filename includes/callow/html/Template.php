@@ -64,7 +64,7 @@ public function setContainer(HTMLContainer &$container)
 
 public function enable()
 {
-    $this->disable = TRUE;
+    $this->disable = FALSE;
 
     return $this;
 
@@ -72,7 +72,7 @@ public function enable()
 
 public function disable()
 {
-    $this->disable = FALSE;
+    $this->disable = TRUE;
 
     return $this;
 }
