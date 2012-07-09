@@ -36,8 +36,11 @@ class DriverValidation
      */
     private $errors = array();
 
-    public function __construct(Driver &$driver)
+    public function __construct(Driver &$driver = NULL)
     {
+        if(!$driver)
+            $driver = new DriverObject();
+
         $this->driver = $driver;
     }
 
