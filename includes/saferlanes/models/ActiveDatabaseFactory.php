@@ -18,7 +18,7 @@ use callow\dbase\PDOBuilder;
 
 
 
-class ActiveDatabaseFactory extends AbstractEventModel
+class ActiveDatabaseFactory extends AbstractObservableModel
 {
 
 

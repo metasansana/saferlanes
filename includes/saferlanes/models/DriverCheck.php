@@ -20,7 +20,7 @@ use saferlanes\core\Driver;
 use saferlanes\core\InvalidPlateNumberError;
 
 
-class DriverCheck
+class DriverCheck extends AbstractObservableModel
 {
 
     /**

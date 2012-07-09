@@ -15,10 +15,10 @@
 
 namespace saferlanes\models;
 
-use callow\event\AbstractEventHost;
+use callow\event\AbstractObservable;
 use callow\event\Subscriber;
 
-abstract class AbstractEventModel extends AbstractEventHost
+abstract class AbstractObservableModel extends AbstractObservable
 {
 
      public  function __construct(Subscriber &$w =NULL)

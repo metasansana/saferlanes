@@ -22,7 +22,7 @@ use callow\event\Subscriber;
 use saferlanes\core\DriverObject;
 
 
-class Engine extends AbstractEventModel
+class Engine extends AbstractObservableModel
 {
 
     private $mapper;
