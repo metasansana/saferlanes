@@ -46,6 +46,7 @@ class Page extends AbstractWindow implements Observer
     {
 
         $this->container->add('msg', new MessageBox($msg, $type));
+        $this->template->enable();
 
         return $this;
 
