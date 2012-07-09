@@ -35,7 +35,7 @@ class Template
      * @var boolean $flag
      * @access private;
      */
-    private $flag = TRUE;
+    private $disable = TRUE;
 
     public function __construct($template_path=NULL)
     {
@@ -64,7 +64,7 @@ public function setContainer(HTMLContainer &$container)
 
 public function enable()
 {
-    $this->flag = TRUE;
+    $this->disable = TRUE;
 
     return $this;
 
@@ -72,7 +72,7 @@ public function enable()
 
 public function disable()
 {
-    $this->flag = FALSE;
+    $this->disable = FALSE;
 
     return $this;
 }
@@ -80,7 +80,7 @@ public function disable()
     public function __destruct()
     {
 
-        if($this->flag)
+        if(!$this->disable)
         {
 
         $content = &$this->container;
