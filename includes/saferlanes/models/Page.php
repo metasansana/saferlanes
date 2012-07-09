@@ -10,7 +10,7 @@
  * @package saferlanes\models
  *
  * Class that manages the views for the saferlanes application.
- * This class has methods for the following phases:
+ * /XXX flagged for clean up.
  *
  */
 
@@ -68,6 +68,8 @@ class Page extends AbstractWindow implements Observer
     elseif($event instanceof UpdateRequest)
     {
 
+        $this->update($event);
+
     }
 
     }
@@ -99,7 +101,11 @@ class Page extends AbstractWindow implements Observer
 
             $this->insertHTML($label, $markup);
 
+
         }
+
+        $this->template->enable();
+        exit();
 
     }
 
