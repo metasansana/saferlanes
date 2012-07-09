@@ -31,10 +31,12 @@ class UpdateRequest extends Event
     {
 
         $this->changes = $changes;
+        
+
 
     }
 
-    public function toArray()
+    public function getChanges()
     {
         return $this->changes;
     }
