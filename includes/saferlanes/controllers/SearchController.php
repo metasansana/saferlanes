@@ -20,7 +20,6 @@ use callow\http\PostReader;
 use saferlanes\models\DriverValidation;
 use saferlanes\core\DriverObject;
 use saferlanes\models\Engine;
-use saferlanes\tools\DriverSQLGenerator;
 use saferlanes\models\ActiveDatabaseFactory;
 use saferlanes\models\SessionAgent;
 use saferlanes\models\DriverProfile;
