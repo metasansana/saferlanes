@@ -31,12 +31,14 @@ class DriverCheck extends AbstractObservableModel
     private $driver;
 
 
-    public function __construct(Driver &$driver = NULL)
+    public function __construct(Driver &$driver = NULL, Observer $w = NULL)
     {
         if(!$driver)
             $driver = new DriverObject();
 
         $this->driver = $driver;
+
+        parent::__construct($w);
     }
 
     public function assignPlateNumber($pnum)
