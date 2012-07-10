@@ -1,65 +1,118 @@
 <?php
 
 /**
- * timestamp May 30, 2012 2:55:47 PM
+ * timestamp May 30, 2012 12:00:39 AM
  *
  *
  * @author Lasana Murray  <lmurray@trinistorm.org>
  * @copyright 2012 Lasana Murray
- * @package saferlanes\core\domain
+ * @package saferlanes\core
  *
+ *  The DriverObject represents a driver.
  *
  */
 
 namespace saferlanes\core;
 
-use callow\domain\Domain;
+use callow\domain\AbstractDomain;
 
-interface Driver extends Domain
+
+class Driver extends AbstractDomain implements DriverInterface
 {
 
-    /**
-     * Sets a plate number to the Driver.
-     * @var string $plate
-     */
-    public function setPlate($plate);
+    protected $plate;
+    protected $timestamp;
+    protected $plus;
+    protected $minus;
 
-    /**
-     * Sets  the minus vote flag for a Driver.
-     * @var string minus
-     */
-    public function setMinus($minus);
+    public function __construct(array $driver = NULL)
+    {
+        if ($driver)
+            $this->set($driver);
 
-    /**
-     * Sets  the plus vote flag for a Driver.
-     *@var string $plus
-     */
-    public function setPlus($plus);
+    }
 
-    /**
-     * Sets the timestamp for a Driver;
-     */
-    public function setTimeStamp();
+    public function setPlate($plate)
+    {
 
-    /**
-     * Returns the current platenumber.
-     */
-    public function getPlate();
+        $validator = new DriverValidator();
 
-    /**
-     * Returns the current timestamp.
-     */
-    public function getTimeStamp();
+        $plate = strtolower(str_replace(' ', NULL, trim($plate)));
 
-    /**
-     * Returns the current plus count.
-     */
-    public function getPlus();
+        if (!$validator->isValid('plate', $plate))
+        {
+            throw new InvalidPlateNumberError();
+        }
+        else
+        {
+            $this->plate = $plate;
+        }
 
-    /**
-     * Returns the current minus count
-     */
-    public function getMinus();
+
+        return $this;
+
+    }
+
+    public function setTimeStamp()
+    {
+
+        $this->timestamp = time();
+        return $this;
+
+    }
+
+    public function setPlus($plus)
+    {
+
+        $validator = new DriverValidator();
+
+        if (!$validator->isValid('plus', $plus))
+        {
+            throw new VoteError();
+        }
+
+        return $this;
+
+    }
+
+    public function setMinus($minus)
+    {
+
+        $validator = new DriverValidator();
+
+        if (!$validator->isValid('minus', $minus))
+        {
+            throw new VoteError();
+        }
+
+        return $this;
+
+    }
+
+    public function getPlate()
+    {
+        return $this->plate;
+
+    }
+
+    public function getTimeStamp()
+    {
+        return $this->timestamp;
+
+    }
+
+    public function getPlus()
+    {
+        return $this->plus;
+
+    }
+
+    public function getMinus()
+    {
+        return $this->minus;
+
+    }
+
 
 }
 
