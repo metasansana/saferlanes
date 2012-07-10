@@ -1,7 +1,7 @@
 <?php
 
 /**
- * timestamp Jul 10, 2012 4:49:01 AM
+ * timestamp Jul 10, 2012 5:02:45 AM
  *
  *
  * @project saferlanes
@@ -14,7 +14,7 @@
 
 namespace callow\event;
 
-interface Event
+class Warning extends AbstractEvent
 {
 
 }

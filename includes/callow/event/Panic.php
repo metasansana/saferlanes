@@ -1,7 +1,7 @@
 <?php
 
 /**
- * timestamp Jul 10, 2012 4:49:01 AM
+ * timestamp Jul 10, 2012 5:15:25 AM
  *
  *
  * @project saferlanes
@@ -11,11 +11,17 @@
  *
  *
  */
-
 namespace callow\event;
 
-interface Event
+class Panic extends AbstractEvent
 {
+
+
+    public function __construct(\Exception $ex)
+    {
+        parent::__construct($ex->getMessage());
+    }
+
 
 }
 
