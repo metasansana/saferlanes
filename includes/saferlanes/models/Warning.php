@@ -14,28 +14,16 @@
 
 namespace saferlanes\models;
 
-use callow\event\Event;
+use callow\event\AbstractEvent;
 
-class Warning implements Event
+class Warning extends AbstractEvent
 {
 
-    /**
-     *
-     * @var
-     * @access protected
-     */
-    private $message;
 
-    public function __construct($message)
-    {
-        $this->message = (string) $message;
-    }
 
     public function __toString()
     {
         return $this->message;
-    }
-
-}
+    }}
 
 ?>
