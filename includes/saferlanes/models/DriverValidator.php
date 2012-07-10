@@ -15,13 +15,13 @@
 
 namespace saferlanes\models;
 
-use callow\event\Observer;
+use callow\event\AbstractObservable;
 use saferlanes\core\DriverObject;
 use saferlanes\core\Driver;
 use saferlanes\core\BadPlateNumberException;
 
 
-class DriverValidator
+class DriverValidator extends AbstractObservable
 {
 
     /**
