@@ -16,6 +16,8 @@
 
 namespace callow\app;
 
+use callow\events\Observers;
+
 abstract class AbstractController implements Controller
 {
 
@@ -24,15 +26,15 @@ abstract class AbstractController implements Controller
      * @var Window $view
      * @access protected
      */
-    protected $ui;
+    protected $window;
 
     protected $observers;
 
 
 
-    public function setWindow(Window &$view)
+    public function setWindow(Window &$window)
     {
-        $this->ui = $view;
+        $this->window = $window;
         return $this;
     }
 
