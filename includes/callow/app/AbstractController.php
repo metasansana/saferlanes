@@ -26,6 +26,8 @@ abstract class AbstractController implements Controller
      */
     protected $ui;
 
+    protected $observers;
+
 
 
     public function setWindow(Window &$view)
@@ -33,6 +35,14 @@ abstract class AbstractController implements Controller
         $this->ui = $view;
         return $this;
     }
+
+    public function setObserver(Observers &$observers)
+    {
+        $this->observers = $observers;
+
+        return $this;
+    }
+
 
 }
 
