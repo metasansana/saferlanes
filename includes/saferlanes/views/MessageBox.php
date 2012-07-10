@@ -19,19 +19,22 @@ use callow\html\Widget;
 class MessageBox extends Widget
 {
 
+    private $type;
+
     public function __construct($message, $type='notice')
     {
 
-        if ($message)
-            $this->setMessage($message, $type);
+        $this->type = $type;
 
-    }
+        parent::__construct((string)$message);
 
-    public function setMessage($msg, $class)
+        }
+
+    public function __toString()
     {
-        $msg = (string) $msg;
 
-        $this->html = "<div class='$class'>$msg</div>";
+
+        return "<div class='{$this->type}'>$this->html</div>";
         return $this;
 
     }
