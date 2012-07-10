@@ -36,9 +36,9 @@ abstract class AbstractObservable implements Observable
 
     protected function fire(Event &$event)
     {
-        foreach($this->subscribers as &$value)
+        foreach($this->subscribers as &$o)
         {
-            $value->notify($event);
+            $o->notify($event);
         }
     }
 
@@ -55,6 +55,14 @@ abstract class AbstractObservable implements Observable
     {
         return $this->subscribers;
 
+    }
+
+
+    protected function pack($label, $item, AbstractEvent &$event)
+    {
+        $event->store($label, $item);
+
+        return $this;
     }
 
 }
