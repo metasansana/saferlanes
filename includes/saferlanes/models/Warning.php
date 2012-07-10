@@ -19,11 +19,6 @@ use callow\event\AbstractEvent;
 class Warning extends AbstractEvent
 {
 
-
-
-    public function __toString()
-    {
-        return $this->message;
-    }
+}
 
 ?>
