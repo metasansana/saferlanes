@@ -36,7 +36,7 @@ class Engine extends AbstractObservableModel
             parent::__construct ($w);
     }
 
-    public function fetchDriver(DriverObject &$driver, &$sql)
+    public function fetchDriver(Driver &$driver, &$sql)
     {
 
 
@@ -46,21 +46,22 @@ class Engine extends AbstractObservableModel
 
         try
         {
-
         $this->mapper->load();
         }
         catch(EmptyResultException $exc)
         {
 
-            $this->fire(new FetchFailure());
+            $this->fire(new DriverNotFound($driver));
 
         }
+
+        $this->fire(new DriverFound($driver));
 
         return $driver;
 
     }
 
-    public function updateDriver(DriverObject &$driver, &$sql)
+    public function updateDriver(Driver &$driver, &$sql)
     {
 
         $this->mapper->setDomain($driver);
