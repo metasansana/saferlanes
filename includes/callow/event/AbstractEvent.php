@@ -41,7 +41,7 @@ class AbstractEvent implements Event
      * Stores references to some object, data, structure etc that was involved with the event.
      * @var array $state
      */
-    protected $state = array();
+    protected $cache = array();
 
     public function __construct($message=NULL, Observable &$src = NULL)
 
@@ -66,14 +66,19 @@ class AbstractEvent implements Event
 
     }
 
-    public function store($label, $item)
+    public function typeOf($class_name)
     {
-        $this->state[$label] = $item;
+        return (get_class($this) === (string)$class_name);
     }
 
-    public function getState($label)
+    public function put($label, $item)
     {
-        return $this->state[$label];
+        $this->cache[$label] = $item;
+    }
+
+    public function get($label)
+    {
+        return $this->cache[$label];
     }
 
     public function __toString()

@@ -60,7 +60,7 @@ abstract class AbstractObservable implements Observable
 
     protected function pack($label, $item, AbstractEvent &$event)
     {
-        $event->store($label, $item);
+        $event->put($label, $item);
 
         return $this;
     }
