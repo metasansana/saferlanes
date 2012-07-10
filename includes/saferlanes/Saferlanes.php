@@ -19,7 +19,8 @@ use callow\app\Application;
 use saferlanes\controllers\SearchController;
 use saferlanes\controllers\PostController;
 use saferlanes\controllers\VoteController;
-use saferlanes\models\PageWindow;
+use saferlanes\models\WebPage;
+use safelanes\models\ObserverFactory;
 
 
 class Saferlanes extends Application
@@ -50,7 +51,7 @@ class Saferlanes extends Application
 
             switch ($flag)
             {
-                case 'post':
+                case 'post': $controller = new PostController();
                     break;
 
                 case 'vote': $controller = new VoteController();
@@ -60,7 +61,13 @@ class Saferlanes extends Application
                     break;
             }
 
-        $controller->setWindow(new PageWindow)->main($this->params);
+            $window = new models\WebPage();
+
+            $stack = new ObserverFactory;
+
+            $controller->setObserver($stack->generate())->main($this->params);
+
+            $controller->setWindow($window);
 
 
 
