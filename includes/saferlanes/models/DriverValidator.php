@@ -49,7 +49,7 @@ class DriverValidator extends AbstractObservable
         catch(BadPlateNumberException $bex)
         {
 
-            $this->fire(new Warning($bex));
+            $this->fire(new Notice($bex, $this));
 
             return FALSE;
         }
