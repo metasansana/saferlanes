@@ -24,6 +24,11 @@ abstract class Widget
      */
     protected  $html;
 
+    public function __construct($markup)
+    {
+        $this->html = $markup;
+    }
+
     public function __toString()
     {
         return $this->html;
