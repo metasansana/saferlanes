@@ -35,13 +35,13 @@ class Driver extends AbstractDomain implements DriverInterface
     public function setPlate($plate)
     {
 
-        $validator = new DriverValidator();
+        $validator = new InternalDriverValidator();
 
         $plate = strtolower(str_replace(' ', NULL, trim($plate)));
 
         if (!$validator->isValid('plate', $plate))
         {
-            throw new InvalidPlateNumberError();
+            throw new BadPlateNumberException();
         }
         else
         {
@@ -64,7 +64,7 @@ class Driver extends AbstractDomain implements DriverInterface
     public function setPlus($plus)
     {
 
-        $validator = new DriverValidator();
+        $validator = new InternalDriverValidator();
 
         if (!$validator->isValid('plus', $plus))
         {
@@ -78,7 +78,7 @@ class Driver extends AbstractDomain implements DriverInterface
     public function setMinus($minus)
     {
 
-        $validator = new DriverValidator();
+        $validator = new InternalDriverValidator();
 
         if (!$validator->isValid('minus', $minus))
         {
