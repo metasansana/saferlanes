@@ -86,6 +86,20 @@ class DriverPresenter implements DriverProvider
 
     }
 
+   public function getPlusLink($token)
+   {
+
+       return "/vote/plus/{$this->driver->getPlate()}/$token";
+
+   }
+
+   public function getMinusLink($token)
+   {
+
+       return "/vote/minus/{$this->driver->getPlate()}/$token";
+
+   }
+
 }
 
 ?>
