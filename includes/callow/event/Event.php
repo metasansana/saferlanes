@@ -18,8 +18,6 @@ namespace callow\event;
 interface Event
 {
 
-    public function typeOf($class_name);
-
     public function getSource();
 
     public function __toString();

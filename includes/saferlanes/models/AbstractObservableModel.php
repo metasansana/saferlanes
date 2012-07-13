@@ -16,7 +16,8 @@
 namespace saferlanes\models;
 
 use callow\event\AbstractObservable;
-use callow\event\Subscriber;
+use callow\event\Observer;
+
 
 abstract class AbstractObservableModel extends AbstractObservable
 {

@@ -20,7 +20,7 @@ use saferlanes\controllers\SearchController;
 use saferlanes\controllers\PostController;
 use saferlanes\controllers\VoteController;
 use saferlanes\models\WebPage;
-use safelanes\models\ObserverFactory;
+use saferlanes\models\ObserverFactory;
 
 
 class Saferlanes extends Application
@@ -63,11 +63,14 @@ class Saferlanes extends Application
 
             $window = new models\WebPage();
 
-            $stack = new ObserverFactory;
-
-            $controller->setObserver($stack->generate())->main($this->params);
+            $stack = new ObserverFactory();
 
             $controller->setWindow($window);
+
+            $controller->setObserver($stack->generate($window))->main($this->params);
+
+
+
 
 
 

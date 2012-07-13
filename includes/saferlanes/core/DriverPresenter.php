@@ -14,19 +14,21 @@
 
 namespace saferlanes\core;
 
-class DriverPresenter implements DriverProvider
+use callow\domain\Domain;
+
+class DriverPresenter
 {
 
     /**
      *
-     * @var
-     * @access protected
+     * @var Driver $driver
+     * @access private
      */
     private $driver;
 
     public function __construct(Driver &$driver)
     {
-        $this->driver = $driver;
+        $this->set($driver->to);
     }
 
 

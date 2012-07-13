@@ -39,7 +39,7 @@ class Domain implements DomainInterface
      * Returns an array representation of this class.
      * @return array
      */
-    public function toArray()
+    public function __toArray()
     {
 
         $list = array ();

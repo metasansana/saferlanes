@@ -66,14 +66,11 @@ class AbstractEvent implements Event
 
     }
 
-    public function typeOf($class_name)
-    {
-        return (get_class($this) === (string)$class_name);
-    }
-
     public function put($label, $item)
     {
         $this->cache[$label] = $item;
+
+        return $this;
     }
 
     public function get($label)

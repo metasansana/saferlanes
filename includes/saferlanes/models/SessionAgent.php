@@ -15,21 +15,18 @@
 
 namespace saferlanes\models;
 
-use callow\app\AbstractWindow;
 use callow\core\Driver;
 use callow\http\Session;
 use callow\security\RandomToken;
+use callow\event\AbstractObservable;
+use callow\event\UserNotice;
 
-class SessionAgent extends AbstractObservableModel
+class SessionAgent extends AbstractObservable
 {
 
     const NO_COOKIE = 'You must have cookies enabled to continue!';
 
     const CSRF = 'This does not appear to be a valid request! Please try again.';
-
-    const LABEL = 'msg';
-
-
 
     /**
      * Internal reference to the current session.
@@ -38,34 +35,24 @@ class SessionAgent extends AbstractObservableModel
      */
     private $session;
 
-    public function __construct(AbstractWindow &$win)
+    public function __construct()
     {
 
-        parent::__construct($win);
-
         $this->session = new Session();
+
+        $this->session->regenerate(TRUE);
 
     }
 
 
-    public function enableVoting($plate_number)
+    public function generateVotekey()
     {
-
-        $request = array();
-
-        $this->session->regenerate(TRUE);
 
         $token = RandomToken::generate();
 
-        $this->session->add('vote_key', $token);
+        $this->add('vote_key', $token);
 
-        $request['plus_link'] =  "/vote/plus/$plate_number/$token";
-
-        $request['minus_link'] =  "/vote/minus/$plate_number/$token";
-
-        $this->sendRequest($request);
-
-        return $this;
+        return $token;
 
 
     }
@@ -100,13 +87,23 @@ class SessionAgent extends AbstractObservableModel
         }
 
 
+
     }
 
-    private function sendRequest($request)
-    {
-        $this->fire(new UpdateRequest($request));
-    }
+public function add($key,  $value)
+{
 
+    $this->session->add($key, $value);
+
+    $notice  = new NewSessionKeyNotice($key, $value);
+
+    $this->fire($notice);
+
+    return $this;
+
+
+
+}
 
 }
 

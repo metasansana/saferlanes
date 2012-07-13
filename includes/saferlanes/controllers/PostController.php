@@ -90,7 +90,7 @@ class PostController extends Controller
 
                     $mapper->save();
 
-                    new Redirect('/' . $driver->getPlate(), TRUE);
+                    new Redirect('/' . $driver->putPlate(), TRUE);
                 }
             }
             catch (MemberNotFoundException $mexc)

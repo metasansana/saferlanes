@@ -13,9 +13,9 @@
 
 namespace saferlanes\core;
 
-use callow\domain\Domain;
+use callow\domain\DomainInterface;
 
-interface DriverInterface extends Domain, DriverProvider
+interface DriverInterface extends DomainInterface, DriverProvider
 {
 
     /**

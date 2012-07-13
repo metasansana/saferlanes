@@ -15,17 +15,21 @@
 namespace saferlanes\models;
 
 use callow\event\Observers;
+use callow\event\Observer;
 use saferlanes\models\WebPage;
 
 class ObserverFactory
 {
 
-
-    public function getObservers()
+    public function generate(Observer $o  = NULL)
     {
 
         $factory = new Observers;
 
-        $factory->addObserver(new WebPage());
+        if($o)
+            $factory->addObserver ($o);
+
+        return $factory;
+
     }
 }

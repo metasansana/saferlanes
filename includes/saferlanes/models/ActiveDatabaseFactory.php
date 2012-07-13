@@ -37,13 +37,14 @@ class ActiveDatabaseFactory extends AbstractObservableModel
         {
 
         $config = new PDOBuilder ($creds);
+
         $instance = new ActiveDatabase($config);
 
         }
-        catch(\Exception $pexc)
+        catch(\PDOException $pexc)
         {
 
-            $this->fire(new FatalEvent());
+            $this->fire(new Panic($pexc));
 
         }
 

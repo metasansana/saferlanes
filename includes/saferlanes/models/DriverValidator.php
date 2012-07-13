@@ -16,9 +16,11 @@
 namespace saferlanes\models;
 
 use callow\event\AbstractObservable;
+use callow\event\UserWarn;
 use saferlanes\core\DriverObject;
 use saferlanes\core\Driver;
 use saferlanes\core\BadPlateNumberException;
+
 
 
 class DriverValidator extends AbstractObservable
@@ -49,7 +51,7 @@ class DriverValidator extends AbstractObservable
         catch(BadPlateNumberException $bex)
         {
 
-            $this->fire(new Notice($bex, $this));
+            $this->fire(new UserWarn($bex, $this));
 
             return FALSE;
         }
@@ -57,6 +59,11 @@ class DriverValidator extends AbstractObservable
         return TRUE;
 
 
+    }
+
+    public function getDriver()
+    {
+     return $this->driver;
     }
 
 

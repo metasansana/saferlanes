@@ -16,14 +16,13 @@ namespace saferlanes\controllers;
 use callow\app\AbstractController;
 use callow\app\Commands;
 use callow\http\Redirect;
-use callow\http\PostReader;
-use saferlanes\models\DriverCheck;
-use saferlanes\core\DriverObject;
+use callow\http\Post;
+use saferlanes\models\DriverValidator;
+use saferlanes\core\Driver;
 use saferlanes\models\Engine;
 use saferlanes\models\ActiveDatabaseFactory;
 use saferlanes\models\SessionAgent;
 use saferlanes\models\DriverProfile;
-use saferlanes\models\SQLFactory;
 
 class SearchController extends AbstractController
 {
@@ -33,73 +32,101 @@ class SearchController extends AbstractController
     public function main(Commands $params = NULL)
     {
 
-        $this->view->selectTemplate('search');
+        $plate = NULL;
 
-        $reader = new PostReader();
+        if($params->count() > 1)
+                new Redirect('/', TRUE);
 
-        if ($reader->contains('plate'))  //Get platenumber from form
+        if(($params->count() === 1))
         {
 
-            $this->fetchRequestedDriver($reader->get('plate'));
-
-        }
-        elseif ($params->count() === 1)  //get plate number from url
-        {
-
-            $this->fetchRequestedDriver($params[0]);
-        }
-        elseif ($params->count() > 1)  //erroneous input
-        {
-
-            new Redirect('/', TRUE);
-        }
 
 
-    }
+             $plate = $params[0];
 
-    private function fetchRequestedDriver($plate_number)
-    {
-
-        $validator = new DriverCheck(new DriverObject());
-
-        if(!$validator->assignPlateNumber($plate_number))
-        {
-            $this->view->promptMessage($validator->getErrorMessage('plate'), 'error');
         }
         else
         {
+
+            $posted = new Post();
+
+            if($posted->contains('plate'))
+                $plate= $posted->get('plate');
+
+        }
+
+        if(isset($plate))
+        {
+            $this->fetch ($plate);
+        }
+        else
+        {
+
+        $this->output('search');
+
+        }
+
+
+   }
+
+    private function fetch($plate)
+    {
+
+        $validator = new DriverValidator(new Driver());
+
+        $validator->register($this->observers);
+
+        if($validator->assignPlateNumber($plate))
+        {
             $this->getFromDatabase($validator->getDriver());
+        }
+        else
+        {
+         $this->output('search');
+        }
+
+
+    }
+
+    private function getFromDatabase(Driver &$driver)
+    {
+
+        $dfactory = new ActiveDatabaseFactory($this->observers);
+
+        $engine = new Engine($dfactory->getActiveDatabase(), $this->observers);
+
+        if($engine->fetchDriver($driver))
+        {
+             $this->prepare($driver);
+        }
+        else
+        {
+            $this->output('search');
         }
 
     }
 
-    private function getFromDatabase(DriverObject &$driver)
+    private function prepare(Driver &$driver)
     {
 
-        $dfactory = new ActiveDatabaseFactory($this->view);
+        $agent = new SessionAgent();
 
+        $agent->register($this->observers);
 
-        $engine = new Engine($dfactory->getActiveDatabase(), $this->view);
+        $key = $agent->generateVotekey($driver->getPlate());
 
-        $engine->fetchDriver($driver, new SQLFactory(SQLFactory::LOAD_DRIVER));
+        $profile = new DriverProfile($this->window, $driver); //FullProfile, DriverSummaryProfile?
 
-        $this->show($driver);
+        $profile->create($key);
 
-        return $this;
+        $this->output('display');
+
 
     }
 
-    private function show(DriverObject &$driver)
+    private function output($template)
     {
-
-        $agent = new SessionAgent($this->view);
-
-        $agent->enableVoting($driver->getPlate());
-
-        $profile = new DriverProfile($this->view, $driver);
-
-        $profile->displayRequestedDriver();
-
+     $this->window->import($template)->display();
     }
 
 }

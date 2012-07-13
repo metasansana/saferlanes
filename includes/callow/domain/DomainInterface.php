@@ -16,9 +16,7 @@ namespace callow\domain;
 interface DomainInterface
 {
 
-    public function isProperty($property);
-
-    public function toArray();
+    public function __toArray();
 
     public function get();
 

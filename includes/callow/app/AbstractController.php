@@ -16,7 +16,7 @@
 
 namespace callow\app;
 
-use callow\events\Observers;
+use callow\event\Observer;
 
 abstract class AbstractController implements Controller
 {
@@ -38,7 +38,7 @@ abstract class AbstractController implements Controller
         return $this;
     }
 
-    public function setObserver(Observers &$observers)
+    public function setObserver(Observer &$observers)
     {
         $this->observers = $observers;
 

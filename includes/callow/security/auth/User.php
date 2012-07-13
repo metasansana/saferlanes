@@ -16,7 +16,7 @@ namespace callow\security\auth;
 
 use callow\domain\AbstractDomain;
 
-class User extends AbstractDomain
+class User extends Domain
 {
 
     /**

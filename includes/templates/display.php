@@ -11,6 +11,7 @@
     </head>
     <body>
         <div id="master">
+            <?= $content['system']?>
             <div id="window">
                 <img src="img/van.png" alt="truck"/>
                 <div id="breakdown" class="<?= $content['image']; ?>">

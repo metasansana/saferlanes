@@ -14,10 +14,10 @@
 
 namespace saferlanes\core;
 
-use callow\domain\AbstractDomain;
+use callow\domain\Domain;
 
 
-class Driver extends AbstractDomain implements DriverInterface
+class Driver extends Domain implements DriverInterface
 {
 
     protected $plate;

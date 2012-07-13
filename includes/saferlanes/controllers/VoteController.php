@@ -33,7 +33,7 @@ class VoteController extends AbstractController
 
         if($params)
         {
-            $agent = new SessionAgent($this->view);
+            $agent = new SessionAgent($this->window);
 
             if($agent->verifyRequest('vote_key', $params[3]))
                     $this->vote($params);
@@ -68,20 +68,20 @@ class VoteController extends AbstractController
 
         }
 
-        $validator = new DriverCheck();
+        $validator = new DriverValidator();
 
         if($validator->assignPlateNumber($cmd[2]))
         {
 
             $driver = $validator->getDriver();
 
-            $dfactory = new ActiveDatabaseFactory($this->view);
+            $dfactory = new ActiveDatabaseFactory($this->window);
 
-            $engine = new Engine($dfactory->getActiveDatabase(), $this->view);
+            $engine = new Engine($dfactory->getActiveDatabase(), $this->window);
 
             die($sql);
 
-            $engine->updateDriver($driver, new SQLFactory($sql));
+            $engine->voteDriver($driver, new SQLFactory($sql));
 
             //By here the profile has been updated. We would like to fire an event that alerts
             //all classes interested including the window object.

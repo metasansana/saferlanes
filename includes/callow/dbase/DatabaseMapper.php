@@ -15,7 +15,7 @@
 namespace callow\dbase;
 
 use callow\domain\DomainMapperInterface;
-use callow\domain\AbstractDomain;
+use callow\domain\Domain;
 
 class DatabaseMapper implements DomainMapperInterface
 {
@@ -41,7 +41,7 @@ class DatabaseMapper implements DomainMapperInterface
      */
     private $sql;
 
-    public function __construct(ActiveDatabase &$dbase, AbstractDomain &$domain = NULL, $sql = NULL)
+    public function __construct(ActiveDatabase &$dbase, Domain &$domain = NULL, $sql = NULL)
     {
 
         if($domain)
@@ -173,7 +173,7 @@ class DatabaseMapper implements DomainMapperInterface
         return $this;
     }
 
-    public function setDomain(AbstractDomain &$domain)
+    public function setDomain(Domain &$domain)
     {
         $this->domain = $domain;
         return $this;
