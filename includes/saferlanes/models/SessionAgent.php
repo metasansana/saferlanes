@@ -45,7 +45,7 @@ class SessionAgent extends AbstractObservable
     }
 
 
-    public function generateVotekey()
+    public function generateToken()
     {
 
         $token = RandomToken::generate();
@@ -57,13 +57,13 @@ class SessionAgent extends AbstractObservable
 
     }
 
-    public function verifyRequest($key, $value)
+    public function verify($session_label, $desired_value)
     {
 
-        if($this->session->hasIndex($key))
+        if($this->session->hasIndex($session_label))
         {
 
-            if($this->session->get($key) === $value)
+            if($this->session->get($session_label) === $desired_value)
             {
                 return TRUE;
             }
