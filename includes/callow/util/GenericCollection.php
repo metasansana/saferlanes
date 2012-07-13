@@ -154,7 +154,7 @@ class GenericCollection implements Collection
 
     }
 
-    public function toArray()
+    public function __toArray()
     {
         return $this->collected;
 
