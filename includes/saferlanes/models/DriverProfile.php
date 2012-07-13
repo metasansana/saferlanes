@@ -1,65 +1,85 @@
 <?php
 
 /**
- * timestamp Jul 8, 2012 9:19:17 AM
+ * timestamp Jul 10, 2012 8:47:46 PM
  *
  *
  * @project saferlanes
  * @author Lasana Murray  <dev@trinistorm.org>
  * @copyright 2012 Lasana Murray
- * @package saferlanes\models
+ * @package saferlanes
  *
- *  Helper class used to format  a driver for displaying on screen.
  *
  */
-
 namespace saferlanes\models;
 
-use callow\app\AbstractWindow;
-use saferlanes\core\DriverObject;
+use saferlanes\core\Driver;
 
-
-class DriverProfile extends AbstractWindowModel
+class DriverProfile
 {
 
     private $driver;
 
+    private $page;
 
-
-    public function __construct(AbstractWindow &$win, DriverObject &$driver)
+    public function __construct(WebPage &$page, Driver &$driver)
     {
-
+        $this->page = $page;
         $this->driver = $driver;
+    }
 
-        parent::__construct($win);
 
+    public function create($token)
+    {
+        $this->putImage();
+        $this->putMinusLink($token);
+        $this->putPlusLink($token);
+        $this->putTimeStamp();
+        $this->putPlate();
 
+        return $this;
 
     }
 
-    private function getProfileDate()
+    protected function putPlate($label='plate')
     {
-        $date = getdate($this->driver->getTimeStamp());
+        $this->page->set($label, strtoupper($this->driver->getPlate()));
+        return $this;
+    }
+
+    protected function putTimeStamp($label = 'timestamp')
+    {
+         $date = getdate($this->driver->getTimeStamp());
 
         $date = "{$date['mday']} {$date['month']} {$date['year']}";
 
-        return $date;
+        $this->page->set($label, $date);
 
     }
 
-    private function getProfilePlate()
+    protected function putPlusLink($token, $label='plus_link')
     {
+        $plus = "/vote/plus/{$this->driver->getPlate()}/$token";
 
-        return strtoupper($this->driver->getPlate());
+        $this->page->set($label, $plus);
+
+        return $this;
+
 
     }
 
-    public  function displayRequestedDriver()
+    protected function putMinusLink($token, $label='minus_link')
     {
 
-        $this->win->insertHTML('plate', $this->getProfilePlate());
+        $minus = "/vote/minus/{$this->driver->getPlate()}/$token";
 
-        $this->win->insertHTML('timestamp', $this->getProfileDate());
+        $this->page->set($label, $minus);
+
+        return $this;
+    }
+
+    protected function putImage($label = 'image')
+    {
 
         $likes =  $this->driver->getPlus();
 
@@ -78,18 +98,13 @@ class DriverProfile extends AbstractWindowModel
             $image = "sad";
         }
 
-        $this->win->insertHTML('likes', $likes);
+        $this->page->set($label, $image);
 
-        $this->win->insertHTML('fails', $fails);
 
-        $this->win->insertHTML('image', $image);
-
-        $this->win->selectTemplate('display');
-
-        return $this;
-
+        return $image;
 
     }
+
 
 }
 
