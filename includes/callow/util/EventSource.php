@@ -8,8 +8,8 @@
  * @copyright 2012 Lasana Murray
  * @package callow\util
  *
- *  Abstract parent class of classes that are the source of events.
- *
+ *  Optional parent class for classes that fire events. Events can also be created an published  manually by a
+ *  class.
  */
 
 namespace callow\util;
@@ -42,11 +42,11 @@ abstract class EventSource
      * Passes an event to the EventListeners
      * @param Event $e
      */
-    protected function fire(Event &$e)
+    protected function notify(Event &$e)
     {
         foreach ($this->listeners as $l)
         {
-            if($l->accepts($e))
+            if($l->update($e))
                 $l->notify($e);
         }
     }
