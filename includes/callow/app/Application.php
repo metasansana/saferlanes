@@ -24,7 +24,7 @@ abstract class Application
 
     /**
      * Parameters formed from the current url.
-     * @var Commands $params
+     * @var Options $params
      * @access protected
      */
     protected $params;
@@ -32,7 +32,7 @@ abstract class Application
     final public function __construct()
     {
 
-        $this->params = new Commands();
+        $this->params = new Options();
 
     }
 
