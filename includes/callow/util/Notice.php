@@ -16,7 +16,7 @@
 namespace callow\util;
 
 
-class Notice extends InternalEvent
+class Notice extends Signal
 {
 
 }
