@@ -33,7 +33,7 @@ class Options extends Collection
         if (empty($params[0]))
             array_shift($params);
 
-        $this->collected = $params;
+        parent::__construc($params);
 
     }
 
