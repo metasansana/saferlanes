@@ -23,6 +23,7 @@ use saferlanes\models\Engine;
 use saferlanes\models\ActiveDatabaseFactory;
 use saferlanes\models\SessionAgent;
 use saferlanes\models\DriverProfile;
+use saferlanes\models\VoteLinks;
 
 class SearchController extends AbstractController
 {
@@ -113,11 +114,15 @@ class SearchController extends AbstractController
 
         $agent->register($this->observers);
 
-        $key = $agent->generateVotekey($driver->getPlate());
+        $links = new VoteLinks($this->window, $driver, $agent->generateToken($driver->getPlate()));
 
-        $profile = new DriverProfile($this->window, $driver); //FullProfile, DriverSummaryProfile?
+        $links->create();
 
-        $profile->create($key);
+        $profile = new DriverProfile($this->window, $driver);
+
+        $profile->create();
+
+
 
         $this->output('display');
 

@@ -9,7 +9,6 @@
  * @copyright 2012 Lasana Murray
  * @package saferlanes\controller
  *
- *  @todo Remove html from this and other such classes and put into the 'Window'
  *
  */
 
@@ -20,8 +19,8 @@ use callow\app\Commands;
 use callow\http\Redirect;
 use saferlanes\models\SessionAgent;
 use saferlanes\models\SQLFactory;
-use saferlanes\core\DriverObject;
-use saferlanes\models\DriverCheck;
+use saferlanes\core\Driver;
+use saferlanes\models\DriverValidator;
 use saferlanes\models\Engine;
 use saferlanes\models\ActiveDatabaseFactory;
 
@@ -35,66 +34,41 @@ class VoteController extends AbstractController
         {
             $agent = new SessionAgent($this->window);
 
-            if($agent->verifyRequest('vote_key', $params[3]))
-                    $this->vote($params);
-        }
-        else
-        {
-            new Redirect('/', TRUE);
+            if($agent->verify('vote_key', $params[3]))
+            {
+                    $this->vote($params->__toArray());
+            }
+            else
+            {
+                new Redirect('/', TRUE);
+            }
         }
     }
 
 
-    private function vote(Commands &$cmd)
+    private function vote(array &$cmd)
     {
 
-        if($cmd[1] === 'plus')
-        {
 
-            $sql = SQLFactory::VOTE_PLUS;
 
-        }
-        elseif($cmd[1] === 'minus')
-        {
+        $validator = new DriverValidator(new Driver());
 
-                $sql = SQLFactory::VOTE_MINUS;
-
-        }
-        else
-        {
-
-         new Redirect('/', TRUE);  //@ replace with a nice error message.
-         exit();
-
-        }
-
-        $validator = new DriverValidator();
+        $validator->register($this->observers);
 
         if($validator->assignPlateNumber($cmd[2]))
         {
 
             $driver = $validator->getDriver();
 
-            $dfactory = new ActiveDatabaseFactory($this->window);
+            $dfactory = new ActiveDatabaseFactory($this->observers);
 
-            $engine = new Engine($dfactory->getActiveDatabase(), $this->window);
+            $engine = new Engine($dfactory->getActiveDatabase(), $this->observers);
 
-            die($sql);
+            $engine->castVote($driver, $cmd[1]);
 
-            $engine->voteDriver($driver, new SQLFactory($sql));
-
-            //By here the profile has been updated. We would like to fire an event that alerts
-            //all classes interested including the window object.
-
-            echo "Done!";
+            new Redirect("/{$driver->getPlate()}", TRUE);
 
         }
-        else
-        {
-            new Redirect('/', TRUE);
-        }
-
-
 
     }
 
