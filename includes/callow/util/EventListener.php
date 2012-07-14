@@ -20,7 +20,12 @@ abstract class EventListener
 
     public function notify(Event $e)
     {
-        return;
+
+    }
+
+    public function listens(Event $e)
+    {
+        
     }
 
 }

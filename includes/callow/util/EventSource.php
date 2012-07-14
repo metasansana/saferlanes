@@ -46,7 +46,8 @@ abstract class EventSource
     {
         foreach ($this->listeners as $l)
         {
-            $l->notify($e);
+            if($l->listens($e))
+                $l->notify($e);
         }
     }
 
