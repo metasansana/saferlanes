@@ -27,12 +27,14 @@ class AbstractEvent
      */
     protected $src;
 
+
     public function __construct(EventSource &$src)
     {
 
         $this->src = $src;
 
     }
+
 
     /**
      * Returns a reference to the EventSource object.

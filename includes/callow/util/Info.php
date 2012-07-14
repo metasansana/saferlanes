@@ -1,24 +1,22 @@
 <?php
 
 /**
- * timestamp Jul 14, 2012 5:53:45 PM
+ * timestamp Jul 14, 2012 8:05:41 AM
  *
  *
  * @author Lasana Murray  <dev@trinistorm.org>
  * @copyright 2012 Lasana Murray
  * @package callow\util
  *
- *  Parent interface for all event objects.
+ *  Signal sent with basic information.
  *
  */
 
 namespace callow\util;
 
-interface Event
+class Info extends InternalEvent
 {
 
-    
-    public function getSource();
 
 }
 
