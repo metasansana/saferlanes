@@ -15,9 +15,9 @@
 
 namespace callow\app;
 
-use callow\util\GenericCollection;
+use callow\util\Collection;
 
-class Options extends GenericCollection
+class Options extends Collection
 {
 
     final public function __construct()
