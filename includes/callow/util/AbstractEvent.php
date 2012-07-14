@@ -22,16 +22,16 @@ class AbstractEvent
 
     /**
      * Internal reference to the class that fired the event.
-     * @var EventSource $src
+     * @var object $src
      * @access protected
      */
     protected $src;
 
 
-    public function __construct(EventSource &$src)
+    public function __construct(\stdClass &$src)
     {
 
-        $this->src = $src;
+            $this->src = $src;
 
     }
 
