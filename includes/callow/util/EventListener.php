@@ -15,23 +15,10 @@
 
 namespace callow\util;
 
-abstract class EventListener
+interface EventListener
 {
 
-    /**
-     *  Informs the listener of an event.
-     * @param Event $e
-     */
-    public function notify(Event $e)
-    {
-
-    }
-
-    /**
-     * Returns true if the listener accepts the even $e or false if otherwise.
-     */
-    abstract public function accepts(Event $e);
-
+    public  function update(Event $e);
 
 }
 
