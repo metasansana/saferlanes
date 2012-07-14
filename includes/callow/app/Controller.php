@@ -8,6 +8,8 @@
  * @copyright 2012 Lasana Murray
  * @package callow\app
  *
+ *  Controllers are simillar to the controllers in the MVC design pattern. They respond to user requests
+ *  by calling in worker classes to perform various tasks.
  *
  */
 
@@ -17,7 +19,7 @@ interface  Controller
 {
 
 
-    public function main (Commands $params = NULL);
+    public function main (Options $params = NULL);
 
     public function setWindow(Window &$view);
 
