@@ -1,30 +1,164 @@
 <?php
 
 /**
- * timestamp May 30, 2012 4:09:44 PM
+ * timestamp May 30, 2012 4:35:24 PM
  *
  *
  * @author Lasana Murray  <lmurray@trinistorm.org>
  * @copyright 2012 Lasana Murray
  * @package callow\util
  *
- *  The Collection interface provides a way to collect, inspect and manipulate a stable simillar data items.
- *  The interface leaves the signature of the add() method up to implementers to allow cont
+ *  A basic Collection class.
  *
+ *  @todo There is still no distinction between numeric and string keys.
+ *  @todo A call to remove messes up the key ordering of the internal array. A solution is needed.
+ * @todo Add iterator aggregrate
  */
 
 namespace callow\util;
 
-interface Collection extends \ArrayAccess, \IteratorAggregate, \Countable
+use callow\util\Collection;
+
+class Collection
 {
 
-    public function remove($index);
+    /**
+     * @var array $collected
+     * @access protected
+     */
+    protected $items = array ();
 
-    public function contains($index);
+    public function __construct(array &$items = NULL)
+    {
 
-    public function hasIndex($index);
+        if ($items)
+        {
 
-    public function get($index);
+            foreach ($items as $key => &$value)
+            {
+                $this->add($key, $value);
+            }
+        }
+
+    }
+
+    public function add($index, $item)
+    {
+
+        $this->items[$index] = $item;
+
+        return $this;
+
+    }
+
+    public function remove($index)
+    {
+
+        $removed = NULL;
+
+        if($this->exists($index))
+        {
+            if(!is_string($index))
+            {
+
+            }
+        $removed = $this->items[$index];
+        unset($this->items[$index]);
+        }
+
+        return $removed;
+
+    }
+
+    public function copy(Collection $another_collection)
+    {
+        $this->items = $another_collection->toArray();
+
+    }
+
+    public function getIterator()
+    {
+
+    }
+
+    public function get($index)
+    {
+        if (array_key_exists($index, $this->items))
+            return $this->items[$index];
+
+        throw new InvalidIndexException($index);
+
+        return FALSE;
+
+    }
+
+    public function count()
+    {
+        return count($this->items);
+
+    }
+
+    public function exists($index)
+    {
+        return array_key_exists($index, $this->items);
+
+    }
+
+    public function itemAt($index)
+    {
+        $result = isset($this->items[$index]);
+
+        return $result;
+
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        if (is_null($offset))
+        {
+            $this->items[] = $value;
+        }
+        else
+        {
+            $this->items[$offset] = $value;
+        }
+
+    }
+
+    public function offsetExists($offset)
+    {
+        return $this->isEmpty($offset);
+
+    }
+
+    public function offsetUnset($offset)
+    {
+        $this->remove($offset);
+
+    }
+
+    public function offsetGet($offset)
+    {
+
+        $result = NULL;
+
+        try
+        {
+            $result = $this->get($offset);
+        }
+        catch (\Exception $ex)
+        {
+
+        }
+
+        return $result;
+
+    }
+
+    public function __toArray()
+    {
+        return $this->items;
+    }
 
 }
 
