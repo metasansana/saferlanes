@@ -12,12 +12,11 @@
  *
  *  @todo There is still no distinction between numeric and string keys.
  *  @todo A call to remove messes up the key ordering of the internal array. A solution is needed.
- * @todo Add iterator aggregrate
+ *  @todo Add iterator aggregrate
+ *  @todo this class is messy and needs clean up
  */
 
 namespace callow\util;
-
-use callow\util\Collection;
 
 class Collection
 {
