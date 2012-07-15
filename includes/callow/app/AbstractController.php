@@ -25,12 +25,12 @@ abstract class AbstractController implements Controller
      * @var Window $view
      * @access protected
      */
-    protected $w;
+    protected $window;
 
 
     public function setWindow(Window &$window)
     {
-        $this->w = $window;
+        $this->window = $window;
         return $this;
     }
 

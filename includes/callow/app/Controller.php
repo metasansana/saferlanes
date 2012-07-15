@@ -19,7 +19,7 @@ interface  Controller
 {
 
 
-    public function main (Options $params = NULL);
+    public function main (Options $opt = NULL);
 
     public function setWindow(Window &$view);
 
