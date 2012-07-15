@@ -57,12 +57,11 @@ class Collection
 
         if($this->exists($index))
         {
-            if(!is_string($index))
-            {
 
-            }
         $removed = $this->items[$index];
+
         unset($this->items[$index]);
+
         }
 
         return $removed;
@@ -86,8 +85,6 @@ class Collection
     {
         if (array_key_exists($index, $this->items))
             return $this->items[$index];
-
-        throw new InvalidIndexException($index);
 
         return FALSE;
 
