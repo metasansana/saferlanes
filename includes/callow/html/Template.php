@@ -14,6 +14,8 @@
 
 namespace callow\html;
 
+use callow\Collection;
+
 
 class Template
 {
@@ -38,37 +40,44 @@ class Template
      */
     private $disabled = TRUE;
 
-    public function __construct($filename = NULL, HTMLContainer &$container = NULL)
+    /**
+     * Collection of templates to be used
+     * @var OrderedList $templates
+     * @access private
+     */
+    private $templates;
+
+    public function __construct(OrderedList $templates = NULL, HTMLContainer &$container = NULL)
     {
 
-        if ($filename)
-            $this->use($filename);
+        if ($templates)
+            $this->templates = $templates;
 
         if (!$container)
-            $container = new HTMLContainer();
+            $this->setContainer ($container);
 
-        $this->container = $container;
 
     }
 
     /**
-     *  Assigns the filename of the template.
-     * @param string $filename
+     *  Adds a template path to the current list
+     * @param string $path
      * @return \callow\html\Template
      */
-    public function name($filename)
+    public function addTemplate($path)
     {
-        $filename = (string) $filename;
+        $path = (string) $path;
 
-        $this->filename = $filename;
+        if(file_exists($path))
+            $this->templates->add($path);
 
         return $this;
 
     }
 
-    public function set($label, $html)
+    public function fill($keyword, $html)
     {
-        $this->container->add($label, $html);
+        $this->container->add($keyword, $html);
         return $this;
     }
 
@@ -88,6 +97,12 @@ class Template
 
     }
 
+    public function setContainer(HTMLContainer &$c)
+    {
+        $this->container = $c;
+        return $this;
+    }
+
     public function __destruct()
     {
 
@@ -96,7 +111,13 @@ class Template
 
             $content = &$this->container;
 
-            include_once($this->filename);
+            $templates = $this->templates->getIterator();
+
+            while ($templates->hasNext())
+            {
+                include_once($templates->next());
+            }
+
         }
 
     }
