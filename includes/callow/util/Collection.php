@@ -18,7 +18,7 @@
 
 namespace callow\util;
 
-class Collection
+class Collection implements \ArrayAccess
 {
 
     /**
