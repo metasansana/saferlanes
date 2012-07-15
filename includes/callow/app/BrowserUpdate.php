@@ -47,11 +47,11 @@ class BrowserUpdate extends AbstractEvent
 
     /**
      * Returns an ArrayIterator containing the updates.
-     * @return ArrayIterator 
+     * @return Collection
      */
     public function getChanges()
     {
-        return $this->changes->getIterator();
+        return $this->changes;
     }
 
 }
