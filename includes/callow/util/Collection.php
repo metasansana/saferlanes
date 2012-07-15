@@ -55,7 +55,7 @@ class Collection implements \ArrayAccess
 
         $removed = NULL;
 
-        if($this->exists($index))
+        if($this->contains($index))
         {
 
         $removed = $this->items[$index];
@@ -96,13 +96,13 @@ class Collection implements \ArrayAccess
 
     }
 
-    public function exists($index)
+    public function contains($index)
     {
         return array_key_exists($index, $this->items);
 
     }
 
-    public function itemAt($index)
+    public function isEmptyIndex($index)
     {
         $result = isset($this->items[$index]);
 
