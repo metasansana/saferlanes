@@ -16,11 +16,12 @@
 namespace saferlanes;
 
 use callow\app\Application;
+use callow\app\Page;
+use callow\app\Options;
 use saferlanes\controllers\SearchController;
 use saferlanes\controllers\PostController;
 use saferlanes\controllers\VoteController;
-use saferlanes\models\WebPage;
-use saferlanes\models\ObserverFactory;
+
 
 
 class Saferlanes extends Application
@@ -47,32 +48,31 @@ class Saferlanes extends Application
 
         $controller = NULL;
 
+        $opts = NULL;
+
+
+
         $flag = $this->params[0];
 
             switch ($flag)
             {
-                case 'post': $controller = new PostController();
+                case 'post':
+                    $controller = new PostController();
                     break;
 
-                case 'vote': $controller = new VoteController();
+                case 'vote':
+                    $controller = new VoteController();
                     break;
 
-                default: $controller = new SearchController();
+                default:
+                    $controller = new SearchController();
+                    $opts = new Options();
                     break;
             }
 
-            $window = new models\WebPage();
+            $window = new Page('templates');
 
-            $stack = new ObserverFactory();
-
-            $controller->setWindow($window);
-
-            $controller->setObserver($stack->generate($window))->main($this->params);
-
-
-
-
-
+            $controller->setWindow($window)->main($opts);
 
         return $this;
 
