@@ -15,10 +15,13 @@
 
 namespace callow\util;
 
-interface EventListener
+abstract class EventListener
 {
 
-    public  function update(Event $e);
+    public  function update(Event $e)
+    {
+
+    }
 
 }
 
