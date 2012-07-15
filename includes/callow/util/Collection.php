@@ -78,6 +78,8 @@ class Collection
     public function getIterator()
     {
 
+        return new ArrayIterator($this->items);
+
     }
 
     public function get($index)
