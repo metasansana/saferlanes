@@ -14,9 +14,9 @@
 
 namespace callow\http;
 
-use callow\util\GenericCollection;
+use callow\util\Collection;
 
-class Session extends GenericCollection
+class Session extends Collection
 {
 
     /**

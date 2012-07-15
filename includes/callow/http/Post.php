@@ -12,9 +12,9 @@
  */
 
 namespace callow\http;
-use callow\util\GenericCollection;
+use callow\util\Collection;
 
-class Post extends GenericCollection
+class Post extends Collection
 {
 
 
