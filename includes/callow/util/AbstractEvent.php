@@ -17,7 +17,7 @@
 
 namespace callow\util;
 
-class AbstractEvent
+class AbstractEvent implements Event
 {
 
     /**
@@ -28,10 +28,10 @@ class AbstractEvent
     protected $src;
 
 
-    public function __construct(\stdClass &$src)
+    public function __construct($src)
     {
 
-            $this->src = $src;
+            $this->src = (object)$src;
 
     }
 
