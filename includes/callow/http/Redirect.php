@@ -32,7 +32,7 @@ class Redirect
      */
     private $timer;
 
-    public function __construct($location, $go=FALSE)
+    public function __construct($location, $go=FALSE, $exit = FALSE)
     {
 
         if (is_string($location))
@@ -40,6 +40,9 @@ class Redirect
 
         if($go)
             $this->send ();
+
+        if($exit)
+            exit();
 
 
     }
