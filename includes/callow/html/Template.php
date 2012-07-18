@@ -15,17 +15,11 @@
 namespace callow\html;
 
 use callow\Collection;
+use callow\util\OrderedList;
 
 
 class Template
 {
-
-    /**
-     * The path to the template file
-     * @var string $file
-     * @access private
-     */
-    private $filename;
 
     /**
      * Reference to an HTMLContainer object.
@@ -50,10 +44,12 @@ class Template
     public function __construct(OrderedList $templates = NULL, HTMLContainer &$container = NULL)
     {
 
-        if ($templates)
+        if (!$templates)
+            $templates = new OrderedList();
+
             $this->templates = $templates;
 
-        if (!$container)
+        if ($container)
             $this->setContainer ($container);
 
 
@@ -68,17 +64,11 @@ class Template
     {
         $path = (string) $path;
 
-        if(file_exists($path))
+        //if(file_exists($path))
             $this->templates->add($path);
 
         return $this;
 
-    }
-
-    public function fill($keyword, $html)
-    {
-        $this->container->add($keyword, $html);
-        return $this;
     }
 
     public function enable()

@@ -26,10 +26,10 @@ class BrowserUpdate extends AbstractEvent
      */
     private $changes;
 
-    public function __construct(\stdClass &$src, array $changes = NULL)
+    public function __construct(&$src, Collection $changes = NULL)
     {
         if($changes)
-            $this->changes = new Collection($changes);
+            $this->changes = $changes;
 
         parent::__construct($src);
 

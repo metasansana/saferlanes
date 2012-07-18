@@ -44,10 +44,13 @@ abstract class EventSource
      */
     protected function notify(Event &$e)
     {
+        if($this->listeners)
+        {
         foreach ($this->listeners as $l)
         {
             if($l->update($e))
                 $l->notify($e);
+        }
         }
     }
 

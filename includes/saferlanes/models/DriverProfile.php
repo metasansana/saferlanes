@@ -13,52 +13,64 @@
  */
 namespace saferlanes\models;
 
+use callow\app\AbstractBrowserUpdater;
+use callow\app\BrowserUpdate;
+use callow\util\Collection;
 use saferlanes\core\Driver;
 
-class DriverProfile
+
+class DriverProfile extends AbstractBrowserUpdater
 {
 
     protected $driver;
 
-    protected $page;
+    protected $changes;
 
 
-    public function __construct(WebPage &$page, Driver &$driver)
+    public function __construct(Driver &$driver)
     {
-        $this->page = $page;
         $this->driver = $driver;
+        $this->changes = new Collection();
     }
 
     public function create()
     {
-        $this->putImage();
-        $this->putTimeStamp();
-        $this->putPlate();
-        $this->page->set('likes', $this->driver->getPlus());
-        $this->page->set('fails', $this->driver->getMinus());
+
+        $this->changes->add('image', $this->getImage());
+
+        $this->changes->add('timestamp', $this->getTimeStamp());
+
+        $this->changes->add('plate', $this->getPlate());
+
+        $this->changes->add('likes', $this->driver->getPlus());
+
+        $this->changes->add('fails', $this->driver->getMinus());
+
+        $update = new BrowserUpdate($this, $this->changes);
+
+        $this->notify($update);
 
         return $this;
 
     }
 
-    protected function putPlate($label='plate')
+    protected function getPlate()
     {
-        $this->page->set($label, strtoupper($this->driver->getPlate()));
-        return $this;
+        return strtoupper($this->driver->getPlate());
     }
 
-    protected function putTimeStamp($label = 'timestamp')
+    protected function getTimeStamp()
     {
          $date = getdate($this->driver->getTimeStamp());
 
         $date = "{$date['mday']} {$date['month']} {$date['year']}";
 
-        $this->page->set($label, $date);
+        return $date;
 
     }
 
 
-    protected function putImage($label = 'image')
+    protected function getImage($label = 'image')
     {
 
         $likes =  $this->driver->getPlus();
@@ -77,9 +89,6 @@ class DriverProfile
         {
             $image = "sad";
         }
-
-        $this->page->set($label, $image);
-
 
         return $image;
 

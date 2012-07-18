@@ -14,7 +14,7 @@
 
 namespace callow\app;
 
-interface Window
+interface Window extends BrowserUpdateListener
 {
 
     public function render($label, $html);

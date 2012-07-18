@@ -19,28 +19,25 @@ namespace saferlanes\models;
 use callow\dbase\ActiveDatabase;
 use callow\dbase\DatabaseMapper;
 use callow\dbase\EmptyResultException;
-use callow\event\UserWarn;
-use callow\event\UserNotice;
-use callow\event\Panic;
-use callow\event\Observer;
+use callow\dbase\DuplicateRecordException;
+use callow\util\AbstractAlerter;
+use callow\util\Notice;
+use callow\util\Info;
 use saferlanes\core\Driver;
 use saferlanes\models\SQLFactory;
 
-class Engine extends AbstractObservableModel
+class Engine extends AbstractAlerter
 {
 
-    const DRIVER_NOT_FOUND = "Sorry, that driver is not in the database yet!";
-    const DRIVER_FOUND = NULL;
-
+    const DUPEX = 0x34351;
 
     private $mapper;
 
-    public function __construct(ActiveDatabase &$dbase, Observer &$w = NULL)
+    private $state = 0;
+
+    public function __construct(ActiveDatabase &$dbase)
     {
         $this->mapper = new DatabaseMapper($dbase);
-        if ($w)
-            parent::__construct($w);
-
     }
 
     public function fetchDriver(Driver &$driver)
@@ -51,76 +48,109 @@ class Engine extends AbstractObservableModel
 
         $this->mapper->setSQL(new SQLFactory(SQLFactory::LOAD_DRIVER));
 
-        $flag = TRUE;
+        $result = FALSE;
 
         try
         {
 
             $this->mapper->load();
 
-            $event = new UserNotice(Engine::DRIVER_FOUND, $this);
+            $alert = new Info($this, AlertCodes::DRIVER_FOUND, "Found: {$driver->getPlate()}\n");
+
+            $result = $driver;
+
         }
         catch (EmptyResultException $exc)
         {
 
-            $event = new UserWarn(Engine::DRIVER_NOT_FOUND, $this);
+            $alert = new Notice($this, AlertCodes::DRIVER_NOT_FOUND, "Not Found: {$driver->getPlate()}\n");
 
-            $flag = FALSE;
+            $result = FALSE;
         }
 
-        $this->fire($event->put('driver', $driver));
+        $this->notify($alert);
 
-
-
-
-
-
-        return $flag;
+        return $result;
 
     }
 
-    public function castVote(Driver &$driver, $direction)
+    public function plusDriver(Driver $driver)
     {
+        return $this->castVote($driver, SQLFactory::VOTE_PLUS);
+    }
 
+    public function minusDriver(Driver $driver)
+    {
+        return $this->castVote($driver, SQLFactory::VOTE_MINUS);
+    }
 
-
-        if ($direction === 'plus')
-            $sql = SQLFactory::VOTE_PLUS;
-
-        if ($direction === 'minus')
-            $sql = SQLFactory::VOTE_MINUS;
-
-        if (!isset($sql))
-            exit();
-
+    private function castVote(Driver &$driver, $sql)
+    {
 
         $this->mapper->setDomain($driver);
 
         $this->mapper->setSQL(new SQLFactory($sql));
+
+        $flag = FALSE;
 
         try
         {
 
         $this->mapper->edit();
 
-        $event = new UserNotice();
+        $alert = new Notice($this, AlertCodes::DRIVER_VOTED_ON, "A vote was made on {$driver->getPlate()}");
 
-        $this->fire($event->put('driver', $driver));
-                
+        $flag = TRUE;
+
         }
           catch (EmptyResultException $exc)
         {
 
-            $event = new Panic($ex);  //Something went wrong that isn't our fault
-
-            $this->fire($event);
 
         }
 
 
-        return $driver;
+        return $flag;
 
     }
+
+    public function createDriver(Driver $driver)
+    {
+
+        $this->notify(new Notice($this, AlertCodes::DRIVER_CREATE_ATTEMPT), "{$driver->getPlate()} pending!");
+
+        $this->mapper->setDomain($driver);
+
+        $this->mapper->setSQL(new SQLFactory(SQLFactory::NEW_DRIVER));
+
+        $flag = FALSE;
+
+        try
+        {
+
+        $this->mapper->save();
+
+        $this->notify(new Notice($this, AlertCodes::DRIVER_CREATED, "Created: {$driver->getPlate()}"));
+
+        $flag = TRUE;
+
+        }
+          catch (DuplicateRecordException $exc)
+        {
+
+              $this->state = Engine::DUPEX;
+        }
+
+        return $flag;
+
+    }
+
+    public function getState()
+    {
+
+    return $this->state;
+    }
+
 
 }
 

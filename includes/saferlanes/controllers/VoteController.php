@@ -15,28 +15,29 @@
 namespace saferlanes\controllers;
 
 use callow\app\AbstractController;
-use callow\app\Commands;
+use callow\app\Options;
 use callow\http\Redirect;
 use saferlanes\models\SessionAgent;
 use saferlanes\models\SQLFactory;
 use saferlanes\core\Driver;
-use saferlanes\models\DriverValidator;
+use saferlanes\models\DriverGenerator;
 use saferlanes\models\Engine;
 use saferlanes\models\ActiveDatabaseFactory;
+
 
 class VoteController extends AbstractController
 {
 
-    public function main(Commands $params = NULL)
+    public function main(Options $opt= NULL)
     {
 
-        if($params)
+        if($opt)
         {
-            $agent = new SessionAgent($this->window);
+            $agent = new SessionAgent();
 
-            if($agent->verify('vote_key', $params[3]))
+            if($agent->verify('vote_key', $opt[3]))
             {
-                    $this->vote($params->__toArray());
+                    $this->vote($opt->__toArray());
             }
             else
             {
@@ -49,28 +50,36 @@ class VoteController extends AbstractController
     private function vote(array &$cmd)
     {
 
+        $gen = new DriverGenerator();
 
+        $gen->register($this->page);
 
-        $validator = new DriverValidator(new Driver());
-
-        $validator->register($this->observers);
-
-        if($validator->assignPlateNumber($cmd[2]))
+        if($gen->isValid($cmd[2]))
         {
 
-            $driver = $validator->getDriver();
+            $dfactory = new ActiveDatabaseFactory();
 
-            $dfactory = new ActiveDatabaseFactory($this->observers);
+            $engine = new Engine($dfactory->getActiveDatabase());
 
-            $engine = new Engine($dfactory->getActiveDatabase(), $this->observers);
+            $driver = $gen->getDriver();
 
-            $engine->castVote($driver, $cmd[1]);
+            $result = FALSE;
 
-            new Redirect("/{$driver->getPlate()}", TRUE);
+            if($cmd[1] === 'minus')
+                $result = $engine->minusDriver($driver);
+
+            if($cmd[1] === 'plus')
+                $result = $engine->plusDriver($driver);
+
+            if($result)
+                new Redirect("/{$driver->getPlate()}", TRUE);
+            }
+
+
 
         }
 
-    }
+
 
 }
 

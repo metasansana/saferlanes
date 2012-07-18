@@ -14,7 +14,7 @@
 
 namespace callow\util;
 
-class ArrayIterator implements callow\util\Iterator
+class ArrayIterator implements\ callow\util\Iterator
 {
 
     /**
@@ -38,16 +38,16 @@ class ArrayIterator implements callow\util\Iterator
      */
     protected $ptr = 0;
 
-    public function __construct(array $items, $size)
+    public function __construct(array $items)
     {
         $this->items = $items;
-        $this->size = (int)$size;
+        $this->size = count($items);
     }
 
     public function hasNext()
     {
 
-        if($this->ptr >= $this->size)
+        if($this->size > $this->ptr)
             return TRUE;
 
         return FALSE;
@@ -56,7 +56,7 @@ class ArrayIterator implements callow\util\Iterator
 
     public function next()
     {
-        $next = $this->items[$ptr];
+        $next = $this->items[$this->ptr];
         $this->ptr++;
         return $next;
     }

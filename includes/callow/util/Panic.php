@@ -13,7 +13,7 @@
  */
 namespace callow\util;
 
-class Panic extends Signal
+class Panic extends Alert
 {
 
 

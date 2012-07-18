@@ -16,7 +16,7 @@ namespace callow\app;
 
 use callow\util\EventListener;
 
-interface BrowserUpdateListener extends EventListener
+interface BrowserUpdateListener
 {
 
     public function update(BrowserUpdate $e);

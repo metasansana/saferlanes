@@ -21,7 +21,7 @@ interface  Controller
 
     public function main (Options $opt = NULL);
 
-    public function setPage(Page &$view);
+    public function setPage(Page &$page);
 
 
 }

@@ -15,10 +15,12 @@ namespace saferlanes\models;
 
 use callow\dbase\ActiveDatabase;
 use callow\dbase\PDOBuilder;
+use callow\util\AbstractAlerter;
+use callow\util\Panic;
 
 
 
-class ActiveDatabaseFactory extends AbstractObservableModel
+class ActiveDatabaseFactory
 {
 
 
@@ -44,7 +46,10 @@ class ActiveDatabaseFactory extends AbstractObservableModel
         catch(\PDOException $pexc)
         {
 
-            $this->fire(new Panic($pexc));
+            $panic = new Panic($this, AlertCodes::DB_UNREACHABLE, $pexc);
+
+
+            $this->notify($panic);
 
         }
 

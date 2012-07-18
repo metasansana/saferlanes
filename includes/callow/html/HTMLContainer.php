@@ -14,9 +14,9 @@
 
 namespace callow\html;
 
-use callow\util\GenericCollection;
+use callow\util\Collection;
 
-class HTMLContainer extends GenericCollection
+class HTMLContainer extends Collection
 {
 
     public function __construct()

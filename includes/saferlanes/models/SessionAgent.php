@@ -18,15 +18,12 @@ namespace saferlanes\models;
 use callow\core\Driver;
 use callow\http\Session;
 use callow\security\RandomToken;
-use callow\event\AbstractObservable;
-use callow\event\UserNotice;
+use callow\util\AbstractAlerter;
+use callow\util\Warning;
 
-class SessionAgent extends AbstractObservable
+class SessionAgent extends AbstractAlerter
 {
 
-    const NO_COOKIE = 'You must have cookies enabled to continue!';
-
-    const CSRF = 'This does not appear to be a valid request! Please try again.';
 
     /**
      * Internal reference to the current session.
@@ -45,32 +42,34 @@ class SessionAgent extends AbstractObservable
     }
 
 
-    public function generateToken()
+    public function generateToken($label)
     {
 
         $token = RandomToken::generate();
 
-        $this->add('vote_key', $token);
+        $this->session->add($label, $token);
 
         return $token;
 
 
     }
 
-    public function verify($session_label, $desired_value)
+    public function verify($label, $match)
     {
 
-        if($this->session->hasIndex($session_label))
+        if($this->session->contains($label))
         {
 
-            if($this->session->get($session_label) === $desired_value)
+            if($this->session->get($label) === $match)
             {
                 return TRUE;
             }
             else
             {
-                $request = array(SessionAgent::LABEL, SessionAgent::CSRF);
-                $this->sendRequest($request);
+
+                $warn = new Warning($this, AlertCodes::REQUEST_CHECK_FAILED, "Possible CSRF attempt!");
+
+                $this->notify($warn);
 
                 return FALSE;
             }
@@ -79,8 +78,9 @@ class SessionAgent extends AbstractObservable
         else
         {
 
-            $request = array(SessionAgent::LABEL, SessionAgent::NO_COOKIE);
-            $this->sendRequest($request);
+            $warn = new Warning($this, AlertCodes::COOKIES_REQUIRED, "Session object is not populated");
+
+            $this->notify($warn);
 
             return FALSE;
 
@@ -90,20 +90,11 @@ class SessionAgent extends AbstractObservable
 
     }
 
-public function add($key,  $value)
-{
-
-    $this->session->add($key, $value);
-
-    $notice  = new NewSessionKeyNotice($key, $value);
-
-    $this->fire($notice);
-
-    return $this;
 
 
 
-}
+
+
 
 }
 

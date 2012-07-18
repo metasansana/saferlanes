@@ -14,124 +14,86 @@
 namespace saferlanes\controllers;
 
 use callow\app\AbstractController;
-use callow\app\Commands;
+use callow\app\Options;
 use callow\http\Redirect;
-use callow\http\Post;
-use saferlanes\models\DriverValidator;
+use saferlanes\models\DriverSearchParamExtractor;
+use saferlanes\models\DriverGenerator;
 use saferlanes\core\Driver;
 use saferlanes\models\Engine;
 use saferlanes\models\ActiveDatabaseFactory;
 use saferlanes\models\SessionAgent;
-use saferlanes\models\DriverProfile;
-use saferlanes\models\VoteLinks;
+use saferlanes\models\VotableDriverProfile;
+use saferlanes\views\MessageBox;
 
 class SearchController extends AbstractController
 {
 
-    private $driver;
+    const DRIVER_NOT_FOUND = "Sorry, looks like that driver is not in the database!";
 
-    public function main(Commands $params = NULL)
+    public function main(Options $opt = NULL)
     {
 
-        $plate = NULL;
+        $extr = new DriverSearchParamExtractor($opt);
 
-        if($params->count() > 1)
-                new Redirect('/', TRUE);
+        $plate = $extr->getParam();
 
-        if(($params->count() === 1))
+        if (!$plate)
         {
-
-
-
-             $plate = $params[0];
-
+            $this->output(Saferlanes::SEARCH_TEMPLATE);
         }
         else
         {
 
-            $posted = new Post();
+            $gen = new DriverGenerator();
 
-            if($posted->contains('plate'))
-                $plate= $posted->get('plate');
+            $gen->register($this->page);
 
-        }
+            if ($gen->isValid($plate))
+            {
+                $this->fetch($gen->getDriver());
+            }
+            else
+            {
 
-        if(isset($plate))
-        {
-            $this->fetch ($plate);
-        }
-        else
-        {
-
-        $this->output('search');
-
-        }
-
-
-   }
-
-    private function fetch($plate)
-    {
-
-        $validator = new DriverValidator(new Driver());
-
-        $validator->register($this->observers);
-
-        if($validator->assignPlateNumber($plate))
-        {
-            $this->getFromDatabase($validator->getDriver());
-        }
-        else
-        {
-         $this->output('search');
-        }
-
-
-    }
-
-    private function getFromDatabase(Driver &$driver)
-    {
-
-        $dfactory = new ActiveDatabaseFactory($this->observers);
-
-        $engine = new Engine($dfactory->getActiveDatabase(), $this->observers);
-
-        if($engine->fetchDriver($driver))
-        {
-             $this->prepare($driver);
-        }
-        else
-        {
-            $this->output('search');
+                $this->output(Saferlanes::SEARCH_TEMPLATE);
+            }
         }
 
     }
 
-    private function prepare(Driver &$driver)
+    private function fetch(Driver $driver)
     {
 
-        $agent = new SessionAgent();
+        $dfactory = new ActiveDatabaseFactory();
 
-        $agent->register($this->observers);
+        $engine = new Engine($dfactory->getActiveDatabase());
 
-        $links = new VoteLinks($this->window, $driver, $agent->generateToken($driver->getPlate()));
+        if ($engine->fetchDriver($driver))
+        {
 
-        $links->create();
+            $agent = new SessionAgent();
 
-        $profile = new DriverProfile($this->window, $driver);
+            $profile = new VotableDriverProfile($driver, $agent->generateToken("vote_key"));
 
-        $profile->create();
+            $profile->register($this->page);
 
+            $profile->create();
 
+            $this->output(Saferlanes::DISPLAY_TEMPLATE);
+        }
+        else
+        {
+            $this->page->render('msg', new MessageBox(SearchController::DRIVER_NOT_FOUND));
 
-        $this->output('display');
-
+            $this->output(Saferlanes::SEARCH_TEMPLATE);
+        }
 
     }
 
     private function output($template)
     {
-     $this->window->import($template)->display();
+        $this->page->import($template)->show();
+
     }
 
 }

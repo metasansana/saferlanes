@@ -16,7 +16,7 @@
 namespace callow\util;
 
 
-class Notice extends Signal
+class Notice extends Alert
 {
 
 }

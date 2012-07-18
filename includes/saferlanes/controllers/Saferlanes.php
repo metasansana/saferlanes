@@ -13,19 +13,22 @@
  *
  */
 
-namespace saferlanes;
+namespace saferlanes\controllers;
 
 use callow\app\Application;
 use callow\app\Page;
 use callow\app\Options;
-use saferlanes\controllers\SearchController;
-use saferlanes\controllers\PostController;
-use saferlanes\controllers\VoteController;
+
 
 
 
 class Saferlanes extends Application
 {
+
+    const SEARCH_TEMPLATE = "templates/search.php";
+    const POST_TEMPLATE = "templates/post.php" ;
+    const DISPLAY_TEMPLATE = "templates/display.php";
+    
 
     protected function init()
     {
@@ -48,10 +51,6 @@ class Saferlanes extends Application
 
         $controller = NULL;
 
-        $opts = NULL;
-
-
-
         $flag = $this->params[0];
 
             switch ($flag)
@@ -66,13 +65,13 @@ class Saferlanes extends Application
 
                 default:
                     $controller = new SearchController();
-                    $opts = new Options();
+
                     break;
             }
 
             $window = new Page('templates');
 
-            $controller->setWindow($window)->main($opts);
+            $controller->setPage($window)->main($this->params);
 
         return $this;
 

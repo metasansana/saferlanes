@@ -22,15 +22,15 @@ abstract class AbstractController implements Controller
 
     /**
      * Reference to a controller for the screen.
-     * @var Window $view
+     * @var Page $page
      * @access protected
      */
-    protected $window;
+    protected $page;
 
 
-    public function setWindow(Window &$window)
+    public function setPage(Page &$page)
     {
-        $this->window = $window;
+        $this->page = $page;
         return $this;
     }
 

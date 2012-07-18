@@ -10,11 +10,8 @@
             <div id="window">
                 <img src="img/van.png" alt="truck"/>
                 <h1>Saferlanes</h1>
-                <p>Ever wanted to get a general opinion of your driving?</p>
-                <p>Saferlanes is a web application that aggregates votes on local drivers based on their licence plate numbers.</p>
-                <p>The votes are basically 'likes' or 'fails' in relation to your repuatation on the nation's roadways</p>
-                <p>Enter a plate number below to see what has been collected so far.</p>
-                <p>Do you want to add a plate number? Use <a href="/post">this</a> link.</p>
+                <p>The online road reputation tracker for Trinidad and Tobago.</p>
+                <p>See what the rest of the country thinks about your driving!</p>
                 <div id="application">
                     <form name="plate_number" method="POST" action="/">
                         <?= $content['msg']; ?>
@@ -23,6 +20,10 @@
                         <input  type="submit" value="go" name="submit"  />
                     </form>
                 </div>
+                <br/>
+                <span>Got a number to add? Click <a href="/post">here</a>.</span>
+                <br/>
+                <br/>
             </div>
         </div>
 </body>

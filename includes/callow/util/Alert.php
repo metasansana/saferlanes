@@ -14,7 +14,7 @@
 
 namespace callow\util;
 
-abstract class Signal extends AbstractEvent
+abstract class Alert extends AbstractEvent
 {
 
     /**

@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# Install script for callow and the saferlanes library
+#
+
+
+if [
+echo 'Please enter the include path to the server'
+if [ -f init ] 
+then
+
+echo exits
+
+fi

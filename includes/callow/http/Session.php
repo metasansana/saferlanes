@@ -39,7 +39,7 @@ class Session extends Collection
     public function clear()
     {
 
-        $this->collected = array ();
+        $this->items = array ();
         return $this;
 
     }
@@ -77,7 +77,7 @@ class Session extends Collection
 
         session_destroy();
 
-        $this->collected = array ();
+        $this->items = array ();
 
         return $this;
 
@@ -96,7 +96,7 @@ class Session extends Collection
 
         @session_start();
 
-        $this->collected = &$_SESSION;
+        $this->items = & $_SESSION;
 
     }
 

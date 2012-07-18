@@ -19,47 +19,31 @@ use saferlanes\core\Driver;
 class VoteLinks
 {
 
-    protected $driver;
-
-    protected $page;
+    private $plate;
 
     protected $token;
 
-    public function __construct(WebPage &$page, Driver &$driver, $token)
+    public function __construct($plate, $token)
     {
-        $this->page = $page;
-        $this->driver = $driver;
+        $this->plate = $plate;
         $this->token = $token;
     }
 
 
-    protected function putPlusLink($label='plus_link')
+    public  function getPlusLink()
     {
-        $plus = "/vote/plus/{$this->driver->getPlate()}/{$this->token}";
+        return  "/vote/plus/{$this->plate}/{$this->token}";
 
-        $this->page->set($label, $plus);
+    }
 
-        return $this;
+    public  function getMinusLink()
+    {
+
+        return  "/vote/minus/{$this->plate}/{$this->token}";
 
 
     }
 
-    protected function putMinusLink($label='minus_link')
-    {
-
-        $minus = "/vote/minus/{$this->driver->getPlate()}/{$this->token}";
-
-        $this->page->set($label, $minus);
-
-        return $this;
-    }
-
-    public function create()
-    {
-        $this->putMinusLink();
-        $this->putPlusLink();
-
-    }
 }
 
 ?>

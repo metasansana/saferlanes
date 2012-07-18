@@ -8,22 +8,22 @@
  * @copyright 2012 Lasana Murray
  * @package saferlanes\models;
  *
- * This class wraps the validation process to make it reusable.
+ *
  *
  *
  */
 
 namespace saferlanes\models;
 
-use callow\event\AbstractObservable;
-use callow\event\UserWarn;
-use saferlanes\core\DriverObject;
+use callow\app\AbstractBrowserUpdater;
+use callow\app\BrowserUpdate;
 use saferlanes\core\Driver;
 use saferlanes\core\BadPlateNumberException;
+use saferlanes\views\MessageBox;
 
 
 
-class DriverValidator extends AbstractObservable
+class DriverGenerator extends AbstractBrowserUpdater
 {
 
     /**
@@ -34,24 +34,32 @@ class DriverValidator extends AbstractObservable
     private $driver;
 
 
-    public function __construct(Driver &$driver)
+    public function __construct()
     {
 
-        $this->driver = $driver;
+        $this->driver = new Driver();
+
+
 
     }
 
-    public function assignPlateNumber($pnum)
+    public function isValid($plate)
     {
 
         try
         {
-        $this->driver->setPlate($pnum);
+
+        $this->driver->setPlate($plate);
+
         }
         catch(BadPlateNumberException $bex)
         {
 
-            $this->fire(new UserWarn($bex, $this));
+            $reply = new BrowserUpdate($this);
+
+            $reply->change('msg', new MessageBox($bex, 'error'));
+
+            $this->notify($reply);
 
             return FALSE;
         }
@@ -63,7 +71,9 @@ class DriverValidator extends AbstractObservable
 
     public function getDriver()
     {
+
      return $this->driver;
+
     }
 
 

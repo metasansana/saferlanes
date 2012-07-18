@@ -1,7 +1,8 @@
 <?php
+
 require_once 'classloader.php';
 
-$app = new saferlanes\Saferlanes();
+$app = new saferlanes\controllers\Saferlanes();
 
 $app->launch();
 

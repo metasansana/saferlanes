@@ -6,18 +6,17 @@
  *
  * @author Lasana Murray  <dev@trinistorm.org>
  * @copyright 2012 Lasana Murray
- * @package
+ * @package callow\app
  *
  *
  */
-class InternalEventListener
+
+namespace callow\util;
+
+interface AlertListener
 {
 
-    /**
-     *
-     * @var
-     * @access protected
-     */
+public function update(Alert $e);
 
 }
 

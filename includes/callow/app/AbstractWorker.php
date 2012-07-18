@@ -1,56 +1,48 @@
 <?php
 
 /**
- * timestamp Jul 14, 2012 5:39:43 PM
+ * timestamp Jul 14, 2012 9:17:48 PM
  *
  *
  * @author Lasana Murray  <dev@trinistorm.org>
  * @copyright 2012 Lasana Murray
  * @package callow\app
  *
- *  Implementation of the Worker interface.
  *
  */
 
 namespace callow\app;
 
-class AbstractWorker implements Worker
+use callow\util\EventSource;
+
+class AbstractWorker extends EventSource implements Worker
 {
+
 
     /**
      * An object that listens for internal Events
-     * @var InternalEventListener $iel
+     * @var AlertListener $iel
      * @access protected
      */
     protected  $iel;
 
-    /**
-     * An object that listens for Browser headed changes.
-     * @var BrowserUpdateListener $bul
-     * @access protected
-     */
-    protected  $bul;
-
-    public function __construct(BrowserUpdateListener &$bul = NULL, InternalEventListener &$iel = NULL)
+    public function __construct(AlertListener &$iel)
     {
-        if($bul)
-            $this->setBrowserUpdateListener ($bul);
 
-        if($iel)
-            $this->setInternalEventListener ($iel);
+
+            $this->register ($iel);
+
+
     }
 
-    public function setBrowserUpdateListener(BrowserUpdateListener &$bul)
+
+    public function register(AlertListener &$iel)
     {
-        $this->bul = $bul;
+        $this->iel = $iel;
         return $this;
     }
 
-    public function setInternalEventListener(InternalEventListener &$icl)
-    {
-        $this->iel = $icl;
-        return $this;
-    }
+
 
 }
 
