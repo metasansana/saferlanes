@@ -28,10 +28,12 @@ class Saferlanes extends Application
     const SEARCH_TEMPLATE = "templates/search.php";
     const POST_TEMPLATE = "templates/post.php" ;
     const DISPLAY_TEMPLATE = "templates/display.php";
-    
+
 
     protected function init()
     {
+
+        require_once 'scripts/launchcheck.php';
 
         require_once 'scripts/systemvars.php';
 
@@ -48,6 +50,11 @@ class Saferlanes extends Application
 
     protected function exec()
     {
+
+        if(defined('UPDATING'))
+        {
+            die('Service is down!');
+        }
 
         $controller = NULL;
 

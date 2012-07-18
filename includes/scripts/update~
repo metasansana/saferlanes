@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+#Script for downloading the latest version of saferlanes from github.com
+#By Lasana Murray
+#Last edit: 18/07/2012
+
+REMOTE_SOURCES='https://raw.github.com/metasansana/saferlanes/master'
+REMOTE_VERSION=
