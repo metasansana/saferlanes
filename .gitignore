@@ -1,2 +1,4 @@
 includes/saferlanes/scripts/settings.php
 includes/testclassloader.php
+/includes/etc/sl.conf
+/includes/etc/updating
