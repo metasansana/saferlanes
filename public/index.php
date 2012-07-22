@@ -5,5 +5,4 @@ $app = new saferlanes\controllers\Saferlanes();
 
 $app->launch();
 
-
 ?>

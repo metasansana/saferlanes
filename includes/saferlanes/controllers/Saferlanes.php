@@ -39,11 +39,6 @@ class Saferlanes extends Application
     protected function exec()
     {
 
-        if(defined('UPDATING'))
-        {
-            die('Service is down!');
-        }
-
         $controller = NULL;
 
         $flag = $this->params[0];
@@ -80,5 +75,3 @@ class Saferlanes extends Application
     }
 
 }
-
-?>
