@@ -17,6 +17,7 @@ use callow\dbase\ActiveDatabase;
 use callow\dbase\PDOBuilder;
 use callow\util\AbstractAlerter;
 use callow\util\Panic;
+use callow\util\Config;
 
 
 
@@ -29,11 +30,13 @@ class ActiveDatabaseFactory
     final public function getActiveDatabase()
     {
 
+        $config = new Config(get_include_path()."/etc/saferlanes/sl.ini");
+
         $instance = NULL;
 
-        $creds['dsn'] = DB_DSN;
-        $creds['usr'] = DB_USER;
-        $creds['passwd'] =  DB_PASSWORD;
+        $creds['dsn'] = $config->get("db_dsn");
+        $creds['usr'] = $config->get('db_user');
+        $creds['passwd'] =  $config->get('db_password');
 
         try
         {
