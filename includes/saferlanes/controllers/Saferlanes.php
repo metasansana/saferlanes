@@ -33,19 +33,7 @@ class Saferlanes extends Application
     protected function init()
     {
 
-        require_once 'scripts/launchcheck.php';
-
-        require_once 'scripts/systemvars.php';
-
-        require_once 'scripts/uservars.php';
-
-        include_once 'scripts/settings.php';
-
-        if(!defined(APP_NAME))
-            header("Status: 500 Not Found", FALSE, 500);
-
         return $this;
-
     }
 
     protected function exec()
