@@ -21,7 +21,7 @@ abstract class AbstractAggregate implements Aggregate
      * @var array $items
      * @access protected
      */
-    protected $items = array ();
+    protected $items = array();
 
     public function __construct(array $items=NULL)
     {
@@ -135,7 +135,9 @@ abstract class AbstractAggregate implements Aggregate
     public function size()
     {
 
-        return count($this->items);
+        $count = count($this->items);
+
+        return $count;
 
     }
 
