@@ -23,9 +23,10 @@ abstract class AbstractAggregate implements Aggregate
      */
     protected $items = array ();
 
-    public function __construct(array $items)
+    public function __construct(array $items=NULL)
     {
 
+        if($items)
         $this->items = $items;
 
     }
