@@ -32,7 +32,7 @@ abstract class AbstractAggregate implements Aggregate
     }
 
     /**
-     * Clears the internal aggregated items
+     * Clears the internally aggregated items
      * @return \proof\util\AbstractAggregate
      */
     public function clear()
