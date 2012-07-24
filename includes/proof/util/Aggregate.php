@@ -17,14 +17,7 @@ namespace proof\util;
  */
 interface Aggregate extends \IteratorAggregate
 {
-
-    /**
-     * Sets the value at location $index to $item
-     *
-     */
-    public function set($index, $item);
-
-
+    
     /**
      * Returns the value stored at a specific index
      *
