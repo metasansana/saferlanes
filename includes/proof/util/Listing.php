@@ -13,9 +13,16 @@ namespace proof\util;
  */
 interface Listing extends Aggregate
 {
+
     /**
      * Adds an item to the listing
      */
     public function add($item);
+    
+    /**
+     * Sets the value at location $index to $item
+     */
+    public function set($index, $item);
+
 
 }
