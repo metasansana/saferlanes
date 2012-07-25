@@ -52,10 +52,10 @@ class Page extends AbstractViewPort
 
     }
 
-    public function addWidget($name, Widget $w)
+    public function addWidget(Widget $w)
     {
 
-        $this->widgets->add($name, $w);
+        $this->widgets->add($w->getName(), $w);
 
         return $this;
 
