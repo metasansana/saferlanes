@@ -17,7 +17,7 @@ namespace proof\util;
  */
 interface Aggregate extends \IteratorAggregate
 {
-    
+
     /**
      * Returns the value stored at a specific index
      *
@@ -36,6 +36,11 @@ interface Aggregate extends \IteratorAggregate
      * Tests for the existence of an index
      */
     public  function indexAt($index);
+
+    /**
+     *Test if an item exists at the specifed index.
+     */
+    public function itemAt($index);
 
     /**
      * Returns the number of elements in the Collection

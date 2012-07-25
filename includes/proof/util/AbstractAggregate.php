@@ -1,8 +1,5 @@
 <?php
-
 namespace proof\util;
-
-
 /**
  * timestamp Jul 18, 2012 1:14:28 PM
  *
@@ -25,10 +22,7 @@ abstract class AbstractAggregate implements Aggregate
 
     public function __construct(array $items=NULL)
     {
-
-        if($items)
         $this->items = $items;
-
     }
 
     /**
@@ -38,7 +32,7 @@ abstract class AbstractAggregate implements Aggregate
     public function clear()
     {
 
-        unset($this->items);
+        $this->items = array();
         return $this;
 
     }
@@ -50,7 +44,7 @@ abstract class AbstractAggregate implements Aggregate
      */
     public function indexAt($index)
     {
-        if (array_key_exists($index, $this->items))
+        if (@array_key_exists($index, $this->items))
         {
             return TRUE;
         }
@@ -60,6 +54,20 @@ abstract class AbstractAggregate implements Aggregate
         }
 
     }
+
+    /**
+     * Tests if an item is set at the specified index.
+     * @param mixed $index
+     * @return boolean
+     */
+    public function itemAt($index)
+    {
+        if(!($this->indexAt($index)))
+            return FALSE;
+
+        return isset($this->items[$index]);
+    }
+
 
     /**
      * Returns an item stored in the current Aggregate
@@ -85,48 +93,21 @@ abstract class AbstractAggregate implements Aggregate
     /**
      * Removes an item at $index if it exists
      * @param mixed $index
-     * @return \proof\util\AbstractAggregate
-     * @throws IndexNotFoundException
+     * @return boolean True if the item exisits and was removed, false if otherwise
+     *
      */
     public function remove($index)
     {
 
-        if ($this->indexAt($index))
-        {
+        $flag = $this->indexAt($index);
+
+        if ($flag)
             unset($this->items[$index]);
-        }
-        else
-        {
-            throw new IndexNotFoundException();
-            return;
-        }
 
-        return $this;
+        return $flag;
 
     }
 
-    /**
-     * Sets an existing index to $item
-     * @param mixed $index
-     * @param mixed $item
-     * @return \proof\util\AbstractAggregate
-     * @throws IndexNotFoundException
-     */
-    public function set($index, $item)
-    {
-
-        if ($this->indexAt($index))
-        {
-            $this->items[$index] = $item;
-        }
-        else
-        {
-            throw new IndexNotFoundException();
-        }
-
-        return $this;
-
-    }
 
     /**
      * Returns the number of items in this aggregate.
@@ -135,10 +116,7 @@ abstract class AbstractAggregate implements Aggregate
     public function size()
     {
 
-        $count = count($this->items);
-
-        return $count;
-
+        return count($this->items);
     }
 
     /**

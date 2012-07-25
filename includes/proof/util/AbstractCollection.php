@@ -1,15 +1,12 @@
 <?php
-
 namespace proof\util;
-
-
 /**
  * timestamp Jul 18, 2012 10:01:52 AM
  *
  *
  * @author Lasana Murray  <dev@trinistorm.org>
  * @copyright 2012 Lasana Murray
- * @package
+ * @package proof\util
  *
  *
  */
@@ -18,14 +15,25 @@ abstract class AbstractCollection extends AbstractAggregate implements Collectio
 
     /**
      * Adds an item to this Collection
-     * @param mixed $index
+     * @param string $index
      * @param mixed $item
      * @return \proof\util\AbstractCollection
+     *
      */
     public function add($index, $item)
     {
+
+        if(!is_string($index))
+            throw new InvalidIndexException('Only string indexes are allowed!');
+
         $this->items[$index] = $item;
+
         return $this;
+    }
+
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->toArray());
     }
 
 }

@@ -1,8 +1,5 @@
 <?php
-
 namespace proof\util;
-
-
 /**
  * timestamp Jul 22, 2012 6:25:51 AM
  *
@@ -18,7 +15,7 @@ abstract class AbstractListing extends AbstractAggregate implements Listing
 
     /**
      * Adds an item to this Listing
-     * @param type $item
+     * @param int $item
      * @return \proof\util\AbstractListing
      */
     public function add($item)
@@ -28,6 +25,29 @@ abstract class AbstractListing extends AbstractAggregate implements Listing
         return $this;
 
     }
+
+    /**
+     * Sets an existing index to $item
+     * @param int $index
+     * @param mixed $item
+     * @return \proof\util\AbstractAggregate
+     *
+     */
+    public function set($index, $item)
+    {
+
+            if($this->indexAt($index))
+            {
+                $this->items[$index] = $item;
+            }
+            else
+            {
+                throw new IndexNotFoundException;
+            }
+
+            return $this;
+        }
+
 
     public function getIterator()
     {
