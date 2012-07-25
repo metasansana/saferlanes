@@ -21,7 +21,6 @@ interface Aggregate extends \IteratorAggregate
     /**
      * Returns the value stored at a specific index
      *
-     *
      */
     public function get($index);
 
@@ -41,6 +40,12 @@ interface Aggregate extends \IteratorAggregate
      *Test if an item exists at the specifed index.
      */
     public function itemAt($index);
+
+    /**
+     * Test for emptiness
+     */
+    public function isEmpty();
+
 
     /**
      * Returns the number of elements in the Collection

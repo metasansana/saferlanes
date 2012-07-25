@@ -108,6 +108,11 @@ abstract class AbstractAggregate implements Aggregate
 
     }
 
+    public function isEmpty()
+    {
+        return empty($this->items);
+    }
+
 
     /**
      * Returns the number of items in this aggregate.
