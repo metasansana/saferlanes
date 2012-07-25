@@ -1,8 +1,5 @@
 <?php
-
 namespace proof\types;
-
-
 /**
  * timestamp Jul 23, 2012 5:06:46 AM
  *
@@ -11,10 +8,11 @@ namespace proof\types;
  * @copyright 2012 Lasana Murray
  * @package proof\types
  *
- *  Classed used to represent a generic string.
+ *  Class for simulating a String type.
+ * @todo Incomplete class
  *
  */
-class String
+class String extends Type
 {
 
     public function __construct($value)
@@ -22,5 +20,6 @@ class String
         parent::__construct((string($value)));
 
     }
+
 
 }
