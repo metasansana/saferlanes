@@ -17,21 +17,15 @@ use proof\util\Map;
 interface ViewPort
 {
 
-    public function add(Widget $w);
+    /**
+     * Attempts to send the html output to a user's browser.
+     */
+    public function show();
 
-    public function import($template);
-
-    public function reset();
-
-    public function setTemplates(ArrayList $templates);
-
-    public function setWidgets(Map $widgets);
-
-    public function getTemplates();
-
-    public function getWidgets();
-
-    public function display();
+    /**
+     *Indicates whether output has been sent already or not.
+     */
+    public function showed();
 
 
 }

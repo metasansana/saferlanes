@@ -29,4 +29,5 @@ interface Widget
      */
     public function __toString();
 
+
 }

@@ -1,5 +1,7 @@
 <?php
+
 namespace proof\hwk;
+
 /**
  * timestamp Jul 22, 2012 7:14:21 PM
  *
@@ -11,146 +13,63 @@ namespace proof\hwk;
  *  Class representing a web page view port for a web application.
  *
  */
-use proof\util\ArrayList;
-use proof\util\Map;
+use proof\util\Collection;
+use proof\util\ImportList;
+use proof\types\String;
 
-class Page implements ViewPort
+class Page extends AbstractViewPort
 {
 
-        /**
+    /**
      * List of templates to be used.
-     * @var proof\util\ArrayList $templates
+     * @var proof\util\ImportList $templates
      * @access protected
      */
-    protected $templates;
+    protected $imports;
 
     /**
      * Collection of widgets added.
-     * @var proof\util\Map $widgets
+     * @var proof\util\Collection $widgets
      * @access protected
      */
     protected $widgets;
 
-    public function __construct(ArrayList $templates = NULL, Map $widgets = NULL)
+    public function __construct(Collection $widgets, ImportList $imports)
     {
 
-        if ($templates)
-        {
-            $this->setTemplates($templates);
-        }
-        else
-        {
-            $this->templates = new ArrayList();
-        }
-
-        if ($widgets)
-        {
-            $this->setWidgets($widgets);
-        }
-        else
-        {
-            $this->widgets = new Map();
-        }
-
-    }
-
-    /**
-     * Sets the internal Map
-     * @param Map $widgets
-     * @return \proof\hwk\AbstractViewPort
-     */
-    public function setWidgets(Map $widgets)
-    {
         $this->widgets = $widgets;
-        return $this;
-    }
 
-    /**
-     *  Sets the internal template ArrayList
-     * @param ArrayList $templates
-     * @return \proof\hwk\AbstractViewPort
-     */
-    public function setTemplates(ArrayList $templates)
-    {
-        $this->templates = $templates;
-        return $this;
-    }
-
-    /**
-     * Returns the internal template ArrayList
-     * @return ArrayList
-     */
-    public function getTemplates()
-    {
-
-        return $this->templates;
+        $this->imports = $imports;
 
     }
 
-    /**
-     * Returns the internal Map
-     * @return Map
-     */
-    public function getWidgets()
+    public function addImport(String $import)
     {
 
-        return $this->widgets;
-
-    }
-
-    /**
-     * Clears the internally stored widgets and template paths
-     * @return \proof\hwk\AbstractViewPort
-     */
-    public function reset()
-    {
-        $this->widgets->clear();
-        $this->templates->clear();
-        return $this;
-    }
-
-    /**
-     * Lists a template path to be included later on.
-     * @param string $template
-     * @return \proof\hwk\Page
-     */
-    public function import($template)
-    {
-
-        $this->templates->add($template);
+        $this->imports->add($import);
 
         return $this;
 
     }
 
-    /**
-     * Adds a widget that will be available to included templates.
-     * @param Widget $w
-     * @return \proof\hwk\Page
-     */
-    public function add(Widget $w)
+    public function addWidget($name, Widget $w)
     {
 
-        $this->widgets->add($w->getName(), $w);
+        $this->widgets->add($name, $w);
 
         return $this;
 
     }
 
-   /**
-    * Generates and displays the gui.
-    */
-    public function display()
+
+    public function show()
     {
 
-        $content = $this->widgets->getIterator();
+        $content = $this->widgets->toArray();
 
-        $tmpl = $this->templates->getIterator();
+        $this->imports->import();
 
-        while ($tmpl->valid())
-        {
-            include_once $tmpl->next();
-        }
+        return  parent::show();
 
     }
 
