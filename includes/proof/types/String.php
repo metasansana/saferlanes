@@ -17,7 +17,7 @@ class String extends Type
 
     public function __construct($value)
     {
-        parent::__construct((string($value)));
+        parent::__construct((string)($value));
 
     }
 
