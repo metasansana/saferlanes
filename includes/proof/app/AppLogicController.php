@@ -27,6 +27,12 @@ abstract class AppLogicController extends AbstractObservable implements LogicCon
     protected $next;
 
     /**
+     * Arguments for the controller
+     * @var ArrayList $args
+     */
+    protected $args;
+
+    /**
      * Widget
      * @var Widget $content;
      */
@@ -37,6 +43,7 @@ abstract class AppLogicController extends AbstractObservable implements LogicCon
      * @var string template
      */
     protected $template;
+
 
    public function getContent()
    {
@@ -51,6 +58,11 @@ abstract class AppLogicController extends AbstractObservable implements LogicCon
    public function getTemplate()
    {
        return $this->template;
+   }
+
+   public function getArgs()
+   {
+       return $this->args;
    }
 
 }
