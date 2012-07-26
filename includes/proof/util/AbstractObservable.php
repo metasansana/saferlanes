@@ -16,33 +16,26 @@ abstract class AbstractObservable implements Observable
 
     /**
      * List of observers.
-     * @var ArrayList $observers
+     * @var Observer $observers
      * @access
      */
-    protected $observers;
-
-    public function __construct()
-    {
-        $this->observers = new ArrayList();
-    }
+    protected $observer;
 
     public function attachObserver(Observer $o)
     {
-        $this->addObservers($o);
+        $this->observer = $o;
         return $this;
     }
 
-    public function getObservers()
+    public function getObserver()
     {
-        return $this->observers;
+        return $this->observer;
     }
 
     public function notify()
     {
-        foreach ($this->observers as $value)
-        {
-            $value->update($this);
-        }
+
+            $this->observer->update($this);
     }
 
 
