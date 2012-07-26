@@ -11,11 +11,10 @@ namespace proof\app;
  *  The Exector interface is the interface for the main controller of the applicaton.
  *
  */
-interface Executor
+use proof\util\ArrayList;
+use proof\util\Observer;
+
+interface Executor extends Observer, Controller
 {
-
-    public function execute(Options $opt);
-
-
-
+    
 }

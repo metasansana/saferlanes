@@ -13,16 +13,11 @@ namespace proof\app;
  *
  */
 use proof\util\Observable;
-use proof\util\Listing;
+use proof\util\ArrayList;
 
-interface  Controller extends Observable
+interface  Controller
 {
 
-
-    public function main (Listing $cmds = NULL);
-
-    public function getContent();
-
-    public function next();
+  public function main (ArrayList $opts = NULL);
 
 }
