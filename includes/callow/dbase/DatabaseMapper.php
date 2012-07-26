@@ -179,6 +179,11 @@ class DatabaseMapper implements DomainMapperInterface
         return $this;
     }
 
+    public function getDomain()
+    {
+        return  $this->domain;
+    }
+
 }
 
 ?>
