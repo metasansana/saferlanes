@@ -13,7 +13,7 @@ namespace proof\hwk;
  *  Class representing a web page view port for a web application.
  *
  */
-use proof\util\Collection;
+use proof\util\Map;
 use proof\util\ImportList;
 use proof\types\String;
 
@@ -34,12 +34,12 @@ class Page extends AbstractViewPort
      */
     protected $widgets;
 
-    public function __construct(Collection $widgets, ImportList $imports)
+    public function __construct()
     {
 
-        $this->widgets = $widgets;
+        $this->widgets = new Map();
 
-        $this->imports = $imports;
+        $this->imports = new ImportList();
 
     }
 
