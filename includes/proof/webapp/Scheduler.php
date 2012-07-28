@@ -41,7 +41,7 @@ final class Scheduler implements IScheduler, EventListener
     /**
      *  Executes controllers from an internal stack.
      */
-    public function execute()
+    public function start()
     {
 
         while(!$this->cstack->isEmpty())

@@ -16,7 +16,7 @@ use proof\util\Aggregate;
 interface IScheduler
 {
 
-    public function execute();
+    public function start();
 
     public function schedule(Controller $ctl, Aggregate $args = NULL);
 
