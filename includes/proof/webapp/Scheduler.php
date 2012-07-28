@@ -67,7 +67,7 @@ final class Scheduler implements IScheduler, EventListener
      * @return \proof\webapp\Scheduler
      *
      */
-    public function put(Controller $ctl, Aggregate $args = NULL)
+    public function schedule(Controller $ctl, Aggregate $args = NULL)
     {
 
         $this->cstack->push($ctl);
@@ -83,7 +83,7 @@ final class Scheduler implements IScheduler, EventListener
     {
 
         if( $evt instanceof Fork)
-            $this->put($evt->getChild(), $evt->getArgs());
+            $this->schedule($evt->getChild(), $evt->getArgs());
 
     }
 }

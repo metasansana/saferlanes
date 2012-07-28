@@ -18,6 +18,6 @@ interface IScheduler
 
     public function execute();
 
-    public function put(Controller $ctl, Aggregate $args = NULL);
+    public function schedule(Controller $ctl, Aggregate $args = NULL);
 
 }
