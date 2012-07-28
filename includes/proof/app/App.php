@@ -11,18 +11,17 @@ namespace proof\app;
  * @copyright 2012 Lasana Murray
  * @package callow\app
  *
- *  Parent class of the main class of a web application.
+ * Class used to run a web application. When this class is  subclassed, the child classes must define
+ * the init, start and finish methods. These methods must all return an '$this' which will allow the method run()
+ * to call all three in sequence.
  *
  */
-abstract class App implements Application
+abstract class App
 {
 
-    /**
-     * The application's controller stack
-     * @var proof\util\Stack
-     * @access protected
-     */
-    protected $controllers;
+    abstract public function init();
+
+    abstract public function start();
 
     public function run()
     {
