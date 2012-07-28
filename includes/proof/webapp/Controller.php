@@ -1,6 +1,5 @@
 <?php
-
-namespace proof\app;
+namespace proof\webapp;
 
 /**
  * timestamp May 5, 2012 9:00:02 PM
@@ -14,13 +13,12 @@ namespace proof\app;
  *
  *
  */
-use proof\util\AbstractEventSource, proof\util\Aggregate;
+use proof\util\Aggregate;
 
-interface Controller extends \proof\util\EventSource
+interface Controller
 {
 
     public function main(Aggregate $opts = NULL);
 
-    public function setScheduler(Scheduler $s);
 
 }
