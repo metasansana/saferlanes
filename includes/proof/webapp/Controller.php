@@ -13,12 +13,19 @@ namespace proof\webapp;
  *
  *
  */
-use proof\util\Aggregate;
+use proof\util\Aggregate, proof\util\ArrayList, proof\util\Map;
+use proof\hwk\Page;
 
 interface Controller
 {
 
-    public function main(Aggregate $opts = NULL);
+   /**
+    *  The main method of any controller class.
+    * @param \proof\webapp\ArrayList $get                     Contents of the GET method
+    * @param \proof\util\Map $post                                  Contenets of the POST method
+    * @param \proof\util\Aggregate $opts                        Optional arguments passed internally
+    */
+    public function main(Page $page, ArrayList $get, Map $post, Aggregate $opts=NULL);
 
 
 }
