@@ -31,9 +31,16 @@ abstract class AbstractCollection extends AbstractAggregate implements Collectio
         return $this;
     }
 
+    /**
+     * Copies the contents of one collection into this one. Conflicting local keys are overwritten.
+     * @param Collection $c
+     * @return \proof\util\AbstractCollection
+     */
     public  function copy(Collection $c)
     {
         array_merge($this->items, $c->toArray());
+
+        return $this;
     }
 
     public function getIterator()
