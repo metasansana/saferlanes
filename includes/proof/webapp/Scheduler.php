@@ -1,5 +1,7 @@
 <?php
+
 namespace proof\webapp;
+
 /**
  * timestamp Jul 28, 2012 11:22:54 AM
  *
@@ -11,7 +13,15 @@ namespace proof\webapp;
  *  Class that executes the controllers of a web app.
  *
  */
-use proof\util\Stack,  proof\util\EventListener,  proof\util\Event,  proof\util\Aggregate;
+use proof\util\Stack,
+    proof\util\EventListener,
+    proof\util\Event,
+    proof\util\Aggregate,
+    proof\util\EventSource,
+    proof\util\ArrayList,
+    proof\util\Map;
+
+use proof\hwk\Page;
 
 final class Scheduler implements IScheduler, EventListener
 {
@@ -23,7 +33,7 @@ final class Scheduler implements IScheduler, EventListener
      */
     private $dstack;
 
-    /**public function
+    /** public function
      * Stack for controllers
      * @var proof\util\Stack
      * @access protected
@@ -41,21 +51,24 @@ final class Scheduler implements IScheduler, EventListener
     /**
      *  Executes controllers from an internal stack.
      */
-    public function start()
+    public function run(Page $page, ArrayList $get, Map $post)
     {
 
-        while(!$this->cstack->isEmpty())
+        while (!$this->cstack->isEmpty())
         {
 
             $data = NULL;
 
-            if(!$this->dstack->isEmpty())
+            if (!$this->dstack->size() > 1)
                 $data = $this->dstack;
+
 
             $next_controller = $this->cstack->pop();
 
-            $next_controller->main($data);
+            if ($next_controller instanceof EventSource)
+                $next_controller->register($this);
 
+            $next_controller->main($page, $get, $post, $data);
         }
 
     }
@@ -67,13 +80,12 @@ final class Scheduler implements IScheduler, EventListener
      * @return \proof\webapp\Scheduler
      *
      */
-    public function schedule(Controller $ctl, Aggregate $args = NULL)
+    public function schedule(Controller $ctl, Aggregate $opts = NULL)
     {
 
         $this->cstack->push($ctl);
 
-        if($args)
-            $this->dstack->push ($args);
+        $this->dstack->push($opts);
 
         return $this;
 
@@ -82,8 +94,9 @@ final class Scheduler implements IScheduler, EventListener
     public function notify(Event $evt)
     {
 
-        if( $evt instanceof Fork)
+        if ($evt instanceof Fork)
             $this->schedule($evt->getChild(), $evt->getArgs());
 
     }
+
 }
