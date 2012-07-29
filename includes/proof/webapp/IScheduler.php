@@ -11,13 +11,14 @@ namespace proof\webapp;
  *  Interface for executing controllers.
  *
  */
-use proof\util\Aggregate;
+use proof\util\Aggregate, proof\util\ArrayList, proof\util\Map;
+use proof\hwk\Page;
 
 interface IScheduler
 {
 
-    public function start();
+    public function run(Page $page, ArrayList $get, Map $post);
 
-    public function schedule(Controller $ctl, Aggregate $args = NULL);
+    public function schedule(Controller $ctl, Aggregate $opts = NULL);
 
 }
