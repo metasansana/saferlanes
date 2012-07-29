@@ -12,7 +12,7 @@ namespace proof\util;
  *
  *
  */
-interface Collection extends \IteratorAggregate
+interface Collection extends Aggregate
 {
 
     /**
