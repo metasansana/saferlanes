@@ -11,8 +11,8 @@ namespace proof\types;
  * @copyright 2012 Lasana Murray
  * @package proof\types
  *
- *  Parent class of all proof primitive type classes. Type classes are used to 'fake' stable
- *  typing in the PHP language.
+ * Class for creating a specific structure or primitive.
+ *
  *
  */
 class Type
