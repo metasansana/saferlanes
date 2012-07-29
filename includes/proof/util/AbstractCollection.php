@@ -31,6 +31,11 @@ abstract class AbstractCollection extends AbstractAggregate implements Collectio
         return $this;
     }
 
+    public  function copy(Collection $c)
+    {
+        array_merge($this->items, $c->toArray());
+    }
+
     public function getIterator()
     {
         return new \ArrayIterator($this->toArray());
