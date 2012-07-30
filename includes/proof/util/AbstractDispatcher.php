@@ -22,6 +22,11 @@ abstract class AbstractDispatcher implements Dispatcher
      */
     protected $listeners;
 
+    public function __construct()
+    {
+        $this->listeners = new ArrayList;
+    }
+
 
     /**
      *  Clears and returns the listeners of this class.
