@@ -38,7 +38,7 @@ class LocationChangedEvent extends BrowserEvent
      */
     public function getPath()
     {
-        return $this->getPath();
+        return $this->path;
     }
 
 }
