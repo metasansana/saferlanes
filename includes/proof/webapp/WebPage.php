@@ -94,4 +94,14 @@ class WebPage implements Page
 
     }
 
+    public function show()
+    {
+
+        $page = $this->widgets->toArray();
+
+        if(!$this->templates->isEmpty())
+        $this->templates->import ();
+
+    }
+
 }

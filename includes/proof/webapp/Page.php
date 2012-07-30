@@ -26,4 +26,6 @@ interface Page
 
     public function getTemplates();
 
+    public function show();
+
 }
