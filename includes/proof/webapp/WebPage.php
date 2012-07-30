@@ -17,7 +17,7 @@ use proof\util\Map,
     proof\util\ImportList,
     \proof\util\ArrayList;
 
-class WebPage implements Page
+abstract class WebPage implements Page
 {
 
     /**
