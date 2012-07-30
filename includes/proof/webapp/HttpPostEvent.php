@@ -27,7 +27,7 @@ class HttpPostEvent extends BrowserEvent
      */
     private $post;
 
-    public function __constuct(Browser $brwser, Map $post)
+    public function __construct(Browser $brwser, Map $post)
     {
         parent::__constuct($brwser);
         $this->post = $post;
