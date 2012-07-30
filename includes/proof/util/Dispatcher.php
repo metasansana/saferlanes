@@ -13,9 +13,7 @@ namespace proof\util;
  */
 interface Dispatcher
 {
-
-    public function bind(EventListener $l);
-
+    
     public function getListeners();
 
     public function flush();
