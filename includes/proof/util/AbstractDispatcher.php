@@ -44,6 +44,7 @@ abstract class AbstractDispatcher implements Dispatcher
 
     /**
      *  Clears and returns the listeners of this class.
+     * @todo clearing the list seems to return null, see unit test
      * @return proof\util\ArrayList   The previous list of listeners.
      */
     public function flush()
