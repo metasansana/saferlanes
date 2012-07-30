@@ -17,7 +17,7 @@ abstract class AbstractDispatcher implements Dispatcher
 
     /**
      * List of listeners
-     * @var proof\util\Aggregate $listeners
+     * @var proof\util\ArrayList $listeners
      * @access protected
      */
     protected $listeners;
@@ -27,10 +27,24 @@ abstract class AbstractDispatcher implements Dispatcher
         $this->listeners = new ArrayList;
     }
 
+    /**
+     *  Binds a listener to the dispatcher
+     * @param \proof\util\EventListener $l
+     * @return \proof\util\AbstractDispatcher
+     */
+    public function bind(EventListener $l)
+    {
+
+        $this->listeners->add($l);
+
+        return $this;
+
+    }
+
 
     /**
      *  Clears and returns the listeners of this class.
-     * @return proof\util\Aggregate   The previous list of listeners.
+     * @return proof\util\ArrayList   The previous list of listeners.
      */
     public function flush()
     {
@@ -45,7 +59,7 @@ abstract class AbstractDispatcher implements Dispatcher
 
     /**
      *  Returns the listeners of this class
-     * @return proof\util\Aggregate
+     * @return proof\util\ArrayList
      */
     public function getListeners()
     {
