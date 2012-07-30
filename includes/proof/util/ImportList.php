@@ -19,10 +19,10 @@ class ImportList extends AbstractListing implements Importable
 
         foreach ($this as $value)
         {
-            $flag = (@include_once $value);
+            $flag = (@include_once "$value");
 
             if(!$flag)
-                throw new BadImportException;
+                throw new BadImportException("Cannot find $value");
         }
 
     }
