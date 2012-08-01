@@ -11,6 +11,8 @@ namespace proof\php;
  *  Class that contains a list of files to be included into the execution environment.
  *
  */
+use proof\util\AbstractListing;
+
 class ImportList extends AbstractListing implements Importable
 {
 
