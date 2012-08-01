@@ -1,5 +1,7 @@
 <?php
+
 namespace proof\http;
+
 /**
  * timestamp Jul 25, 2012 4:34:41 PM
  *
@@ -8,7 +10,7 @@ namespace proof\http;
  * @copyright 2012 Lasana Murray
  * @package proof\util
  *
- *  Class that attempts to contain data about the current http request.
+ *  Class providing  data about the current http request.
  * @todo incomplete class
  *
  */
@@ -18,22 +20,52 @@ use proof\util\Map;
 class HttpRequest
 {
 
+    /**
+     * Returns the type of method used for this request
+     * @return string    The method used.
+     */
+    public function method()
+    {
+
+        return $_SERVER['REQUEST_METHOD'];
+
+    }
+
+    /**
+     *  Returns the arguments passed as GET parameters.
+     * @return \proof\util\Map    The arguments.
+     */
+    public function getArgs()
+    {
+        return new Map($_GET);
+
+    }
+
+    /**
+     * Returns the path of this request.
+     * @return string    The path of the request.
+     */
+    public function getPath()
+    {
+        return $_SERVER['REQUEST_URI'];
+
+    }
 
     /**
      * Returns the an ArrayList of the current url's path.
      * @return \proof\util\ArrayList
      */
-    public function getPaths()
+    public function getCleanPath()
     {
 
-        $url = urldecode(@$_SERVER['REQUEST_URI']);
+        $url = urldecode($this->getPath());
 
         @$params = explode('/', $url);
 
-        array_shift($params);
+        array_shift($params);    //Drop the NULL member
 
         if (empty($params[0]))
-            array_shift($params);
+            $params = array ();
 
         return new ArrayList($params);
 
@@ -46,6 +78,7 @@ class HttpRequest
     public function getPost()
     {
         return new Map($_POST);
+
     }
 
     /**
@@ -55,7 +88,20 @@ class HttpRequest
     public function isPost()
     {
 
-        if($_SERVER['REQUEST_METHOD'] === 'POST')
+        if ($this->method() === 'POST')
+            return TRUE;
+
+        return FALSE;
+
+    }
+
+    /**
+     * Test for the GET request method.
+     * @return boolean    True if the request method was GET, false if otherwise.
+     */
+    public function isGet()
+    {
+        if ($this->method() === 'GET')
             return TRUE;
 
         return FALSE;
