@@ -1,5 +1,5 @@
 <?php
-namespace proof\util;
+namespace proof\php;
 /**
  * timestamp Jul 25, 2012 8:23:34 AM
  *
@@ -23,7 +23,7 @@ class ImportList extends AbstractListing implements Importable
 
             if(!$flag)
                 throw new BadImportException("Cannot find $value");
-            
+
         }
 
     }
