@@ -14,7 +14,7 @@ namespace proof\webapp;
  */
 use proof\util\Map;
 
-class PostRequestEvent extends BrowserEvent
+class PostRequestEvent extends BrowserRequestEvent
 {
 
     public function __construct(Browser $browser, Map $get)
