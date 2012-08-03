@@ -26,7 +26,7 @@ class SilentErrorPDOProvider extends AbstractPDOProviderWrapper
 
         $pdo = $this->provider->getPDO();
 
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ATTR_ERRMODE);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
 
         return $pdo;
 
