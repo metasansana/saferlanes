@@ -32,21 +32,21 @@ class PreparedStatement
     }
 
 
-    public function execute(array &$params )
+    public function start(array &$params )
     {
 
-        if($this->stmt->execute($params))
+        if($this->stmt->start($params))
             return TRUE;
 
         $errors = $this->stmt->errorInfo();
-        
+
         if($errors[1] === 1062)
             throw new DuplicateRecordException();
 
         throw new ExecutionFailedException($errors);
 
 
-        return $this->stmt->execute($params);
+        return $this->stmt->start($params);
     }
 
     public function getRow()
@@ -54,7 +54,7 @@ class PreparedStatement
 
         $row = NULL;
 
-        $row = $this->stmt->fetch(\PDO::FETCH_ASSOC);
+        $row = $this->stmt->pull(\PDO::FETCH_ASSOC);
 
         if($row)
         {

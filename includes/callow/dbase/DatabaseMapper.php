@@ -68,7 +68,7 @@ class DatabaseMapper implements DomainMapperInterface
         for ($c; $c < $count; $c++)
         {
             $args = new PreparedArray($this->domain->get());
-            $pstmt->execute($args->getFormatedArray());
+            $pstmt->start($args->getFormatedArray());
             unset($args);
         }
 
@@ -91,7 +91,7 @@ class DatabaseMapper implements DomainMapperInterface
         for ($c = 0; $c < $count; $c++)
         {
             $args = new PreparedArray($this->domain->get());
-            $pstmt->execute($args->getFormatedArray());
+            $pstmt->start($args->getFormatedArray());
             unset($args);
         }
 
@@ -125,7 +125,7 @@ class DatabaseMapper implements DomainMapperInterface
         for ($c; $c < $count; $c++)
         {
             $args = new PreparedArray($this->domain->get());
-            $pstmt->execute($args->getFormatedArray());
+            $pstmt->start($args->getFormatedArray());
             unset($args);
         }
 
@@ -150,7 +150,7 @@ class DatabaseMapper implements DomainMapperInterface
         for ($c; $c < $count; $c++)
         {
             $args = new PreparedArray($this->domain->get());
-            $pstmt->execute($args->getFormatedArray());
+            $pstmt->start($args->getFormatedArray());
             unset($args);
         }
 
