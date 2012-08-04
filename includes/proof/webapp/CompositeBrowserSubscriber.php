@@ -55,13 +55,13 @@ class CompositeBrowserSubscriber implements BrowserSubscriber
 
     }
 
-    public function onPath(Browser $browser, ArrayList $paths)
+    public function onPath(Browser $browser, ArrayList $path)
     {
 
         foreach ($this->subscribers as $s)
         {
 
-            $s->onPath($browser, $paths);
+            $s->onPath($browser, $path);
         }
 
     }
