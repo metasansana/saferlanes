@@ -13,7 +13,7 @@ namespace proof\sql;
  */
 use proof\util\Map;
 
-interface FetchListener
+interface FetchListener extends SQLEventListener
 {
 
     public function onFetch(Map $row);
