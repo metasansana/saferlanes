@@ -17,6 +17,7 @@ namespace proof\webapp;
  *
  */
 use proof\http\HttpRequest;
+use proof\http\Location;
 
 class Browser implements PageContainer
 {
@@ -73,6 +74,7 @@ class Browser implements PageContainer
         return $s;
     }
 
+
     /**
      * Simulates a GET request event
      *
@@ -104,7 +106,7 @@ class Browser implements PageContainer
     {
 
         if ($this->request->isPost())
-            $this->subscriber->OnPost($this, $this->request->getPost());
+            $this->subscriber->OnPost($this, $this->request->getPost(), $this->request->getCleanPath());
 
     }
 

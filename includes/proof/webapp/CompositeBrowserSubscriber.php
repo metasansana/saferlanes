@@ -14,6 +14,7 @@ namespace proof\webapp;
  *
  */
 use proof\util\ArrayList;
+use proof\util\Map;
 
 class CompositeBrowserSubscriber implements BrowserSubscriber
 {
@@ -44,7 +45,7 @@ class CompositeBrowserSubscriber implements BrowserSubscriber
 
     }
 
-    public function onGet(Browser $browser, \proof\util\Map $args)
+    public function onGet(Browser $browser, Map $args)
     {
 
         foreach ($this->subscribers as $s)
@@ -66,13 +67,13 @@ class CompositeBrowserSubscriber implements BrowserSubscriber
 
     }
 
-    public function onPost(Browser $browser, \proof\util\Map $post)
+    public function onPost(Browser $browser, \Map $post, ArrayList $path)
     {
 
         foreach ($this->subscribers as $s)
         {
 
-            $s->onPost($browser, $post);
+            $s->onPost($browser, $post, $path);
         }
 
     }

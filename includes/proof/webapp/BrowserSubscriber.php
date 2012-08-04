@@ -24,6 +24,6 @@ interface BrowserSubscriber
 
     public function onPath(Browser $browser, ArrayList $path);
 
-    public function onPost(Browser $browser, Map $post);
+    public function onPost(Browser $browser, Map $post, ArrayList $path);
 
 }
