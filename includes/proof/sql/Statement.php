@@ -64,11 +64,11 @@ abstract class Statement
         return $this;
     }
 
-    protected function raiseFailureFlag()
+    protected function raiseFailureFlag($info)
     {
         foreach($this->handlers as $h)
         {
-            $h->onFailure($this->provider, $this->pdo->errorInfo());
+            $h->onFailure($this->provider, $info);
         }
     }
 

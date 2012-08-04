@@ -1,5 +1,7 @@
 <?php
+
 namespace proof\sql;
+
 /**
  * timestamp Aug 4, 2012 9:00:02 AM
  *
@@ -11,23 +13,62 @@ namespace proof\sql;
  *  Alternative to prepared statement. Runs the sql command in one go.
  *
  */
-class FastStatement extends Statement
+use proof\util\Map;
+
+class FastStatement extends Statement implements Pushable, Fetchable
 {
 
-
-    public function pull(PullHandler $handler)
+    private function _query()
     {
 
-        $pdo = $this->provider->getPDO();
+        $result = $this->pdo->query($this->stmt);
 
+        if (!$result)
+            $this->raiseFailureFlag($this->pdo->errorInfo());
 
-
-
+        return $result;
 
     }
 
-    public function put(SQLEventHandler $handler)
+    public function fetch(SQLFetchHandler $h)
     {
 
+        $result = $this->_query();
+
+        if ($result)
+        {
+            foreach ($result as $row)
+            {
+                $h->onFetch(new Map($row));
+            }
+
+            return TRUE;
+
+        }
+        else
+        {
+
+            return FALSE;
+        }
+
     }
+
+    public function push(SQLPushHandler $h)
+    {
+
+        $result = $this->_query();
+
+        if ($result)
+        {
+            $h->onPush($result->rowCount());
+
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
+
+    }
+
 }
