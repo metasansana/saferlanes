@@ -14,6 +14,7 @@ namespace saferlanes;
  */
 use proof\webapp\AbstractBrowserSubscriber;
 use proof\util\ArrayList;
+use proof\util\Map;
 use proof\webapp\Browser;
 
 class DefaultController extends AbstractBrowserSubscriber
@@ -25,18 +26,14 @@ class DefaultController extends AbstractBrowserSubscriber
 
 
 
-    public function onPath(Browser $browser, ArrayList $paths)
+    public function onGet(Browser $browser, ArrayList $path, Map $args)
     {
 
-        $page = $browser->getPage();
+        $strategy = new PageStrategy($browser->getPage());
 
-        $page->addTemplate(DefaultController::HEAD_TEMPLATE);
-        $page->addTemplate(DefaultController::SEARCH_FORM_TEMPLATE);
-        $page->addTemplate(DefaultController::END_TEMPLATE);
+        $strategy->useSearchPage();
 
-        $page->addContent("title", "Saferlanes:  Reputation tracker for the nation's roadways");
-
-        $page->show();
+        $strategy->getPage()->show();
 
 
     }
