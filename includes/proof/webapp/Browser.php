@@ -1,7 +1,5 @@
 <?php
-
 namespace proof\webapp;
-
 
 /**
  * timestamp Jul 29, 2012 9:03:43 PM
@@ -11,20 +9,16 @@ namespace proof\webapp;
  * @copyright 2012 Lasana Murray
  * @package proof\webapp
  *
- *  Class that simulates the user's browser.
- *  Purpose:
- *  Simulates control over the user's browser.
+ *  Class for simulating the user's browser for the 'view' in a web application.
  *
  *
  *
  *
  *
  */
-use proof\http\HttpRequest, proof\http\HttpReply;
-use proof\hwk\Page;
-use proof\util\DispatchProxy;
+use proof\http\HttpRequest;
 
-class Browser implements IBrowser, DispatchProxy
+class Browser implements PageContainer
 {
 
     /**
@@ -35,82 +29,87 @@ class Browser implements IBrowser, DispatchProxy
     private $page;
 
     /**
-     * Manager of browser events.
+     * Subscriber to browser events
      * @var proof\webapp\BrowserEventDispatcher
      * @access  private
      */
-    private $dispatch;
+    private $subscriber;
 
-    /**
-     * Internal HttpRequest object
-     * @var proof\http\HttpRequest $request;
-     * @access  private
-     */
-    private $request;
-
-    public function __construct(Page $page = NULL)
+    public function __construct(Page $page, BrowserSubscriber $s)
     {
 
-        $this->dispatch = new BrowserEventDispatcher;
-        $this->request = new HttpRequest;
         $this->page = $page;
+        $this->subscriber = $s;
+
 
     }
 
     /**
-     * Attacheds a listener to the internal dispathcerd
-     * @param \proof\webapp\BrowserListener $l
+     * Attaches subscriber to this browser.
+     * @param \proof\webapp\BrowserSubscriber $s
      * @return \proof\webapp\Browser
      */
-    public function  attachListener(BrowserListener $l)
+    public function setSubscriber(BrowserSubscriber $s)
     {
 
-        $this->dispatch->bind($l);
-
-        return $this;
-    }
-
-    /**
-     *  Returns the internal dispatcher
-     * @return type
-     */
-    public function getDispatcher()
-    {
-        return $this->dispatch;
-    }
-
-    public function getRequest()
-    {
-
-        return $this->request;
-
-    }
-
-    /**
-     * Checks the various input mechanisms the browser can use.
-     * @todo add GET support.
-     * @return \proof\webapp\Browser
-     */
-    public function checkInput()
-    {
-
-        if($this->request->isPost())
-            $this->dispatch->notifyOnHttpPost (new HttpPostEvent ($this, $this->request->getPost()));
-
-        $this->dispatch->notifyOnLocationChanged(new LocationChangedEvent($this, $this->request->getPaths()));
+        $this->subscriber = $s;
 
         return $this;
 
     }
 
+    public function flushSubscriber()
+    {
+        $s = $this->subscriber;
+        $this->subscriber = NULL;
+        return $s;
+    }
+
     /**
-     * Returns an HttpReply object that can be used to send http replies to the browser.
-     * @return \proof\http\HttpReply
+     * Simulates a GET request event
+     * @param \proof\http\HttpRequest $request
      */
-    public function sendReply()
+    public function submitGet(HttpRequest $request)
     {
 
-        return new HttpReply;
+        if ($request->isGet())
+            $this->subscriber->OnGet($this, $request->getArgs ());
+
+    }
+
+    /**
+     * Simulates a path submission event.
+     * @param \proof\http\HttpRequest $request
+     */
+    public function submitPath(HttpRequest $request)
+    {
+
+        $this->subscriber->OnPath($this, $request->getCleanPath());
+
+    }
+
+    /**
+     * Simulates a POST request event.
+     * @param \proof\http\HttpRequest $request
+     */
+    public function submitPost(HttpRequest $request)
+    {
+
+        if ($request->isPost())
+            $this->subscriber->OnPost($this, $request->getPost());
+
+    }
+
+    /**
+     * Calls all submit methods in sequence.
+     * @return \proof\webapp\Browser
+     */
+    public function submit(HttpRequest $request)
+    {
+
+        $this->submitPath($request);
+        $this->submitGet($request);
+        $this->submitPost($request);
 
     }
 
@@ -118,7 +117,7 @@ class Browser implements IBrowser, DispatchProxy
      * Changes the page of browser.
      * @param \proof\hwk\Page $page
      */
-    public function updatePage(Page $page)
+    public function setPage(Page $page)
     {
 
         $this->page = $page;
@@ -132,13 +131,6 @@ class Browser implements IBrowser, DispatchProxy
     public function getPage()
     {
         return $this->page;
-    }
-
-    public function refresh()
-    {
-
-        if($this->page)
-            $this->page->show();
 
     }
 
