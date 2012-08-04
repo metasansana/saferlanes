@@ -48,12 +48,12 @@ abstract class Statement
      */
     protected $handlers;
 
-    public function __construct($stmt, PDOProvider $provider)
+    public function __construct(PDOProvider $provider, $stmt = NULL)
     {
 
-        $this->stmt = $stmt;
         $this->provider = $provider;
         $this->pdo = $provider->getPDO();
+        $this->stmt = $stmt;
         $this->handlers = new ArrayList;
 
     }
