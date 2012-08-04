@@ -12,7 +12,7 @@ namespace proof\sql;
  *
  *
  */
-interface SQLEventListener
+interface SQLEventHandler
 {
 
     public function onSuccess(SQLEvent $e);
