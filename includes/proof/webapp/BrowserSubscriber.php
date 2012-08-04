@@ -20,10 +20,8 @@ use proof\util\ArrayList;
 interface BrowserSubscriber
 {
 
-    public function onGet(Browser $browser, Map $args);
+    public function onGet(Browser $browser, ArrayList $path, Map $args);
 
-    public function onPath(Browser $browser, ArrayList $path);
-
-    public function onPost(Browser $browser, Map $post, ArrayList $path);
+    public function onPost(Browser $browser, ArrayList $path, Map $args);
 
 }

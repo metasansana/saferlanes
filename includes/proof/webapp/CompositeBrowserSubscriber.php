@@ -45,35 +45,24 @@ class CompositeBrowserSubscriber implements BrowserSubscriber
 
     }
 
-    public function onGet(Browser $browser, Map $args)
+    public function onGet(Browser $browser, ArrayList $path, Map $args)
     {
 
         foreach ($this->subscribers as $s)
         {
 
-            $s->onGet($browser, $args);
+            $s->onGet($browser, $path, $args);
         }
 
     }
 
-    public function onPath(Browser $browser, ArrayList $path)
+    public function onPost(Browser $browser, ArrayList $path, Map $post)
     {
 
         foreach ($this->subscribers as $s)
         {
 
-            $s->onPath($browser, $path);
-        }
-
-    }
-
-    public function onPost(Browser $browser, \Map $post, ArrayList $path)
-    {
-
-        foreach ($this->subscribers as $s)
-        {
-
-            $s->onPost($browser, $post, $path);
+            $s->onPost($browser, $path,  $post);
         }
 
     }

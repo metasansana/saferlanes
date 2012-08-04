@@ -83,18 +83,7 @@ class Browser implements PageContainer
     {
 
         if ($this->request->isGet())
-            $this->subscriber->OnGet($this, $this->request->getArgs ());
-
-    }
-
-    /**
-     * Simulates a path submission event.
-     *
-     */
-    public function submitPath()
-    {
-
-        $this->subscriber->OnPath($this, $this->request->getCleanPath());
+            $this->subscriber->onGet($this, $this->request->getCleanPath(), $this->request->getArgs ());
 
     }
 
@@ -106,18 +95,17 @@ class Browser implements PageContainer
     {
 
         if ($this->request->isPost())
-            $this->subscriber->OnPost($this, $this->request->getPost(), $this->request->getCleanPath());
+            $this->subscriber->OnPost($this,  $this->request->getCleanPath(), $this->request->getPost());
 
     }
 
     /**
-     * Calls all submit methods in sequence.
+     * Calls submitGet and submitPost
      *
      */
     public function submit()
     {
 
-        $this->submitPath();
         $this->submitGet();
         $this->submitPost();
 
