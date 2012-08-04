@@ -15,6 +15,8 @@ namespace proof\sql;
  *  sql statement which can be INSERT,DELETE, SELECT, UPDATE or vendor specific commands.
  *
  */
+use proof\util\ArrayList;
+
 abstract class Statement
 {
 
@@ -32,25 +34,51 @@ abstract class Statement
      */
     protected $provider;
 
+    /**
+     * The PDO object supplied by the provider. @todo This may completely replace the provider
+     * @var \PDO $pdo
+     * @access protected
+     */
+    protected $pdo;
+
+    /**
+     * Handler for the status of SQL commands.
+     * @var proof\util\ArrayList;
+     * @access protected.
+     */
+    protected $handlers;
+
     public function __construct($stmt, PDOProvider $provider)
     {
 
         $this->stmt = $stmt;
         $this->provider = $provider;
+        $this->pdo = $provider->getPDO();
+        $this->handlers = new ArrayList;
 
     }
 
-    abstract public function put(SQLEventHandler $handler);
+    public function addStatusListener(SQLStatusListener $h)
+    {
+        $this->handlers->add($h);
+        return $this;
+    }
 
-    abstract public function pull(PullHandler $handler);
+    protected function raiseFailureFlag()
+    {
+        foreach($this->handlers as $h)
+        {
+            $h->onFailure($this->provider, $this->pdo->errorInfo());
+        }
+    }
 
     /**
      * Sets the executable statement
-     * @param string $stmt
+     * @param string $cmd
      */
-    public function setStatement($stmt)
+    public function setCommand($cmd)
     {
-        $this->stmt = $stmt;
+        $this->stmt = $cmd;
 
         return $this;
 
