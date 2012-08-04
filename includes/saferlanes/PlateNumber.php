@@ -17,7 +17,7 @@ namespace saferlanes;
 class PlateNumber
 {
 
-    const PLATE_REGEX = '/^(p|d|r|h|v|x|t{1})([a-z]){0,2}(\d){1,4}$/';
+    const PLATE_NUMBER_PATTERN = '/^(p|d|r|h|v|x|t{1})([a-z]){0,2}(\d){1,4}$/';
 
     /**
      * The plate number
@@ -29,13 +29,13 @@ class PlateNumber
     public function __construct($plate_number)
     {
 
-        $this->plate = $plate;
+        $this->plate = $plate_number;
 
     }
 
     public function isValid()
     {
-        return preg_match(Plate::PLATE_REGEX, $this->plate);
+        return (boolean)preg_match(PlateNumber::PLATE_NUMBER_PATTERN, $this->plate);
 
     }
 
