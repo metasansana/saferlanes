@@ -115,9 +115,9 @@ class Browser implements PageContainer
     public function submit()
     {
 
-        $this->submitPath($request);
-        $this->submitGet($request);
-        $this->submitPost($request);
+        $this->submitPath();
+        $this->submitGet();
+        $this->submitPost();
 
     }
 
