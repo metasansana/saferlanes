@@ -22,6 +22,13 @@ class Browser implements PageContainer
 {
 
     /**
+     * The request associated with this browsert
+     * @var proof\http\HttpRequest $request
+     * @access private
+     */
+    private $request;
+
+    /**
      * Page object to be sent as html
      * @var Page $page
      * @access private
@@ -35,9 +42,10 @@ class Browser implements PageContainer
      */
     private $subscriber;
 
-    public function __construct(Page $page, BrowserSubscriber $s)
+    public function __construct(HttpRequest $request, Page $page, BrowserSubscriber $s)
     {
 
+        $this->request = $request;
         $this->page = $page;
         $this->subscriber = $s;
 
@@ -67,44 +75,44 @@ class Browser implements PageContainer
 
     /**
      * Simulates a GET request event
-     * @param \proof\http\HttpRequest $request
+     *
      */
-    public function submitGet(HttpRequest $request)
+    public function submitGet()
     {
 
-        if ($request->isGet())
-            $this->subscriber->OnGet($this, $request->getArgs ());
+        if ($this->request->isGet())
+            $this->subscriber->OnGet($this, $this->request->getArgs ());
 
     }
 
     /**
      * Simulates a path submission event.
-     * @param \proof\http\HttpRequest $request
+     *
      */
-    public function submitPath(HttpRequest $request)
+    public function submitPath()
     {
 
-        $this->subscriber->OnPath($this, $request->getCleanPath());
+        $this->subscriber->OnPath($this, $this->request->getCleanPath());
 
     }
 
     /**
      * Simulates a POST request event.
-     * @param \proof\http\HttpRequest $request
+     *
      */
-    public function submitPost(HttpRequest $request)
+    public function submitPost()
     {
 
-        if ($request->isPost())
-            $this->subscriber->OnPost($this, $request->getPost());
+        if ($this->request->isPost())
+            $this->subscriber->OnPost($this, $this->request->getPost());
 
     }
 
     /**
      * Calls all submit methods in sequence.
-     * @return \proof\webapp\Browser
+     *
      */
-    public function submit(HttpRequest $request)
+    public function submit()
     {
 
         $this->submitPath($request);
@@ -132,6 +140,11 @@ class Browser implements PageContainer
     {
         return $this->page;
 
+    }
+
+    public function getRequest()
+    {
+        return $this->request;
     }
 
 }
