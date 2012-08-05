@@ -81,21 +81,23 @@ class PreparedStatement extends Statement implements Pushable, Fetchable
     public function fetch(SQLFetchHandler $h)
     {
 
-        $row = NULL;
+        $flag  = TRUE;
 
         if ($this->pstmt->execute($this->params))
         {
 
-            do
+            while ($flag)
             {
 
-                $row = $this->pstmt->fetch();
+                $flag = $this->pstmt->fetch();
 
-                $h->onFetch(new Map($row));
+                if($flag)
+                $h->onFetch($flag);
+
             }
-            while ($row);
 
             return TRUE;
+
         }
         else
         {
