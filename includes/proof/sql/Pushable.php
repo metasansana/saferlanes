@@ -14,6 +14,6 @@ namespace proof\sql;
 interface Pushable
 {
 
-    public function push(SQLPushHandler $h);
+    public function push();
 
 }

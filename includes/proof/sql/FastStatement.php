@@ -53,19 +53,19 @@ class FastStatement extends Statement implements Pushable, Fetchable
 
     }
 
-    public function push(SQLPushHandler $h)
+    public function push()
     {
 
         $result = $this->_query();
 
         if ($result)
         {
-            $h->onPush($result->rowCount());
+            return $result->rowCount();
 
-            return TRUE;
         }
         else
         {
+            $this->raiseFailureFlag($this->pdo->errorInfo());
             return FALSE;
         }
 

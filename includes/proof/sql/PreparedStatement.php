@@ -108,14 +108,13 @@ class PreparedStatement extends Statement implements Pushable, Fetchable
 
     }
 
-    public function push(SQLPushHandler $h)
+    public function push()
     {
 
         if ($this->pstmt->execute($this->params))
         {
-            $h->onPush($this->pstmt->rowCount());
+            return $this->pstmt->rowCount();
 
-            return TRUE;
         }
         else
         {
