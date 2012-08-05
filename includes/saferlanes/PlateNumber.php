@@ -14,6 +14,13 @@ namespace saferlanes;
  *  A plate number class.
  *
  */
+use proof\sql\SQLFetchHandler;
+use proof\sql\SQLStatusListener;
+use proof\sql\BasePDOProvider;
+use proof\sql\SilentPDOProvider;
+use proof\sql\PreparedStatement;
+use proof\util\ArrayList;
+
 class PlateNumber
 {
 
@@ -35,13 +42,81 @@ class PlateNumber
 
     public function isValid()
     {
-        return (boolean)preg_match(PlateNumber::PLATE_NUMBER_PATTERN, $this->plate);
+
+        $flag = preg_match(PlateNumber::PLATE_NUMBER_PATTERN, $this->plate);
+
+        if($flag === 1)
+            return TRUE;
+
+        if($flag === 0 )
+        return FALSE;
 
     }
 
+    public function findDriver(\PDO $pdo , SQLFetchHandler $handler, SQLStatusListener $listener)
+    {
+
+        $pstmt = new PreparedStatement(new SilentPDOProvider(new BasePDOProvider($pdo)));
+
+        $pstmt->addStatusListener($listener);
+
+        $pstmt->prepare(SQL::FETCH_DRIVER);
+
+        $pstmt->setPlaceHolderParams(new ArrayList(array($this->plate)));
+
+        $pstmt->fetch($handler);
+
+    }
+
+    public function like(\PDO $pdo , SQLStatusListener $listener)
+    {
+
+        $pstmt = new PreparedStatement(new SilentPDOProvider(new BasePDOProvider($pdo)));
+
+        $pstmt->addStatusListener($listener);
+
+        $pstmt->prepare(SQL::VOTE_PLUS);
+
+        $pstmt->setPlaceHolderParams(new ArrayList(array($this->plate)));
+
+        return $pstmt->push();
+
+    }
+
+    public function fail(\PDO $pdo , SQLStatusListener $listener)
+    {
+
+        $pstmt = new PreparedStatement(new SilentPDOProvider(new BasePDOProvider($pdo)));
+
+        $pstmt->addStatusListener($listener);
+
+        $pstmt->prepare(SQL::VOTE_MINUS);
+
+        $pstmt->setPlaceHolderParams(new ArrayList(array($this->plate)));
+
+        return $pstmt->push();
+
+    }
+
+    public function  store(\PDO $pdo , SQLStatusListener $listener)
+    {
+
+        $pstmt = new PreparedStatement(new SilentPDOProvider(new BasePDOProvider($pdo)));
+
+        $pstmt->addStatusListener($listener);
+
+        $pstmt->prepare(SQL::PUSH_DRIVER);
+
+        $pstmt->setPlaceHolderParams(new ArrayList(array($this->plate, time())));
+
+        return $pstmt->push();
+
+    }
+
+
     public function getPlate()
     {
-        return $this->plate;
+        return strtolower(str_replace(' ', NULL, trim($this->plate)));
     }
 
     public function __toString()

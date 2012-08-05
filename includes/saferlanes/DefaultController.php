@@ -20,18 +20,13 @@ use proof\webapp\Browser;
 class DefaultController extends AbstractBrowserSubscriber
 {
 
-    const HEAD_TEMPLATE = 'templates/head.php';
-    const SEARCH_FORM_TEMPLATE = "templates/search.php";
-    const END_TEMPLATE = "templates/end.php";
-
-
 
     public function onGet(Browser $browser, ArrayList $path, Map $args)
     {
 
         $strategy = new PageStrategy($browser->getPage());
 
-        $strategy->useSearchPage();
+        $strategy->toSearchPage();
 
         $strategy->getPage()->show();
 

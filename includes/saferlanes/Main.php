@@ -70,10 +70,15 @@ class Main extends AbstractBrowserSubscriber
 
         $strategy = new ControllerStrategy;
 
+        if($path->get(0) === "search")
+            $strategy->useSearchForm();
+
+        if($path->get(0) === "post")
+            $strategy->usePost();
 
         $browser->flushSubscriber();
 
-        $browser->setSubscriber(new PostController);
+        $browser->setSubscriber($strategy->getController());
 
         $browser->submitPost();
 
