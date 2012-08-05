@@ -23,7 +23,7 @@ class Alerts
 
         return <<<MSG
 
-User at {$_SERVER['SERVER_ADDR']} posted a the number $plate.
+User at {$_SERVER["REMOTE_ADDR"]} posted a the number $plate.
 Today is: {$date['mday']} {$date['month']} {$date['year']}.
 MSG;
 
@@ -35,7 +35,7 @@ MSG;
 
         return <<<MSG
 
-User at {$_SERVER['SERVER_ADDR']} voted '$vote' on the number $plate.
+User at {$_SERVER["REMOTE_ADDR"]} voted '$vote' on the number $plate.
 Today is: {$date['mday']} {$date['month']} {$date['year']}.
 MSG;
 
