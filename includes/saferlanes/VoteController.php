@@ -41,9 +41,9 @@ class VoteController extends AbstractBrowserSubscriber implements SQLStatusListe
         if(!$path->get(3) === $key)
             die('CSRF detected!');
 
-           $plate = new PlateNumber($path->get(2));
+           $pnum = new PlateNumber($path->get(2));
 
-           if(!$plate->isValid())
+           if(!$pnum->isValid())
                die('Plate number not valid!');
 
             $config = new Config(Saferlanes::CONFIG_FILE);
@@ -61,11 +61,11 @@ class VoteController extends AbstractBrowserSubscriber implements SQLStatusListe
 
             if($vote === 'like')
             {
-                $flag = $plate->like($db->getConnection (), $this);
+                $flag = $pnum->like($db->getConnection (), $this);
             }
             elseif($vote === 'fail')
             {
-                $flag = $plate->fail ($db->getConnection (), $this);
+                $flag = $pnum->fail ($db->getConnection (), $this);
             }
             else
             {
