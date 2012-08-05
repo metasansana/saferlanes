@@ -16,9 +16,9 @@ abstract class AbstractPDOProviderWrapper implements PDOProvider
     /**
      * Internally stored provider
      * @var proof\sql\PDOProvider $provider
-     * @access private
+     * @access protected
      */
-    private $provider;
+    protected $provider;
 
     public function __construct(PDOProvider $provider)
     {
