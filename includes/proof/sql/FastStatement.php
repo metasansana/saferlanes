@@ -39,7 +39,7 @@ class FastStatement extends Statement implements Pushable, Fetchable
         {
             foreach ($result as $row)
             {
-                $h->onFetch($row);
+                $h->onFetch(new Map($row));
             }
 
             return TRUE;

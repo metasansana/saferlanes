@@ -17,6 +17,6 @@ use proof\util\Map;
 interface SQLFetchHandler
 {
 
-    public function onFetch(array $row);
+    public function onFetch(Map $row);
 
 }

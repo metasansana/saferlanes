@@ -92,7 +92,7 @@ class PreparedStatement extends Statement implements Pushable, Fetchable
                 $flag = $this->pstmt->fetch();
 
                 if($flag)
-                $h->onFetch($flag);
+                $h->onFetch(new Map($flag));
 
             }
 
