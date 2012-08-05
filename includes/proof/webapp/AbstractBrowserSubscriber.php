@@ -18,7 +18,7 @@ class AbstractBrowserSubscriber implements BrowserSubscriber
 {
 
 
-    public function onGet(Browser $browser, ArrayList $paths, Map $args)
+    public function onGet(Browser $browser, ArrayList $path, Map $args)
     {
 
     }

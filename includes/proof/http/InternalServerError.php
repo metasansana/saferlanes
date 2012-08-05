@@ -8,28 +8,18 @@ namespace proof\http;
  * @copyright 2012 Lasana Murray
  * @package proof\http
  *
- *  Class used to send a error 500 message.
+ *  Convience class used to send a error 500 message.
  *
  */
-class InternalServerError extends HttpStatus
+class InternalServerError extends Header
 {
 
-        /**
-     * The code for the status
-     * @var int $code
-     * @access protected
-     */
-    protected $code = 500;
-
-     /**
-     * Message associated with the status.
-     * @var string message
-     * @access protected
-     */
-    protected $message = "500 Internal Server Error";
-
-    public function __construct()
+    public function __construct($flag = FALSE)
     {
+
+        $this->status = parent::E500;
+        $this->text = parent::M500;
+        $this->flag = $flag;
 
     }
 

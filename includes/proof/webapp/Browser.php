@@ -18,6 +18,7 @@ namespace proof\webapp;
  */
 use proof\http\HttpRequest;
 use proof\http\Location;
+use proof\http\Session;
 
 class Browser implements PageContainer
 {
@@ -136,5 +137,6 @@ class Browser implements PageContainer
     {
         return $this->request;
     }
+
 
 }

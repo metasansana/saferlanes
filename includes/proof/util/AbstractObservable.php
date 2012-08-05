@@ -32,10 +32,10 @@ abstract class AbstractObservable implements Observable
         return $this->observer;
     }
 
-    public function notify()
+    protected function notify($change)
     {
 
-            $this->observer->update($this);
+            $this->observer->update($this, $change);
     }
 
 

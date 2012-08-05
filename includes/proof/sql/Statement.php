@@ -68,7 +68,7 @@ abstract class Statement
     {
         foreach($this->handlers as $h)
         {
-            $h->onFailure($this->provider, $info);
+            $h->onChange($this->provider, new SQLStatus($info));
         }
     }
 

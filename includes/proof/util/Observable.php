@@ -16,11 +16,7 @@ interface Observable
 
     public function attachObserver(Observer $o);
 
-    public function getObservers();
-
-    public function notify();
-
-
-
+    public function getObserver();
+    
 
 }

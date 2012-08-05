@@ -53,11 +53,13 @@ class Page
     public function addWidget(Widget $w)
     {
 
-        $map =  $w->getContent();
+        $map =  $w->getContent()->toArray();
 
-        foreach($map as $label=>&$value)
+
+        foreach($map as $label=>$value)
         {
             $this->addContent($label, $value);
+
         }
 
         return $this;

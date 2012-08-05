@@ -15,6 +15,6 @@ namespace proof\util;
 interface  Observer
 {
 
-    public function update(Observable $o);
+    public function update(Observable $o, $change);
 
 }

@@ -11,9 +11,13 @@ namespace proof\http;
  *  Interface for sending http headers to a browser.
  *
  */
-interface OutboundHeader
+interface HttpResponse
 {
 
-    public function send($replace=TRUE);
+    public function setText($text);
+
+    public function setStatus($code);
+
+    public function send($overwrite=TRUE);
 
 }

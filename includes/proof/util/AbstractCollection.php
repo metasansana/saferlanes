@@ -23,9 +23,6 @@ abstract class AbstractCollection extends AbstractAggregate implements Collectio
     public function add($index, $item)
     {
 
-        if(!is_string($index))
-            throw new InvalidIndexException('Only string indexes are allowed!');
-
         $this->items[$index] = $item;
 
         return $this;

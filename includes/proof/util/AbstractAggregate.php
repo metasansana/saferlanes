@@ -132,7 +132,7 @@ abstract class AbstractAggregate implements Aggregate
     {
 
         return $this->items;
-
+        
     }
 
 }

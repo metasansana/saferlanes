@@ -8,14 +8,14 @@ namespace proof\util;
  * @copyright 2012 Lasana Murray
  * @package proof\util
  *
- * Interface for dispatching events to other classes.
+ * Interface for classes that dispatch messages to other classes.
  *
  */
 interface Dispatcher
 {
-    
-    public function getListeners();
 
-    public function flush();
+    public function getSubscribers();
+
+    public function detachListener();
 
 }
