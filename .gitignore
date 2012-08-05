@@ -1,3 +1,7 @@
 includes/saferlanes/scripts/settings.php
 includes/testclassloader.php
+<<<<<<< .merge_file_WKkChl
+=======
+/public/dbdebug.php
+>>>>>>> .merge_file_r9wxen
 /includes/etc/saferlanes/sl.ini
