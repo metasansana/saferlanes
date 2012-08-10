@@ -36,7 +36,7 @@ class PlateNumber
     public function __construct($plate_number)
     {
 
-        $this->plate = $plate_number;
+        $this->plate = strtolower(str_replace(' ', NULL, trim($plate_number)));
 
     }
 
@@ -116,7 +116,7 @@ class PlateNumber
 
     public function getPlate()
     {
-        return strtolower(str_replace(' ', NULL, trim($this->plate)));
+        return $this->plate;
     }
 
     public function __toString()
