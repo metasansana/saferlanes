@@ -1,4 +1,5 @@
 saferlanes
 ==========
 
-Saferlanes is a web application for tracking the reputation of vehicles in Trinidad and Tobago.
+## This project has come to an end.
+Saferlanes was a web application for tracking the reputation of vehicles in Trinidad and Tobago.
